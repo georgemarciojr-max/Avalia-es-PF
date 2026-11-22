@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Polícia Federal | Portal de Avaliações - Rio Rise S11</title>
+  <style>
+    :root {
+      --bg-dark: #050a14;
+      --bg-card: #0c1527;
+      --bg-card-alt: #12203b;
+      --border: #1e355e;
+      --blue: #2563eb;
+      --blue-glow: #38bdf8;
+      --gold: #eab308;
+      --gold-soft: #fde047;
+      --green: #22c55e;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #0f1f3d 0%, var(--bg-dark) 65%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 12px 32px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 18px 16px;
+      background: linear-gradient(180deg, rgba(18, 32, 59, 0.95), rgba(12, 21, 39, 0.95));
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .badge-svg {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.35));
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .header .subtitle {
+      font-size: 0.82rem;
+      color: var(--gold-soft);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Cards & Views */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+      margin-bottom: 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      color: var(--blue-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Form Controls */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 560px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 600;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #070e1c;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--blue-glow);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    /* Role Selector */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .role-card {
+      background: #081020;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      position: relative;
+    }
+
+    .role-card:hover {
+      border-color: var(--blue-glow);
+      background: #0e1c36;
+    }
+
+    .role-card.selected {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(234, 179, 8, 0.12));
+      box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
+    }
+
+    .role-card .role-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--blue-glow);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .role-card.selected .role-tag {
+      background: var(--gold);
+      color: #050a14;
+    }
+
+    .role-card h3 {
+      font-size: 0.98rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .role-card p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    /* Info Box */
+    .rules-box {
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-left: 4px solid var(--blue-glow);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 14px 0 18px;
+      font-size: 0.83rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .rules-box ul {
+      padding-left: 18px;
+      margin-top: 6px;
+    }
+
+    .rules-box li {
+      margin-bottom: 4px;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #eab308, #ca8a04);
+      color: #050a14;
+      box-shadow: 0 4px 14px rgba(234, 179, 8, 0.35);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--red);
+      color: #fca5a5;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .btn-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Quiz Top Bar */
+    .quiz-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      color: var(--blue-glow);
+      text-transform: uppercase;
+    }
+
+    .pill-gold {
+      color: var(--gold-soft);
+      border-color: rgba(234, 179, 8, 0.45);
+    }
+
+    .timer-box {
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 10px;
+      background: #070e1c;
+      border: 2px solid var(--blue-glow);
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      min-width: 92px;
+      text-align: center;
+    }
+
+    .timer-box.warn {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .timer-box.danger {
+      border-color: var(--red);
+      color: var(--red);
+      animation: pulse 0.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: #070e1c;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--blue-glow));
+      transition: width 0.4s linear, background 0.3s;
+    }
+
+    /* Question Area (No Select) */
+    .no-select {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      background: #081020;
+      border: 2px solid var(--border);
+      border-radius: 11px;
+      padding: 13px 14px;
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.4;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+
+    .option-btn:hover {
+      border-color: var(--blue-glow);
+      background: #0f1d38;
+    }
+
+    .option-btn.selected {
+      border-color: var(--gold);
+      background: rgba(234, 179, 8, 0.12);
+    }
+
+    .opt-letter {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--blue-glow);
+    }
+
+    .option-btn.selected .opt-letter {
+      background: var(--gold);
+      color: #050a14;
+      border-color: var(--gold);
+    }
+
+    /* Results & Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    @media (max-width: 520px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-box {
+      background: #081020;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-box .val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .stat-box .lbl {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .status-banner {
+      padding: 14px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 700;
+      margin: 14px 0;
+      border: 1px solid;
+    }
+
+    .status-pass {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: var(--green);
+      color: #86efac;
+    }
+
+    .status-fail {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: var(--red);
+      color: #fca5a5;
+    }
+
+    /* Attempt Comparison */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 560px) {
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .attempt-choice {
+      background: #081020;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .attempt-choice:hover {
+      border-color: var(--blue-glow);
+    }
+
+    .attempt-choice.selected {
+      border-color: var(--gold);
+      background: rgba(234, 179, 8, 0.1);
+    }
+
+    .attempt-choice h3 {
+      font-size: 1rem;
+      color: var(--gold-soft);
+      margin-bottom: 8px;
+    }
+
+    .attempt-choice p {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      margin-bottom: 4px;
+    }
+
+    /* Report Box */
+    .report-preview {
+      width: 100%;
+      min-height: 240px;
+      background: #050a14;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      margin: 12px 0;
+      resize: vertical;
+    }
+
+    .gabarito-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .chip {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #081020;
+      border: 1px solid var(--border);
+    }
+
+    .chip.ok { border-color: var(--green); color: #86efac; }
+    .chip.err { border-color: var(--red); color: #fca5a5; }
+    .chip.nul { border-color: var(--amber); color: #fde047; }
+
+    /* Alerts / Toast */
+    .error-msg {
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid var(--red);
+      color: #fecaca;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    /* Footer & Discreet Admin Button */
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .secret-btn {
+      background: transparent;
+      border: none;
+      color: #334155;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      opacity: 0.45;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .secret-btn:hover {
+      opacity: 0.9;
+      color: var(--muted);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 15, 0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9000;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header class="header">
+      <svg class="badge-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 4L8 14V31C8 46.5 18.2 57.6 32 61C45.8 57.6 56 46.5 56 31V14L32 4Z" fill="#0d1b36" stroke="#eab308" stroke-width="3"/>
+        <path d="M32 10L14 17.5V30.5C14 42.6 21.7 51.3 32 54.4C42.3 51.3 50 42.6 50 30.5V17.5L32 10Z" fill="#172d58" stroke="#38bdf8" stroke-width="1.5"/>
+        <polygon points="32,17 35.6,26.2 45.5,26.8 37.8,33.1 40.3,42.7 32,37.3 23.7,42.7 26.2,33.1 18.5,26.8 28.4,26.2" fill="#eab308"/>
+      </svg>
+      <h1>Polícia Federal — Rio Rise</h1>
+      <div class="subtitle">Servidor 11 • Portal Oficial de Provas & Promoções</div>
+    </header>
+
+    <!-- VIEW 1: INÍCIO / LOGIN DO CANDIDATO -->
+    <section id="view-start" class="card">
+      <div class="section-title">1. Identificação do Candidato</div>
+
+      <div id="start-error" class="error-msg hidden"></div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="cand-name">Nome RP</label>
+          <input type="text" id="cand-name" placeholder="Ex: Carlos_Silva" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="cand-id">ID no Servidor</label>
+          <input type="text" id="cand-id" placeholder="Ex: 14582" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="section-title">2. Selecione a Prova / Cargo</div>
+      <div class="roles-grid" id="roles-grid">
+        <button type="button" class="role-card" data-role="GM">
+          <span class="role-tag">10 Questões • Entrada</span>
+          <h3>Guarda Municipal (GM)</h3>
+          <p>Recepção, Padrão PS, Códigos Q e Regras da Bíblia RP.</p>
+        </button>
+        <button type="button" class="role-card" data-role="AP">
+          <span class="role-tag">15 Questões • Base/Apoio</span>
+          <h3>Agente Policial (AP)</h3>
+          <p>Serviço HP/Mídia/PS, Comandos, Tabela de Crimes, Código Q e Bíblia RP.</p>
+        </button>
+        <button type="button" class="role-card" data-role="TO">
+          <span class="role-tag">15 Questões • Operacional</span>
+          <h3>Tático Operacional (TO)</h3>
+          <p>Controle do PS, Direitos de Detentos, Patrulhamento, Crimes e Bíblia RP.</p>
+        </button>
+        <button type="button" class="role-card" data-role="ES">
+          <span class="role-tag">15 Questões • Liderança</span>
+          <h3>Escrivão Policial</h3>
+          <p>Coordenação, Carregamentos, Avisos, Uso de /D, Crimes, Comandos e Bíblia RP.</p>
+        </button>
+      </div>
+
+      <div class="field" style="margin-bottom: 10px;">
+        <label for="access-code">3. Código de Acesso (Fornecido pelo Delegado)</label>
+        <input type="text" id="access-code" placeholder="Ex: PF11-7K2M" style="text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;" autocomplete="off" />
+      </div>
+
+      <div class="rules-box">
+        <strong>Instruções importantes antes de começar:</strong>
+        <ul>
+          <li>Cada questão possui <strong>1 minuto e 30 segundos (90s)</strong>. Caso o tempo zere sem resposta, a questão é anulada automaticamente e a prova avança.</li>
+          <li>Você poderá realizar até <strong>2 tentativas</strong> com o mesmo código, caso queira tentar melhorar seu desempenho.</li>
+          <li>Ao concluir, o sistema gera o <strong>relatório oficial para envio no WhatsApp do Delegado</strong>, que servirá de base para a <strong>entrevista oral/prática</strong>.</li>
+          <li>O código de acesso é de <strong>uso único</strong>. Evite recarregar a página ou alternar de aplicativo durante a avaliação.</li>
+        </ul>
+      </div>
+
+      <button type="button" id="btn-start-exam" class="btn btn-gold">Iniciar Avaliação Oficial</button>
+    </section>
+
+    <!-- VIEW 2: PROVA EM ANDAMENTO -->
+    <section id="view-quiz" class="card hidden no-select">
+      <div class="quiz-topbar">
+        <div class="quiz-meta">
+          <span class="pill pill-gold" id="quiz-role-badge">CARGO</span>
+          <span class="pill" id="quiz-progress-badge">Questão 1 / 10</span>
+          <span class="pill" id="quiz-attempt-badge">1ª Tentativa</span>
+          <span class="pill" id="quiz-diff-badge">Nível</span>
+        </div>
+        <div class="timer-box" id="timer-display">01:30</div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="timer-bar"></div>
+      </div>
+
+      <div class="question-text" id="question-text">Carregando questão...</div>
+
+      <div class="options-list" id="options-list"></div>
+
+      <button type="button" id="btn-next-q" class="btn btn-primary" disabled>Confirmar e Avançar</button>
+    </section>
+
+    <!-- VIEW 3: FIM DA 1ª TENTATIVA (ESCOLHA DO CANDIDATO) -->
+    <section id="view-mid" class="card hidden">
+      <div class="section-title">1ª Tentativa Concluída</div>
+      <p style="font-size: 0.88rem; color: var(--muted); margin-bottom: 10px;">
+        Confira seu desempenho abaixo. Você pode <strong>finalizar agora e gerar seu relatório</strong> ou <strong>realizar a 2ª tentativa</strong> (com novas questões embaralhadas) e escolher qual resultado enviar ao Delegado no final.
+      </p>
+
+      <div class="stats-grid" id="mid-stats"></div>
+      <div id="mid-status-banner" class="status-banner"></div>
+
+      <div style="font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; font-weight: 600;">Resumo por questão:</div>
+      <div class="gabarito-chips" id="mid-chips"></div>
+
+      <div class="btn-row" style="margin-top: 18px;">
+        <button type="button" id="btn-finish-a1" class="btn btn-green">Finalizar e Gerar Relatório</button>
+        <button type="button" id="btn-retry-a2" class="btn btn-gold">Refazer Prova (2ª Tentativa)</button>
+      </div>
+    </section>
+
+    <!-- VIEW 4: FIM DA 2ª TENTATIVA (ESCOLHA DO RELATÓRIO) -->
+    <section id="view-choose" class="card hidden">
+      <div class="section-title">Selecione o Relatório Oficial</div>
+      <p style="font-size: 0.88rem; color: var(--muted);">
+        Você concluiu as 2 tentativas permitidas. Toque na tentativa que deseja enviar para o Delegado no WhatsApp:
+      </p>
+
+      <div class="compare-grid" id="compare-grid"></div>
+
+      <button type="button" id="btn-confirm-choice" class="btn btn-gold" disabled>Gerar Relatório Selecionado</button>
+    </section>
+
+    <!-- VIEW 5: RELATÓRIO FINAL WHATSAPP -->
+    <section id="view-report" class="card hidden">
+      <div class="section-title">Relatório Oficial da Avaliação</div>
+
+      <div class="rules-box" style="margin-top: 0;">
+        <strong>Próxima Etapa — Entrevista com o Delegado:</strong><br/>
+        Copie ou envie este relatório diretamente no WhatsApp do Delegado responsável. Ele avaliará sua pontuação objetiva e conduzirá a <strong>entrevista oral/prática</strong> antes de definir sua aprovação ou promoção na Polícia Federal.
+      </div>
+
+      <div id="final-status-banner" class="status-banner"></div>
+      <div class="gabarito-chips" id="final-chips"></div>
+
+      <label style="font-size: 0.78rem; color: var(--muted); text-transform: uppercase; font-weight: 700;">Prévia do Relatório (Não altere os dados):</label>
+      <textarea id="report-text" class="report-preview" readonly></textarea>
+
+      <div class="btn-row">
+        <button type="button" id="btn-copy-report" class="btn btn-primary">Copiar Relatório</button>
+        <button type="button" id="btn-send-wa" class="btn btn-green">Enviar no WhatsApp</button>
+      </div>
+
+      <button type="button" id="btn-new-session" class="btn btn-outline" style="margin-top: 12px;">Voltar à Tela Inicial</button>
+    </section>
+
+    <!-- FOOTER COM BOTÃO DISCRETO -->
+    <footer class="footer">
+      <span>Polícia Federal • Rio Rise Servidor 11 • PF-S11 v1.0</span>
+      <button type="button" id="btn-secret-admin" class="secret-btn" title="Acesso restrito" aria-label="Acesso restrito">🔒</button>
+    </footer>
+  </div>
+
+  <!-- MODAL ADMIN (OCULTO) -->
+  <div id="admin-modal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <strong style="color: var(--gold-soft); letter-spacing: 1px; text-transform: uppercase;">Painel Restrito — Códigos</strong>
+        <button type="button" id="btn-close-modal" class="modal-close">&times;</button>
+      </div>
+
+      <!-- LOGIN ADMIN -->
+      <div id="admin-login-box">
+        <div id="admin-login-err" class="error-msg hidden"></div>
+        <div class="field" style="margin-bottom: 12px;">
+          <label for="adm-user">Usuário</label>
+          <input type="text" id="adm-user" autocomplete="off" />
+        </div>
+        <div class="field" style="margin-bottom: 14px;">
+          <label for="adm-pass">Senha</label>
+          <input type="password" id="adm-pass" autocomplete="off" />
+        </div>
+        <button type="button" id="btn-adm-login" class="btn btn-gold">Entrar</button>
+      </div>
+
+      <!-- PAINEL LOGADO -->
+      <div id="admin-panel-box" class="hidden">
+        <div class="rules-box" style="margin-top: 0;">
+          <div><strong>Códigos no sistema (Base + Extras):</strong> <span id="adm-total-codes">0</span></div>
+          <div><strong>Códigos já consumidos neste dispositivo:</strong> <span id="adm-used-codes">0</span></div>
+          <div><strong>Disponíveis neste dispositivo:</strong> <span id="adm-avail-codes">0</span></div>
+        </div>
+
+        <div class="field" style="margin-bottom: 12px;">
+          <label for="adm-new-codes">Inserir novos códigos (um por linha, vírgula ou espaço)</label>
+          <textarea id="adm-new-codes" rows="5" placeholder="Cole aqui os novos códigos gerados na página do Delegado..."></textarea>
+        </div>
+
+        <button type="button" id="btn-adm-save-codes" class="btn btn-green" style="margin-bottom: 10px;">Adicionar Novos Códigos</button>
+        <button type="button" id="btn-adm-reset-used" class="btn btn-danger">Limpar Registro Local de Usados (Teste)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURAÇÕES PRINCIPAIS (MESMAS CREDENCIAIS E CÓDIGOS DA PÁGINA DELEGADO)
+    // =========================================================================
+    const ADMIN_USER = "delegadopf";
+    const ADMIN_PASS = "PF11@2026";
+    const QUESTION_TIME_SECONDS = 90; // 1 minuto e 30 segundos por questão
+    const PASSING_PERCENT = 70;       // Média mínima sugerida para Apto à Entrevista
+
+    const STORAGE_KEYS = {
+      EXTRA_CODES: "pf11_exam_extra_codes_v1",
+      USED_CODES: "pf11_exam_used_codes_v1"
+    };
+
+    // 100 CÓDIGOS PRÉ-DEFINIDOS (IDÊNTICOS AOS DA PÁGINA DO DELEGADO)
+    const DEFAULT_CODES = [
+      "PF11-7K2M", "PF11-4X9P", "PF11-8B3R", "PF11-2N6W", "PF11-9D5H", "PF11-3V8J", "PF11-6T4C", "PF11-5F7Q", "PF11-2Y9Z", "PF11-8G3S",
+      "PF11-4M6K", "PF11-9P2X", "PF11-3R8B", "PF11-6W5N", "PF11-7H4D", "PF11-2J9V", "PF11-8C3T", "PF11-5Q7F", "PF11-9Z2Y", "PF11-4S6G",
+      "PF11-6A9E", "PF11-3U7K", "PF11-8M2P", "PF11-5X4R", "PF11-9B6W", "PF11-2N8H", "PF11-7D3J", "PF11-4V5C", "PF11-8T9Q", "PF11-3F2Z",
+      "PF11-5E8A", "PF11-9K3U", "PF11-2P7M", "PF11-6R4X", "PF11-8W5B", "PF11-3H9N", "PF11-7J2D", "PF11-4C8V", "PF11-9Q3T", "PF11-2Z6F",
+      "PF11-7Y4S", "PF11-3G8A", "PF11-6E2U", "PF11-9K5M", "PF11-4P7X", "PF11-8R3B", "PF11-2W9N", "PF11-5H6D", "PF11-7J4V", "PF11-3C8Q",
+      "PF11-8S2Y", "PF11-4A7G", "PF11-9U3E", "PF11-2M6K", "PF11-5X8P", "PF11-7B4R", "PF11-3N9W", "PF11-6D2H", "PF11-8V5J", "PF11-4Q7C",
+      "PF11-9T3F", "PF11-2Z8S", "PF11-6Y4A", "PF11-3G9U", "PF11-7E2M", "PF11-4K6X", "PF11-8P3B", "PF11-5R7N", "PF11-2W4D", "PF11-9H8V",
+      "PF11-3F7T", "PF11-6S2Z", "PF11-8A5Y", "PF11-4U9G", "PF11-2M3E", "PF11-7X6K", "PF11-9B4P", "PF11-3N8R", "PF11-5D2W", "PF11-8V7H",
+      "PF11-4J9C", "PF11-7Q2F", "PF11-3Z6S", "PF11-8Y4G", "PF11-5A9E", "PF11-2U7K", "PF11-6M3X", "PF11-9P5R", "PF11-4B8N", "PF11-7W2D",
+      "PF11-8C4J", "PF11-3F9Q", "PF11-5S7Z", "PF11-9G2Y", "PF11-4E6A", "PF11-7K3U", "PF11-2X8M", "PF11-6R5P", "PF11-8N4B", "PF11-3D9W"
+    ];
+
+    const ROLE_CONFIG = {
+      GM: { name: "Guarda Municipal (GM)", count: 10 },
+      AP: { name: "Agente Policial (AP)", count: 15 },
+      TO: { name: "Tático Operacional (TO)", count: 15 },
+      ES: { name: "Escrivão Policial", count: 15 }
+    };
+
+    // =========================================================================
+    // BANCO DE QUESTÕES (GM: 20 | AP: 30 | TO: 30 | ES: 30)
+    // =========================================================================
+    const QUESTION_BANK = {
+      GM: [
+        { id: "GM1", d: "Fácil", q: "Qual é a principal função do Guarda Municipal (GM) na corporação?", o: ["Garantir a recepção do servidor, organização, apoio e informações aos jogadores, mantendo um ambiente saudável.", "Realizar patrulhamento tático ostensivo e prisões de alta periculosidade.", "Emitir mandados de busca e revogar licenças de armamento.", "Substituir o Delegado na comunicação com outras organizações."], a: 0 },
+        { id: "GM2", d: "Fácil", q: "No Código Q, o que significa a sigla 'QAP'?", o: ["Na escuta.", "Entendido.", "Aguarde.", "Endereço ou local."], a: 0 },
+        { id: "GM3", d: "Fácil", q: "No Código Q, qual sigla deve ser usada para dizer 'Entendido'?", o: ["QSL", "QRX", "QTA", "QTH"], a: 0 },
+        { id: "GM4", d: "Fácil", q: "O que significa a regra 4.15 da Bíblia RP chamada 'MIX'?", o: ["Misturar assuntos ou informações de fora do RP com acontecimentos de dentro do RP, quebrando a imersão.", "Matar um jogador assim que encontrá-lo sem motivo.", "Usar armas em locais públicos como hospital e praças.", "Causar danos a veículos públicos sem motivo."], a: 0 },
+        { id: "GM5", d: "Fácil", q: "Quando um GM deve iniciar seu turno?", o: ["Quando a equipe estiver pronta para atender os jogadores.", "Apenas quando o Delegado entrar na cidade.", "Somente após realizar uma prisão.", "Apenas no horário do banho de sol."], a: 0 },
+        { id: "GM6", d: "Fácil", q: "Qual é o tripé/lema de atuação estampado no manual do Guarda Municipal?", o: ["Recepção, Organização e Suporte.", "Força, Estratégia e Controle.", "Apenas Patrulha e Prisão.", "Comando, Punição e Fiscalização."], a: 0 },
+        { id: "GM7", d: "Fácil", q: "No Código Q, o que significa a sigla 'TKS' e a sigla 'QAR'?", o: ["Obrigado e Desligar.", "Aguarde e Motorista.", "Viatura e Localização.", "Escutou-me? e Horário exato."], a: 0 },
+        { id: "GM8", d: "Médio", q: "No Código Q, o que significam respectivamente 'QTH' e 'QSV'?", o: ["Endereço/local/posição e Viatura.", "Horário exato e Motorista.", "Aguarde e Dinheiro/pagamento.", "Obrigado e Interferência na comunicação."], a: 0 },
+        { id: "GM9", d: "Médio", q: "Caso um civil chegue à recepção perguntando sobre recrutamento, qual deve ser a conduta do GM?", o: ["Informar todas as orientações disponíveis sobre o processo de recrutamento da Guarda Municipal, seguindo as regras do servidor.", "Ignorar e mandar procurar no hospital.", "Aplicar uma multa por atrapalhar o serviço.", "Levar o civil imediatamente para dentro das celas."], a: 0 },
+        { id: "GM10", d: "Médio", q: "Na Bíblia RP (regra 4.10), o que caracteriza a infração 'SAAV (Sem Amor à Vida)'?", o: ["Agir sem valorizar a própria vida dentro do jogo, escolhendo morrer em vez de cooperar com uma ação.", "Matar integrantes da própria facção sem motivo válido.", "Ofender ou insultar outros jogadores durante o RP.", "Utilizar múltiplas contas para transferir dinheiro."], a: 0 },
+        { id: "GM11", d: "Médio", q: "Qual sigla do Código Q significa 'Aguarde' e qual significa 'Cancelar a última mensagem?'", o: ["QRX e QTA", "QRU e QSO", "QRA e QRT", "QSN e QSR"], a: 0 },
+        { id: "GM12", d: "Médio", q: "Segundo a regra 4.19 da Bíblia RP, o que é 'NRA (Non Roleplay Ambiente)'?", o: ["Utilizar armas em locais públicos, como hospital, delegacia, prefeitura, igrejinha, igreja, leilões, locais de trabalho e praças.", "Invadir corporações sem autorização da Administração.", "Executar ações de forma diferente das regras.", "Permanecer ao redor de mansões de jogadores para forçar ação."], a: 0 },
+        { id: "GM13", d: "Médio", q: "Sobre 'Pausar Turno' e 'Despausar Turno' no manual do GM, quando cada ação deve ocorrer?", o: ["Pausar quando for necessário seguindo a organização do servidor; despausar quando o atendimento puder ser retomado normalmente.", "Pausar apenas no final do dia e nunca despausar.", "Pausar sem seguir organização sempre que um civil perguntar algo.", "Apenas o Delegado pode pausar ou despausar o turno do GM."], a: 0 },
+        { id: "GM14", d: "Médio", q: "No Código Q, o que significam 'QRA' e 'QRL'?", o: ["Nome do operador (indicativo) e Você está ocupado?", "Motorista e Dinheiro.", "Qual sua distância? e Devo repetir?", "Comunicado/aviso e Fazer ponte."], a: 0 },
+        { id: "GM15", d: "Difícil", q: "Um advogado chega à recepção perguntando se pode liberar um preso. Qual comunicação inicial (Padrão PS) o GM deve enviar?", o: ["/f PS : Algum preso está precisando de advogado?", "/m Algum detento quer advogado?", "/d Tem advogado na porta do PS.", "/su Advogado aguardando na recepção."], a: 0 },
+        { id: "GM16", d: "Difícil", q: "Confirmado que há preso aguardando, qual é a comunicação exata via /f que o GM deve enviar sobre o advogado?", o: ["/f PS : O advogado [Nome do Advogado] está na QTI do PS para liberar o detento.", "/f PS : Liberem a cela para o advogado entrar.", "/f QTH do advogado na recepção.", "/f QRV advogado liberado."], a: 0 },
+        { id: "GM17", d: "Difícil", q: "Qual a diferença entre 'SK (Spawn Kill)' e 'KOS (Kill on Sight)' na Bíblia RP?", o: ["SK é matar ou causar dano em locais de spawn; KOS é matar outro jogador simplesmente ao encontrá-lo, sem motivo ou desenvolvimento válido de RP.", "SK é matar aliados; KOS é matar em local de trabalho.", "SK é matar após perder a memória; KOS é matar usando veículo.", "Ambos significam a mesma coisa e têm punição de 20 minutos."], a: 0 },
+        { id: "GM18", d: "Difícil", q: "O que significa 'AAP (Atrapalhar Ação Propositalmente)' na regra 4.17 da Bíblia RP e qual sua punição?", o: ["Interferir intencionalmente em uma ação em andamento (ex: batendo em jogadores, gritando no VOIP, floodando chat) — Punição: Prisão de 60 minutos / Banimento de 1 a 3 dias.", "Causar dano a veículos públicos — Punição: Chute / Prisão de 30 minutos.", "Ensinar comandos incorretos — Punição: Warn.", "Ir para zona segura durante ação — Punição: Ban de 10 dias."], a: 0 },
+        { id: "GM19", d: "Difícil", q: "No Código Q, o que significam 'QRM', 'QRN' e 'QRT', respectivamente?", o: ["Interferência humana?, Interferência na comunicação? e Parar de transmitir fora do ar.", "Motorista, Viatura e Obrigado.", "Transmita mais depressa, Transmita mais devagar e Repetir mensagem.", "Quem está me chamando?, Qual sua distância? e Estou ocupado."], a: 0 },
+        { id: "GM20", d: "Difícil", q: "Na Bíblia RP, o que caracterizam as regras 'DMA (4.18)' e 'TK (4.9)'?", o: ["DMA é causar danos a veículos públicos ou pessoais sem motivo; TK é matar ou causar dano a integrantes da própria facção ou aliadas sem motivo válido.", "DMA é matar em local de spawn; TK é falar fora do RP.", "DMA é usar arma no hospital; TK é fugir de abordagem.", "DMA é desrespeitar a fila da recepção; TK é usar múltiplas contas."], a: 0 }
+      ],
+
+      AP: [
+        { id: "AP1", d: "Fácil", q: "Qual é o tripé da patente de Agente Policial (AP) e quais patentes superiores ele auxilia diretamente?", o: ["Base, Apoio e Compromisso; auxilia Tático, Escrivão e Delegado.", "Força, Estratégia e Controle; auxilia apenas o Comandante Geral.", "Organização, Liderança e Informação; auxilia apenas o GM.", "Honra, Lealdade e Justiça; auxilia apenas o Escrivão."], a: 0 },
+        { id: "AP2", d: "Fácil", q: "Além de auxiliar seus superiores, qual responsabilidade de instrução o Agente Policial possui?", o: ["Treinar e instruir a patente de GM, pois já passou por essa patente e possui o conhecimento necessário.", "Aplicar avisos disciplinares em Delegados.", "Autorizar gravações da mídia sozinho.", "Revogar licenças de armas de Táticos."], a: 0 },
+        { id: "AP3", d: "Fácil", q: "Qual comando policial é utilizado para mostrar sua identificação policial ao jogador?", o: ["/ide [ID]", "/wanted", "/proc [ID]", "/su [ID]"], a: 0 },
+        { id: "AP4", d: "Fácil", q: "Quais são os dois crimes classificados como '1 Estrela (Infrações Leves)' na Tabela de Crimes?", o: ["Tentativa de fuga (TDF - art. 351) e Agressão (art. 129).", "Desacato e Homicídio.", "Roubo de veículo e Invasão de propriedade.", "Porte ilegal de armas e Tráfico de drogas."], a: 0 },
+        { id: "AP5", d: "Fácil", q: "O que significa o código 'QSD' e o código 'QSJ' no Código Q?", o: ["Motorista e Dinheiro/pagamento.", "Viatura e Multa.", "Obrigado e Aguarde.", "Localização e Horário."], a: 0 },
+        { id: "AP6", d: "Fácil", q: "Qual comando é utilizado para colocar o criminoso dentro da cela e qual comando remove as algemas?", o: ["/arrest [ID] e /uncuff [ID]", "/put e /stay", "/clear [ID] e /follow [ID]", "/ticket [ID] e /pullmask"], a: 0 },
+        { id: "AP7", d: "Médio", q: "Em quais três frentes principais de serviço o Agente Policial deve atuar conforme seu manual?", o: ["Serviço no HP (Hospital), Serviço na Mídia e Serviço no PS (Posto de Segurança).", "Escolta de valores, Perícia criminal e Pilotagem de helicóptero.", "Apenas blitz de trânsito, leilões e prefeitura.", "Recrutamento exclusivo, controle de arsenal e punição de oficiais."], a: 0 },
+        { id: "AP8", d: "Médio", q: "Qual comando é usado para emitir um mandado de busca para um suspeito e qual comando remove esse mandado?", o: ["/su [ID] [crime] [motivo] e /clear [ID]", "/cuff [ID] e /uncuff [ID]", "/follow [ID] e /stay", "/arrest [ID] e /ticket [ID]"], a: 0 },
+        { id: "AP9", d: "Médio", q: "Na Tabela de Crimes, qual a sigla e a quantidade de estrelas para 'Desobediência à ordem policial (art. 330)'?", o: ["DOP — 2 estrelas", "TDF — 1 estrela", "TDH — 3 estrelas", "ADA — 5 estrelas"], a: 0 },
+        { id: "AP10", d: "Médio", q: "Qual comando coloca algemas no criminoso e qual comando o coloca dentro do carro patrulha?", o: ["/cuff [ID] e /put", "/follow [ID] e /proc [ID]", "/pullmask e /stay", "/arrest [ID] e /put"], a: 0 },
+        { id: "AP11", d: "Médio", q: "Na Bíblia RP (regra 4.13), o que acontece após um 'PK (Player Kill)'?", o: ["O jogador perde toda a memória relacionada à pessoa que o matou e aos acontecimentos que levaram à sua morte, sendo proibido usar essas informações.", "O jogador pode voltar imediatamente ao local para se vingar.", "O jogador deve pagar uma multa de 60 minutos ao médico.", "O jogador perde o cargo automaticamente."], a: 0 },
+        { id: "AP12", d: "Médio", q: "Na Tabela de Crimes, quais infrações abaixo pertencem à categoria de '2 Estrelas (Infrações Moderadas)'?", o: ["Apologia ao crime (AAC), Lavagem de dinheiro (LDD) e Roubo de veículo (RDV).", "Tráfico de drogas (TDD), Porte ilegal de armas (PIA) e Tentativa de homicídio (TDH).", "Desacato, Assédio e Homicídio.", "Suborno, Corrupção e Estelionato."], a: 0 },
+        { id: "AP13", d: "Médio", q: "Qual comando é utilizado para falar no megafone do carro de serviço durante uma abordagem ou acompanhamento?", o: ["/m [texto]", "/f [texto]", "/d [texto]", "/proc [ID]"], a: 0 },
+        { id: "AP14", d: "Médio", q: "O que significa 'RPFW (Roleplay For The Win)' na regra 4.14 da Bíblia RP?", o: ["Desenvolver um RP buscando apenas o próprio benefício, ignorando consequências ou a lógica da vida real (ex: ir para zona segura durante ação).", "Causar dano a veículos públicos ou pessoais sem motivo.", "Misturar assuntos fora do RP dentro do jogo.", "Matar integrantes da própria corporação."], a: 0 },
+        { id: "AP15", d: "Médio", q: "No serviço no PS (Posto de Segurança), qual é a atribuição do Agente Policial conforme o manual?", o: ["Auxiliar no controle de detentos, na segurança do local e nas demandas do dia a dia.", "Assumir o comando total do servidor no lugar do Delegado.", "Liberar presos sem autorização do Tático ou Escrivão.", "Apenas permanecer no estacionamento."], a: 0 },
+        { id: "AP16", d: "Difícil", q: "Durante uma condução a pé até a cela, você usa /follow [ID] para guiar o detento. Qual comando você utiliza para parar de guiá-lo antes de efetuar a prisão com /arrest [ID]?", o: ["/stay", "/uncuff [ID]", "/clear [ID]", "/pullmask"], a: 0 },
+        { id: "AP17", d: "Difícil", q: "Um suspeito está usando máscara e se recusa a tirá-la durante a identificação. Qual comando o policial deve executar e qual comando verifica a lista de criminosos não capturados?", o: ["/pullmask e /wanted", "/clear [ID] e /proc [ID]", "/ide [ID] e /revokelic [ID]", "/pullmask e /su"], a: 0 },
+        { id: "AP18", d: "Difícil", q: "Na Tabela de Crimes, qual a diferença de estrelas e artigos entre 'Tentativa de homicídio (TDH)' e 'Homicídio'?", o: ["TDH é 3 estrelas (art. 121) e Homicídio é 4 estrelas (art. 121).", "Ambos são 3 estrelas, art. 121.", "TDH é 2 estrelas (art. 129) e Homicídio é 5 estrelas (art. 121).", "TDH é 4 estrelas e Homicídio é 6 estrelas."], a: 0 },
+        { id: "AP19", d: "Difícil", q: "Um cidadão ofende verbalmente um policial em serviço. Qual é o crime, o artigo e a quantidade de estrelas na Tabela de Crimes?", o: ["Desacato — art. 331 — 4 estrelas.", "Agressão — art. 129 — 1 estrela.", "Desobediência à ordem policial (DOP) — art. 330 — 2 estrelas.", "Abuso de autoridade (ADA) — art. 4 — 5 estrelas."], a: 0 },
+        { id: "AP20", d: "Difícil", q: "Na Tabela de Crimes, quais infrações correspondem às siglas 'DDV', 'IDP' e 'ODSF', respectivamente?", o: ["Desmanche de veículos ilegal (2★), Invasão de propriedade (2★) e Obtenção de dinheiro sujo/falso (3★).", "Direção perigosa (1★), Identificação falsa (2★) e Omissão de socorro (3★).", "Desacato (4★), Infração de trânsito (1★) e Ordem ilegal (5★).", "Dano ao patrimônio (2★), Invasão não autorizada (4★) e Obstrução de justiça (3★)."], a: 0 },
+        { id: "AP21", d: "Difícil", q: "Qual comando aceita a chamada de uma pessoa em um carro de serviço e qual comando emite uma multa?", o: ["/proc [ID] e /ticket [ID] [quantia]", "/put e /su [ID]", "/ide [ID] e /clear [ID]", "/wanted e /revokelicense [ID]"], a: 0 },
+        { id: "AP22", d: "Difícil", q: "Qual a diferença entre 'DMA (4.18)' e 'AI (4.20)' na Bíblia RP?", o: ["DMA é causar danos a veículos públicos ou pessoais sem motivo; AI (Ação Irregular) é invadir ou permanecer ao redor de propriedades privadas (casas/mansões) para forçar ação.", "DMA é matar em local de spawn; AI é invadir corporação sem autorização.", "DMA é usar arma no hospital; AI é ensinar comandos incorretos.", "DMA é misturar OOC no IC; AI é fugir para zona segura."], a: 0 },
+        { id: "AP23", d: "Difícil", q: "Na Bíblia RP (regra 4.8), o que caracteriza 'SK (Spawn Kill)' e qual é sua punição?", o: ["Matar ou causar dano a jogadores em locais de spawn, independentemente da facção ou organização — Punição: Prisão por 60 minutos ou banimento de 1 a 5 dias.", "Matar aliados — Punição: Prisão de 20 minutos.", "Atropelar veículos públicos — Punição: Chute.", "Sair do RP durante abordagem — Punição: Warn."], a: 0 },
+        { id: "AP24", d: "Difícil", q: "Em relação às responsabilidades gerais do Agente Policial, como ele deve atuar junto às três patentes superiores?", o: ["Auxiliar o Tático nas operações, auxiliar o Escrivão nos procedimentos e auxiliar o Delegado nas demandas.", "Apenas acompanhar o Delegado e ignorar solicitações do Tático.", "Substituir o Escrivão na aplicação de avisos a Táticos.", "Comandar operações sem comunicar Tático ou Escrivão."], a: 0 },
+        { id: "AP25", d: "Muito Difícil", q: "Na Tabela de Crimes, qual a classificação (estrelas) e o artigo de 'Tráfico de drogas (TDD)' e 'Tráfico de armas (TDA)'?", o: ["Ambos são 3 estrelas — TDD (art. 33) e TDA (art. 18).", "Ambos são 2 estrelas — art. 33 e art. 18.", "TDD é 3 estrelas (art. 33) e TDA é 4 estrelas (art. 18).", "Ambos são 5 estrelas — crimes hediondos."], a: 0 },
+        { id: "AP26", d: "Muito Difícil", q: "O que significa 'EC (4.23)' na Bíblia RP?", o: ["Ensino de Comandos Incorretos — ato de ensinar comandos incorretos a outros jogadores com o intuito de se beneficiar.", "Execução em Combate.", "Evasão de Controle policial.", "Erro de Comunicação no rádio."], a: 0 },
+        { id: "AP27", d: "Muito Difícil", q: "No Código Q, o que significam 'QSA', 'QSM' e 'QSP'?", o: ["Como está recebendo / qual a força do sinal?, Devo repetir a última mensagem? e Fazer ponte / pode transmitir para...", "Tem algo para mim?, Às ordens e Aguarde.", "Qual o horário exato?, Em qual horário irá operar? e Que horas saiu?", "Comunicado/aviso, Tem mensagem para enviar? e Você tem notícias de..."], a: 0 },
+        { id: "AP28", d: "Muito Difícil", q: "Durante o serviço no HP (Hospital) e na Mídia, qual é o papel específico do Agente Policial?", o: ["No HP: garantir segurança, auxiliar no controle e manter a ordem nos atendimentos; na Mídia: auxiliar na segurança, organização e suporte durante gravações, entrevistas e eventos.", "No HP: realizar atendimentos médicos; na Mídia: editar vídeos e publicar no jornal.", "No HP: prender médicos sem licença; na Mídia: proibir qualquer gravação na cidade.", "Apenas ficar dentro da viatura aguardando chamado no /proc."], a: 0 },
+        { id: "AP29", d: "Muito Difícil", q: "Se um indivíduo comete 'Porte ilegal de armas (PIA)' e 'Multas pendentes (MP)', quais são as respectivas pontuações de estrelas na Tabela de Crimes?", o: ["PIA = 3 estrelas e MP = 2 estrelas.", "PIA = 2 estrelas e MP = 1 estrela.", "PIA = 4 estrelas e MP = 2 estrelas.", "PIA = 3 estrelas e MP = 3 estrelas."], a: 0 },
+        { id: "AP30", d: "Muito Difícil", q: "Qual comando revoga as licenças de um jogador e qual a punição na Bíblia RP para 'FAIL (4.22 - Ação Falha)'?", o: ["/revokelicense (revokelic) [ID] — Punição de FAIL: Prisão de 60 minutos / Ban 3–5 dias / Warn.", "/clear [ID] — Punição de FAIL: Prisão de 20 minutos.", "/ticket [ID] — Punição de FAIL: Chute do servidor.", "/pullmask — Punição de FAIL: Ban permanente."], a: 0 }
+      ],
+
+      TO: [
+        { id: "TO1", d: "Fácil", q: "Qual é o lema operacional do Tático Operacional (TO) no Rio Rise?", o: ["Força, Estratégia, Controle e Resultados.", "Base, Apoio e Compromisso.", "Recepção, Organização e Suporte.", "Planejar, Redigir e Arquivar."], a: 0 },
+        { id: "TO2", d: "Fácil", q: "Quais patentes o Tático Operacional é responsável por instruir e orientar conforme o manual de 'Instrução e Treinamento'?", o: ["As patentes abaixo de seu cargo: Agente e GM.", "Apenas Escrivães e Delegados.", "Apenas civis recém-chegados na cidade.", "Comandante Geral e Administração."], a: 0 },
+        { id: "TO3", d: "Fácil", q: "Segundo as regras do 'QTH do PS - Controle de Detentos', qual é a duração e o horário permitido para o banho de sol dos detentos?", o: ["10 minutos, no horário das 08h às 18h.", "15 minutos, das 06h às 20h.", "20 minutos, a qualquer hora do dia ou da noite.", "5 minutos, apenas às 12h."], a: 0 },
+        { id: "TO4", d: "Fácil", q: "Qual é o tempo de ligação telefônica a que todo detento tem direito no PS?", o: ["5 minutos.", "2 minutos.", "10 minutos.", "15 minutos."], a: 0 },
+        { id: "TO5", d: "Fácil", q: "Qual comando é utilizado para revogar as licenças de um jogador (como licença de arma) durante o procedimento no PS?", o: ["/revokelicense [ID] (ou /revokelic [ID])", "/clear [ID]", "/pullmask", "/ticket [ID]"], a: 0 },
+        { id: "TO6", d: "Fácil", q: "No item 'Apoio às Patentes' do manual do Tático Operacional, com quais patentes ele deve trabalhar em conjunto?", o: ["Agente, GM e demais patentes acima de seu cargo (Escrivão e Delegado).", "Apenas com outros Táticos Operacionais.", "Exclusivamente com a Administração.", "Apenas com advogados e jornalistas."], a: 0 },
+        { id: "TO7", d: "Médio", q: "Sobre o direito a advogado no PS, quais são as duas condições obrigatórias descritas no manual do Tático Operacional?", o: ["O detento tem direito a advogado caso não seja preso por Administração, e o advogado só poderá ser liberado se o detento estiver comportado dentro da cela.", "Qualquer preso (inclusive preso por Admin) tem direito imediato, mesmo desrespeitando os policiais.", "Apenas detentos de 1 estrela têm direito a advogado, após pagar fiança ao Tático.", "O advogado só pode entrar entre 08h e 18h."], a: 0 },
+        { id: "TO8", d: "Médio", q: "No controle de detentos no QTH do PS, quais são as 5 responsabilidades listadas para o Tático Operacional?", o: ["Manter segurança/controle dos detentos; realizar revistas; revogar licença de arma (quando necessário); garantir segurança dos detentos e companheiros; levar detentos para alimentação.", "Aplicar banimento; editar tabela de crimes; cobrar impostos; dirigir ambulância; limpar celas.", "Apenas ficar na porta do PS sem revistar ninguém.", "Liberar todos os presos às 18h; devolver armas apreendidas; dar carona até a praça."], a: 0 },
+        { id: "TO9", d: "Médio", q: "Na função de 'Patrulhamento', o que compete diretamente ao Tático Operacional?", o: ["Responsabilidade direta sobre os patrulhamentos: planejar e coordenar rotas, garantir presença policial nas ruas, orientar/instruir a equipe durante as ações e manter a cidade segura.", "Apenas ficar parado na recepção aguardando o GM chamar.", "Delegar todas as rotas para os Guardas Municipais.", "Patrulhar exclusivamente dentro do Hospital."], a: 0 },
+        { id: "TO10", d: "Médio", q: "Na Tabela de Crimes, quais infrações pertencem à categoria de '4 Estrelas (Infrações Muito Graves)'?", o: ["Assédio (art. 215-A), Desacato (art. 331) e Homicídio (art. 121).", "Sequestro, Racismo e Estupro.", "Suborno, Corrupção e Estelionato.", "Tráfico de armas, Tráfico de drogas e Porte ilegal."], a: 0 },
+        { id: "TO11", d: "Médio", q: "Na Bíblia RP (regra 4.21), o que é 'INA (Invasão Não Autorizada)' e qual sua punição?", o: ["Invadir locais como organizações criminosas ou corporações sem autorização prévia da Administração — Punição: Ban de 30 dias.", "Invadir a casa de um civil — Punição: Prisão de 20 minutos.", "Entrar na viatura sem permissão — Punição: Chute.", "Entrar no hospital armado — Punição: Warn."], a: 0 },
+        { id: "TO12", d: "Médio", q: "Qual a diferença entre 'TK (4.9)' e 'FAIL (4.22)' na Bíblia RP?", o: ["TK (Team Kill) é matar ou causar dano a integrantes da própria facção ou aliadas sem motivo válido; FAIL (Ação Falha) é executar ações de forma diferente do que está estabelecido nas regras.", "TK é usar veículo para matar; FAIL é cair da viatura.", "TK é falar fora do RP; FAIL é esquecer de ligar a sirene.", "Ambos têm punição permanente por IP."], a: 0 },
+        { id: "TO13", d: "Médio", q: "Na Tabela de Crimes, qual a pontuação de estrelas e o artigo para 'Suborno', 'Corrupção' e 'Estelionato'?", o: ["5 estrelas — Suborno (art. 363), Corrupção (art. 333) e Estelionato (art. 171).", "4 estrelas — art. 331, art. 330 e art. 129.", "3 estrelas — art. 33, art. 18 e art. 121.", "6 estrelas — crimes inafiançáveis sem artigo."], a: 0 },
+        { id: "TO14", d: "Médio", q: "No Código Q, o que significam 'QRU', 'QRV' e 'QRZ'?", o: ["Tem algo para mim?, Às ordens e Quem está me chamando?", "Aguarde, Entendido e Desligar.", "Qual sua distância?, Escutou-me? e Devo repetir?", "Transmita mais depressa, Transmita mais devagar e Fora do ar."], a: 0 },
+        { id: "TO15", d: "Médio", q: "Quais comandos são usados respectivamente para guiar o criminoso, parar de guiá-lo e removê-lo das algemas?", o: ["/follow [ID], /stay e /uncuff [ID]", "/put, /clear [ID] e /arrest [ID]", "/cuff [ID], /proc [ID] e /pullmask", "/su [ID], /stay e /ide [ID]"], a: 0 },
+        { id: "TO16", d: "Difícil", q: "Um suspeito rouba uma viatura policial/ambulância (veículo emergencial) e comete atentado ao pudor. Na Tabela de Crimes, quais são as siglas e quantas estrelas cada crime possui?", o: ["ROVE (Roubo de veículo emergencial - 5 estrelas) e AAP (Atentado ao pudor - 5 estrelas).", "RDV (2 estrelas) e Assédio (4 estrelas).", "DDV (2 estrelas) e DOP (2 estrelas).", "TDF (1 estrela) e ADA (5 estrelas)."], a: 0 },
+        { id: "TO17", d: "Difícil", q: "Qual crime de 5 estrelas na Tabela de Crimes corresponde ao 'art. 4' e qual sua sigla?", o: ["ADA — Abuso de autoridade.", "AAP — Atentado ao pudor.", "ROVE — Roubo de veículo emergencial.", "Estelionato — art. 4."], a: 0 },
+        { id: "TO18", d: "Difícil", q: "Em uma operação tática de captura de foragido com máscara, qual a sequência lógica correta de comandos desde a abordagem até o encarceramento na cela?", o: ["/su -> /cuff -> /pullmask -> /put -> (no PS) /follow -> /stay -> /arrest", "/arrest -> /cuff -> /put -> /clear -> /ticket", "/uncuff -> /stay -> /wanted -> /ide", "/proc -> /m -> /clear -> /arrest"], a: 0 },
+        { id: "TO19", d: "Difícil", q: "No 'Serviço na Mídia' (ex: Rio Rise News), quais são as atribuições do Tático Operacional?", o: ["Dar suporte nas gravações, entrevistas e eventos; garantir a segurança da equipe; manter a organização do local; apoiar na cobertura de operações e comunicados oficiais.", "Apenas autorizar ou proibir entrevistas no lugar do Delegado.", "Fazer perguntas aos entrevistados e operar a câmera.", "Multar jornalistas que se aproximarem de viaturas."], a: 0 },
+        { id: "TO20", d: "Difícil", q: "Quais são os 8 'Princípios do Tático' listados no manual da patente?", o: ["Disciplina, Estratégia, Organização, Respeito, Trabalho em equipe, Compromisso, Liderança e Evolução contínua.", "Força bruta, Silêncio, Rapidez, Sigilo, Hierarquia, Punição, Vigilância e Controle.", "Recepção, Apoio, Informação, Cordialidade, Paciência, Ordem, Foco e Serviço.", "Planejamento, Redação, Arquivo, Escuta, Comando, Fiscalização, Honra e Lealdade."], a: 0 },
+        { id: "TO21", d: "Difícil", q: "Na Tabela de Crimes, quais infrações são classificadas como '6 Estrelas (Crimes Gravíssimos)'?", o: ["Sequestro (art. 148), Racismo, Estupro e Discriminação por orientação sexual (DPOS).", "Homicídio, Sequestro, Latrocínio e Corrupção.", "Tráfico de armas, Sequestro, Desacato e Suborno.", "Racismo, Homicídio, Abuso de autoridade e Estelionato."], a: 0 },
+        { id: "TO22", d: "Difícil", q: "Segundo a regra 4.16 da Bíblia RP ('Múltiplas contas para transferência de dinheiro'), qual é a punição prevista para quem cria ou utiliza várias contas para transferir dinheiro, obter vantagens ou sabotar eventos/guerras?", o: ["Banimento de 30 dias / Banimento por IP / Permanente.", "Prisão de 60 minutos.", "Banimento de 1 a 3 dias.", "Multa administrativa e perda de cargo."], a: 0 },
+        { id: "TO23", d: "Difícil", q: "Na Tabela de Crimes, o que significa a sigla 'DPOS' e quantas estrelas ela gera?", o: ["Discriminação por orientação sexual — 6 estrelas (Crimes Gravíssimos).", "Desobediência policial ostensiva — 2 estrelas.", "Desmanche público ou clandestino — 3 estrelas.", "Danos ao patrimônio oficial — 4 estrelas."], a: 0 },
+        { id: "TO24", d: "Difícil", q: "Na Bíblia RP, qual a regra aplicável a um jogador que, após sofrer 'PK (4.13)', retorna à delegacia cobrando satisfação do policial que participou da ação anterior?", o: ["Ele violou o PK, pois após a morte do personagem o jogador perde toda a memória relacionada à pessoa que o matou e aos acontecimentos que levaram à morte.", "É permitido retornar desde que use máscara.", "Apenas caracteriza MIX se ele falar no chat OOC.", "É permitido se esperar 5 minutos no hospital."], a: 0 },
+        { id: "TO25", d: "Muito Difícil", q: "Durante uma ocorrência no PS, um detento está xingando os policiais e chutando a grade da cela. Um advogado chega pedindo para liberá-lo. Como o Tático Operacional deve agir?", o: ["Negar a liberação do advogado naquele momento, pois o manual estabelece que o advogado só poderá ser liberado se o detento estiver comportado dentro da cela.", "Liberar o advogado imediatamente, pois todo preso tem direito irrestrito.", "Aplicar /clear no detento para acalmá-lo.", "Colocar o detento no banho de sol às 21h para ele esfriar a cabeça."], a: 0 },
+        { id: "TO26", d: "Muito Difícil", q: "No Código Q, diferencie os códigos de horário e tempo: 'QTR', 'QTU' e 'QTN'.", o: ["QTR = Qual o horário exato?; QTU = Em qual horário irá operar?; QTN = Que horas saiu?", "QTR = Que horas saiu?; QTU = Qual o horário exato?; QTN = Em qual horário irá operar?", "QTR = Tempo de prisão; QTU = Turno encerrado; QTN = Tempo de deslocamento.", "QTR = Aguarde; QTU = Desligar; QTN = Transmita mais devagar."], a: 0 },
+        { id: "TO27", d: "Muito Difícil", q: "Na regra 4.11 da Bíblia RP ('Flaming RP'), o que é proibido e qual a variação de punição prevista?", o: ["Utilizar ofensas, insultos ou discursos de ódio direcionados a outros jogadores durante o RP — Punição: Prisão e mute de 60 minutos ou banimento de 1 a 30 dias (conforme a gravidade).", "Gritar no VOIP durante abordagem — Punição: Chute do servidor.", "Usar termos em inglês no chat — Punição: Prisão de 20 minutos.", "Discutir regras no Discord — Punição: Banimento permanente."], a: 0 },
+        { id: "TO28", d: "Muito Difícil", q: "Um jogador invadiu uma corporação sem autorização da Administração (INA) e, ao ser abordado, puxou arma dentro do hospital (NRA). Quais são as respectivas punições previstas na Bíblia RP para essas duas infrações?", o: ["INA = Ban de 30 dias; NRA = Prisão de 20 minutos.", "INA = Ban de 10 dias; NRA = Prisão de 60 minutos.", "INA = Prisão de 60 minutos; NRA = Ban de 3 dias.", "Ambas resultam apenas em Warn."], a: 0 },
+        { id: "TO29", d: "Muito Difícil", q: "No Serviço no HP (Hospital), qual a postura exigida do Tático Operacional em relação às demais patentes?", o: ["Garantir total segurança e organização do HP, atuar juntamente com Agente e patentes acima, controlar o fluxo de pessoas e evitar tumultos.", "Atuar isoladamente sem comunicar o PS.", "Subordinar-se operacionalmente aos Guardas Municipais no local.", "Aplicar /revokelic em todos os civis que entrarem no hospital."], a: 0 },
+        { id: "TO30", d: "Muito Difícil", q: "Um detento foi preso pela Administração e solicita advogado no PS; outro detento comum pede banho de sol às 19h30. Quais pedidos devem ser negados pelo Tático?", o: ["Ambos devem ser negados: preso por Administração não tem direito a advogado, e o banho de sol é permitido apenas das 08h às 18h.", "Apenas o pedido de advogado; o banho de sol pode ocorrer às 19h30.", "Apenas o banho de sol; preso por Administração tem direito a advogado.", "Nenhum deve ser negado; ambos devem ser liberados imediatamente."], a: 0 }
+      ],
+
+      ES: [
+        { id: "ES1", d: "Fácil", q: "Qual é o lema institucional da patente de Escrivão Policial?", o: ["Organização, Coordenação, Disciplina e Resultados.", "Base, Apoio e Compromisso.", "Força, Estratégia, Controle e Resultados.", "Recepção, Informação e Suporte."], a: 0 },
+        { id: "ES2", d: "Fácil", q: "Em relação à hierarquia, qual é a responsabilidade central do Escrivão Policial sobre o efetivo?", o: ["Coordenar e organizar todo o efetivo abaixo dele, manter as hierarquias e a disciplina, e informar sobre as QTHs.", "Apenas cuidar da recepção quando não houver GM.", "Comandar exclusivamente as viaturas de trânsito.", "Subordinar-se ao Agente Policial durante operações."], a: 0 },
+        { id: "ES3", d: "Fácil", q: "Qual comando o Escrivão Policial está autorizado a usar na ausência de um Delegado para responder às outras organizações?", o: ["/D", "/m", "/f", "/proc"], a: 0 },
+        { id: "ES4", d: "Fácil", q: "Qual é a obrigação do Escrivão Policial nos 'carregamentos' durante o seu turno?", o: ["Estar presente no seu turno nos carregamentos para coordenar e organizar toda a equipe, garantindo o alinhamento e o bom início das operações.", "Ficar ausente para organizar documentos externos.", "Delegar o alinhamento exclusivamente aos Guardas Municipais.", "Liberar o efetivo sem alinhamento prévio."], a: 0 },
+        { id: "ES5", d: "Fácil", q: "Como funciona a 'Aplicação de Avisos' pelo Escrivão Policial caso veja algum guerreiro cometendo erros?", o: ["O Escrivão poderá estar aplicando aviso e informando ao superior responsável pelo turno.", "O Escrivão deve aplicar banimento imediato.", "O Escrivão deve ignorar e esperar o fim do mês.", "O Escrivão deve multar o policial com /ticket."], a: 0 },
+        { id: "ES6", d: "Fácil", q: "No Posto de Segurança (PS), quais são as 4 atribuições de responsabilidade do Escrivão Policial?", o: ["Manter a organização, garantir a segurança, coordenar o efetivo e acompanhar as operações.", "Apenas abrir e fechar as celas durante o banho de sol.", "Realizar entrevistas de TV dentro do PS.", "Substituir o GM na recepção durante todo o turno."], a: 0 },
+        { id: "ES7", d: "Médio", q: "Quais são as 4 atribuições do Escrivão Policial no 'Controle de Material'?", o: ["Fazer a verificação do material; controlar a distribuição; manter o registro atualizado; garantir o uso correto.", "Vender armamento excedente; distribuir armas a civis; guardar viaturas em casas privadas; zerar estoque.", "Comprar munição no mercado negro; revogar licenças de policiais; confiscar salários.", "Apenas trancar o arsenal e não liberar para nenhuma patente."], a: 0 },
+        { id: "ES8", d: "Médio", q: "Na gestão de 'Recrutamento' e 'Treinamentos', o que compete ao Escrivão Policial?", o: ["No Recrutamento: organizar o processo, informar orientações aos civis, avaliar e encaminhar novos integrantes e manter ambiente organizado. Nos Treinamentos: organizar/coordenar treinamentos, instruir GM e patentes abaixo, acompanhar desenvolvimento e garantir qualidade das instruções.", "Apenas assinar a ficha depois que o GM recrutar sozinho.", "Realizar treinamentos apenas para Delegados e Comandantes.", "Dispensar a avaliação de novos integrantes para ganhar tempo."], a: 0 },
+        { id: "ES9", d: "Médio", q: "Qual o diferencial de atuação do Escrivão Policial como 'Responsável pela Mídia'?", o: ["Autorizar e organizar gravações, garantir a segurança da equipe, acompanhar entrevistas e eventos e manter o controle e a ordem.", "O Escrivão não tem nenhuma responsabilidade sobre a Mídia.", "O Escrivão apenas dirige o carro da imprensa.", "O Escrivão proíbe todas as gravações na cidade."], a: 0 },
+        { id: "ES10", d: "Médio", q: "Na Tabela de Crimes, associe corretamente os artigos aos seguintes crimes: Agressão, Desobediência à ordem policial (DOP), Desacato e Suborno.", o: ["Art. 129, Art. 330, Art. 331 e Art. 363.", "Art. 351, Art. 121, Art. 33 e Art. 171.", "Art. 18, Art. 148, Art. 4 e Art. 333.", "Art. 215-A, Art. 129, Art. 363 e Art. 330."], a: 0 },
+        { id: "ES11", d: "Médio", q: "Qual comando é usado para remover um mandado de busca aplicado por engano a um cidadão e qual comando remove suas algemas?", o: ["/clear [ID] e /uncuff [ID]", "/stay e /pullmask", "/su [ID] e /cuff [ID]", "/wanted e /ide [ID]"], a: 0 },
+        { id: "ES12", d: "Médio", q: "Na Bíblia RP, qual é a punição prevista para 'AI (Ação Irregular - 4.20)' quando cometida individualmente e qual o agravante caso seja família em ação conjunta?", o: ["Ban de 10 dias; caso seja família em ação conjunta, sujeita a aviso / Ban IP.", "Prisão de 20 minutos; em família, prisão de 40 minutos.", "Ban de 30 dias; em família, banimento permanente.", "Apenas Warn verbal."], a: 0 },
+        { id: "ES13", d: "Médio", q: "Na Tabela de Crimes, quais crimes possuem 4 estrelas e quais possuem 5 estrelas?", o: ["4 estrelas: Assédio, Desacato e Homicídio. 5 estrelas: Suborno, Corrupção, Estelionato, Atentado ao pudor (AAP), Abuso de autoridade (ADA) e Roubo de veículo emergencial (ROVE).", "4 estrelas: Sequestro, Racismo e Estupro. 5 estrelas: Homicídio, Desacato e Tráfico de armas.", "4 estrelas: Tráfico de drogas, Porte ilegal e TDH. 5 estrelas: Lavagem de dinheiro, DDV e IDP.", "4 estrelas: Suborno e Corrupção. 5 estrelas: Assédio e Desacato."], a: 0 },
+        { id: "ES14", d: "Médio", q: "No Código Q, o que significam 'QTC', 'QSO' e 'QUA'?", o: ["Tem mensagem para enviar?, Comunicado/aviso e Você tem notícias de...", "Cancelar última mensagem?, Quem está me chamando? e Escutou-me?", "Transmita mais depressa, Transmita mais devagar e Interferência humana?", "Às ordens, Aguarde e Obrigado."], a: 0 },
+        { id: "ES15", d: "Médio", q: "Como 'Responsável pelo Patrulhamento', quais são as 4 ações atribuídas ao Escrivão Policial?", o: ["Coordenar as rotas, orientar a equipe, garantir a presença policial nas ruas e manter a cidade segura e o RP ativo.", "Proibir patrulhamentos durante o dia e concentrar todos na recepção.", "Dirigir sozinho sem acompanhar o restante da equipe.", "Apenas fiscalizar multas de trânsito pendentes."], a: 0 },
+        { id: "ES16", d: "Difícil", q: "Ao auxiliar o Delegado, quais são as 4 atribuições específicas descritas no manual do Escrivão Policial?", o: ["Dar suporte nas operações; auxiliar na tomada de decisões; substituir na ausência (quando necessário); manter a comunicação com outras orgs.", "Apenas lavar as viaturas e preencher o ponto dos GMs.", "Assumir o cargo de Comandante Geral permanentemente.", "Emitir banimentos administrativos no servidor."], a: 0 },
+        { id: "ES17", d: "Difícil", q: "Um suspeito cometeu 'Estelionato (art. 171)' e 'Lavagem de dinheiro (LDD)'. Qual o total acumulado de estrelas desses dois crimes na Tabela de Crimes?", o: ["7 estrelas (5 + 2).", "5 estrelas (3 + 2).", "6 estrelas (4 + 2).", "8 estrelas (5 + 3)."], a: 0 },
+        { id: "ES18", d: "Difícil", q: "Na Tabela de Crimes, qual crime de 6 estrelas possui artigo especificado e qual é esse artigo?", o: ["Sequestro — art. 148.", "Racismo — art. 140.", "Estupro — art. 213.", "DPOS — art. 5."], a: 0 },
+        { id: "ES19", d: "Difícil", q: "Qual a diferença exata de punição na Bíblia RP entre 'SK (4.8)' e 'TK (4.9)'?", o: ["SK: Prisão por 60 minutos ou banimento de 1 a 5 dias; TK: Prisão por 40 minutos ou banimento de 1 a 2 dias.", "SK: Prisão por 40 minutos ou banimento de 1 a 2 dias; TK: Prisão por 60 minutos ou banimento de 1 a 5 dias.", "Ambos têm punição de prisão de 20 minutos.", "SK: Ban de 30 dias; TK: Chute do servidor."], a: 0 },
+        { id: "ES20", d: "Difícil", q: "Um policial em serviço age com abuso de poder contra um civil e exige vantagem indevida para soltá-lo. Quais crimes da Tabela de Crimes (5 estrelas) ele cometeu e quais são seus respectivos artigos?", o: ["Abuso de autoridade (ADA - art. 4) e Corrupção (art. 333).", "Desacato (art. 331) e Estelionato (art. 171).", "Desobediência (art. 330) e Apologia ao crime (AAC).", "Assédio (art. 215-A) e Suborno (art. 363)."], a: 0 },
+        { id: "ES21", d: "Difícil", q: "No Código Q, diferencie 'QSM', 'QSR' e 'QSN'.", o: ["QSM = Devo repetir a última mensagem?; QSR = Devo repetir?; QSN = Escutou-me?", "QSM = Escutou-me?; QSR = Quem está me chamando?; QSN = Aguarde.", "QSM = Comunicado; QSR = Fazer ponte; QSN = Desligar.", "QSM = Viatura; QSR = Motorista; QSN = Dinheiro."], a: 0 },
+        { id: "ES22", d: "Difícil", q: "Durante uma ocorrência no HP (Hospital), qual é a função de liderança do Escrivão Policial?", o: ["Garantir a segurança, coordenar a equipe, organizar os atendimentos e manter a ordem no local.", "Ficar apenas na recepção anotando placas de ambulâncias.", "Realizar atendimento médico nos policiais feridos.", "Transferir todos os pacientes para o PS."], a: 0 },
+        { id: "ES23", d: "Difícil", q: "A sigla 'AAP' aparece tanto na Bíblia RP (4.17) quanto na Tabela de Crimes (5★). Qual o significado correto em cada documento?", o: ["Na Bíblia RP (4.17): Atrapalhar Ação Propositalmente; na Tabela de Crimes (5★): Atentado ao pudor.", "Em ambos os documentos significa Abuso de Autoridade Policial.", "Na Bíblia RP significa Atentado ao pudor; na Tabela de Crimes significa Agressão.", "Na Bíblia RP significa Ação Armada Proibida; na Tabela de Crimes significa Apologia."], a: 0 },
+        { id: "ES24", d: "Difícil", q: "Na Tabela de Crimes, qual a diferença de estrelas entre 'RDV' (Roubo de veículo) e 'ROVE' (Roubo de veículo emergencial)?", o: ["RDV são 2 estrelas (Infrações Moderadas) e ROVE são 5 estrelas (Crimes Hediondos e contra a Administração).", "RDV são 3 estrelas e ROVE são 4 estrelas.", "Ambos geram 4 estrelas.", "RDV é 1 estrela e ROVE são 6 estrelas."], a: 0 },
+        { id: "ES25", d: "Muito Difícil", q: "Na regra 4.14 da Bíblia RP ('RPFW - Roleplay For The Win'), são citados 4 exemplos claros de infração. Quais são eles?", o: ["Vender vagas ou benefícios em geral; ir para uma zona segura durante uma ação; utilizar regras para prejudicar outros jogadores ou obter vantagens; guardar veículos de trabalho em locais privados para obter vantagens.", "Matar em local de spawn; matar aliados; usar armas no hospital; insultar jogadores.", "Misturar chat OOC; ensinar comandos errados; bater em viaturas; floodar o VOIP.", "Invadir corporações sem autorização; rondar mansões; fugir da abordagem; não amar a vida."], a: 0 },
+        { id: "ES26", d: "Muito Difícil", q: "Um suspeito abordado estava mascarado, possuía mandado ativo, mas durante a revista verificou-se que houve erro na emissão do mandado anterior e ele tinha apenas multa pendente. Quais comandos você deve usar para: (1) tirar a máscara, (2) limpar o mandado anterior, (3) emitir o mandado correto de MP e (4) aplicar a multa?", o: ["/pullmask -> /clear [ID] -> /su [ID] MP [motivo] -> /ticket [ID] [quantia]", "/ide [ID] -> /uncuff [ID] -> /wanted -> /arrest [ID]", "/pullmask -> /revokelic [ID] -> /su [ID] PIA [motivo] -> /put", "/clear [ID] -> /stay -> /proc [ID] -> /ticket [ID]"], a: 0 },
+        { id: "ES27", d: "Muito Difícil", q: "No Código Q, qual a diferença entre 'QRQ' e 'QRS', e o que significa 'QRB'?", o: ["QRQ = Transmita mais depressa; QRS = Transmita mais devagar; QRB = Qual sua distância?", "QRQ = Qual sua distância?; QRS = Transmita mais depressa; QRB = Transmita mais devagar.", "QRQ = Quem está me chamando?; QRS = Às ordens; QRB = Obrigado.", "QRQ = Interferência humana; QRS = Interferência na comunicação; QRB = Fora do ar."], a: 0 },
+        { id: "ES28", d: "Muito Difícil", q: "Na Tabela de Crimes, compare 'Tentativa de fuga (TDF)' e 'Desobediência à ordem policial (DOP)': quais são seus artigos e quantas estrelas cada um gera?", o: ["TDF = art. 351 (1 estrela); DOP = art. 330 (2 estrelas).", "TDF = art. 330 (1 estrela); DOP = art. 351 (2 estrelas).", "TDF = art. 129 (2 estrelas); DOP = art. 331 (3 estrelas).", "Ambos são art. 330 com 2 estrelas."], a: 0 },
+        { id: "ES29", d: "Muito Difícil", q: "Como Escrivão Policial de turno, você observa um Agente ensinando um comando falso para um GM com intenção de tirar vantagem (EC - 4.23), enquanto o Delegado está ausente da cidade. Quais duas medidas administrativas/operacionais de sua alçada você deve tomar?", o: ["Aplicar aviso disciplinar no Agente e informar ao superior responsável pelo turno, além de assumir a comunicação oficial com outras organizações via /D (na ausência do Delegado).", "Aplicar banimento de 30 dias via painel admin e encerrar o turno de toda a equipe.", "Rebaixar o GM e ignorar a conduta do Agente.", "Usar /su no Agente e prendê-lo no PS por 60 minutos."], a: 0 },
+        { id: "ES30", d: "Muito Difícil", q: "Um civil oferece dinheiro para você não cumprir um mandado de busca (Suborno) e depois tenta matar um policial durante a fuga (Tentativa de homicídio). Quais artigos e quantas estrelas somam esses dois crimes?", o: ["Suborno (art. 363 — 5★) + TDH (art. 121 — 3★), totalizando 8 estrelas.", "Corrupção (art. 333 — 5★) + Homicídio (art. 121 — 4★), totalizando 9 estrelas.", "Suborno (art. 363 — 4★) + TDH (art. 121 — 2★), totalizando 6 estrelas.", "Estelionato (art. 171 — 5★) + TDF (art. 351 — 1★), totalizando 6 estrelas."] , a: 0 }
+      ]
+    };
+
+    // =========================================================================
+    // ESTADO DA APLICAÇÃO
+    // =========================================================================
+    const state = {
+      candidateName: "",
+      candidateId: "",
+      role: null,
+      activeCode: "",
+      attemptNumber: 1,
+      usedQuestionIds: new Set(),
+      currentQuestions: [],
+      currentIndex: 0,
+      selectedOptionIdx: null,
+      timerInterval: null,
+      timeLeft: QUESTION_TIME_SECONDS,
+      attemptStartTime: 0,
+      tabSwitches: 0,
+      currentAnswers: [], // { qNum, status: 'ok'|'err'|'nul', letterChosen }
+      attemptsData: [],   // [ attempt1Obj, attempt2Obj ]
+      chosenAttemptIdx: null,
+      examActive: false,
+      adminLoggedIn: false
+    };
+
+    // =========================================================================
+    // UTILITÁRIOS DE ARMAZENAMENTO DE CÓDIGOS
+    // =========================================================================
+    function getExtraCodes() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.EXTRA_CODES);
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveExtraCodes(arr) {
+      localStorage.setItem(STORAGE_KEYS.EXTRA_CODES, JSON.stringify([...new Set(arr)]));
+    }
+
+    function getUsedCodes() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.USED_CODES);
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function markCodeAsUsed(code) {
+      const used = getUsedCodes();
+      if (!used.includes(code)) {
+        used.push(code);
+        localStorage.setItem(STORAGE_KEYS.USED_CODES, JSON.stringify(used));
+      }
+    }
+
+    function getAllValidCodes() {
+      return [...new Set([...DEFAULT_CODES, ...getExtraCodes()])];
+    }
+
+    // =========================================================================
+    // UTILITÁRIOS GERAIS
+    // =========================================================================
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function showToast(msg, duration = 3000) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.add("hidden"), duration);
+    }
+
+    function showView(viewId) {
+      ["view-start", "view-quiz", "view-mid", "view-choose", "view-report"].forEach(id => {
+        document.getElementById(id).classList.toggle("hidden", id !== viewId);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, "0");
+      const s = String(sec % 60).padStart(2, "0");
+      return `${m}:${s}`;
+    }
+
+    function formatDuration(totalSec) {
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
+      return `${m}min ${String(s).padStart(2, "0")}s`;
+    }
+
+    // Gera hash curto verificador (3 chars)
+    function computeCheckHash(str) {
+      let h = 2166136261;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      const chars = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+      const v = Math.abs(h);
+      return chars[v % chars.length] + chars[Math.floor(v / 31) % chars.length] + chars[Math.floor(v / 961) % chars.length];
+    }
+
+    // Protocolo discreto: PF11-{CARGO}{ACERTOS2D}{A/B}-{ABAS2D}-{HASH3}
+    // A = 1ª tentativa | B = 2ª tentativa
+    function buildDiscreetProtocol(attObj) {
+      const hits2 = String(attObj.correct).padStart(2, "0");
+      const attemptTag = attObj.attemptNumber === 1 ? "A" : "B";
+      const tabs2 = String(Math.min(attObj.tabSwitches, 99)).padStart(2, "0");
+      const raw = `${state.candidateName}|${state.candidateId}|${state.role}|${hits2}|${attemptTag}|${tabs2}|${state.activeCode}`;
+      const hash = computeCheckHash(raw);
+      return `PF11-${state.role}${hits2}${attemptTag}-${tabs2}-${hash}`;
+    }
+
+    // =========================================================================
+    // ANTI-COLA (TROCA DE ABA / APLICATIVO)
+    // =========================================================================
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && state.examActive) {
+        state.tabSwitches++;
+        showToast("Atenção: saída da tela durante a prova foi registrada.", 3500);
+      }
+    });
+
+    // =========================================================================
+    // SELEÇÃO DE CARGO E INÍCIO DA PROVA
+    // =========================================================================
+    document.querySelectorAll(".role-card").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".role-card").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        state.role = btn.dataset.role;
+      });
+    });
+
+    document.getElementById("btn-start-exam").addEventListener("click", () => {
+      const errBox = document.getElementById("start-error");
+      errBox.classList.add("hidden");
+
+      const name = document.getElementById("cand-name").value.trim();
+      const id = document.getElementById("cand-id").value.trim();
+      const code = document.getElementById("access-code").value.trim().toUpperCase();
+
+      if (!name || name.length < 3) {
+        return showStartError("Informe seu Nome RP completo.");
+      }
+      if (!id) {
+        return showStartError("Informe seu ID no servidor.");
+      }
+      if (!state.role) {
+        return showStartError("Selecione a prova / cargo que você vai realizar.");
+      }
+      if (!code) {
+        return showStartError("Insira o Código de Acesso fornecido pelo Delegado.");
+      }
+
+      const validCodes = getAllValidCodes();
+      const usedCodes = getUsedCodes();
+
+      if (!validCodes.includes(code)) {
+        return showStartError("Código de acesso inválido. Verifique com o Delegado.");
+      }
+      if (usedCodes.includes(code)) {
+        return showStartError("Este código de acesso já foi utilizado e não pode ser reutilizado.");
+      }
+
+      // Queima o código imediatamente ao iniciar para impedir reinício por F5
+      markCodeAsUsed(code);
+
+      state.candidateName = name;
+      state.candidateId = id;
+      state.activeCode = code;
+      state.attemptNumber = 1;
+      state.usedQuestionIds = new Set();
+      state.attemptsData = [];
+      state.chosenAttemptIdx = null;
+
+      startAttempt(1);
+    });
+
+    function showStartError(msg) {
+      const errBox = document.getElementById("start-error");
+      errBox.textContent = msg;
+      errBox.classList.remove("hidden");
+    }
+
+    // =========================================================================
+    // MOTOR DA PROVA (SORTEIO SEM REPETIÇÃO + EMBARALHAMENTO + 90s)
+    // =========================================================================
+    function startAttempt(num) {
+      state.attemptNumber = num;
+      const bank = QUESTION_BANK[state.role];
+      const needed = ROLE_CONFIG[state.role].count;
+
+      // Prioriza questões ainda não usadas na 1ª tentativa
+      let pool = bank.filter(q => !state.usedQuestionIds.has(q.id));
+      if (pool.length < needed) {
+        pool = [...bank];
+      }
+
+      const selected = shuffleArray(pool).slice(0, needed).map(q => {
+        // Embaralha alternativas preservando qual é a correta
+        const mappedOpts = q.o.map((text, idx) => ({ text, isCorrect: idx === q.a }));
+        const shuffledOpts = shuffleArray(mappedOpts);
+        return {
+          id: q.id,
+          d: q.d,
+          q: q.q,
+          options: shuffledOpts
+        };
+      });
+
+      selected.forEach(q => state.usedQuestionIds.add(q.id));
+
+      state.currentQuestions = selected;
+      state.currentIndex = 0;
+      state.currentAnswers = [];
+      state.tabSwitches = 0;
+      state.attemptStartTime = Date.now();
+      state.examActive = true;
+
+      showView("view-quiz");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      clearInterval(state.timerInterval);
+      const qObj = state.currentQuestions[state.currentIndex];
+      const total = state.currentQuestions.length;
+
+      state.selectedOptionIdx = null;
+      document.getElementById("btn-next-q").disabled = true;
+      document.getElementById("btn-next-q").textContent =
+        state.currentIndex === total - 1 ? "Finalizar Tentativa" : "Confirmar e Avançar";
+
+      document.getElementById("quiz-role-badge").textContent = ROLE_CONFIG[state.role].name;
+      document.getElementById("quiz-progress-badge").textContent = `Questão ${state.currentIndex + 1} / ${total}`;
+      document.getElementById("quiz-attempt-badge").textContent = `${state.attemptNumber}ª Tentativa`;
+      document.getElementById("quiz-diff-badge").textContent = qObj.d;
+      document.getElementById("question-text").textContent = `${state.currentIndex + 1}. ${qObj.q}`;
+
+      const listEl = document.getElementById("options-list");
+      listEl.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      qObj.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn";
+        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${opt.text}</span>`;
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          state.selectedOptionIdx = idx;
+          document.getElementById("btn-next-q").disabled = false;
+        });
+        listEl.appendChild(btn);
+      });
+
+      startQuestionTimer();
+    }
+
+    function startQuestionTimer() {
+      state.timeLeft = QUESTION_TIME_SECONDS;
+      updateTimerUI();
+
+      state.timerInterval = setInterval(() => {
+        state.timeLeft--;
+        updateTimerUI();
+        if (state.timeLeft <= 0) {
+          clearInterval(state.timerInterval);
+          recordAnswer(true); // Anulada por tempo esgotado
+          showToast("Tempo esgotado! Questão anulada — avançando...", 2200);
+          advanceQuestion();
+        }
+      }, 1000);
+    }
+
+    function updateTimerUI() {
+      const display = document.getElementById("timer-display");
+      const bar = document.getElementById("timer-bar");
+      display.textContent = formatTime(state.timeLeft);
+
+      const pct = Math.max(0, (state.timeLeft / QUESTION_TIME_SECONDS) * 100);
+      bar.style.width = `${pct}%`;
+
+      display.classList.remove("warn", "danger");
+      if (state.timeLeft <= 15) {
+        display.classList.add("danger");
+        bar.style.background = "var(--red)";
+      } else if (state.timeLeft <= 30) {
+        display.classList.add("warn");
+        bar.style.background = "var(--amber)";
+      } else {
+        bar.style.background = "linear-gradient(90deg, var(--blue), var(--blue-glow))";
+      }
+    }
+
+    document.getElementById("btn-next-q").addEventListener("click", () => {
+      if (state.selectedOptionIdx === null) return;
+      clearInterval(state.timerInterval);
+      recordAnswer(false);
+      advanceQuestion();
+    });
+
+    function recordAnswer(isTimeout) {
+      const qObj = state.currentQuestions[state.currentIndex];
+      const letters = ["A", "B", "C", "D"];
+
+      if (isTimeout || state.selectedOptionIdx === null) {
+        state.currentAnswers.push({
+          qNum: state.currentIndex + 1,
+          status: "nul",
+          letterChosen: "-"
+        });
+      } else {
+        const chosen = qObj.options[state.selectedOptionIdx];
+        state.currentAnswers.push({
+          qNum: state.currentIndex + 1,
+          status: chosen.isCorrect ? "ok" : "err",
+          letterChosen: letters[state.selectedOptionIdx]
+        });
+      }
+    }
+
+    function advanceQuestion() {
+      if (state.currentIndex + 1 < state.currentQuestions.length) {
+        state.currentIndex++;
+        renderQuestion();
+      } else {
+        finishAttempt();
+      }
+    }
+
+    // =========================================================================
+    // FINALIZAÇÃO DE TENTATIVA E ESCOLHA DO RELATÓRIO
+    // =========================================================================
+    function finishAttempt() {
+      clearInterval(state.timerInterval);
+      state.examActive = false;
+
+      const total = state.currentQuestions.length;
+      const correct = state.currentAnswers.filter(a => a.status === "ok").length;
+      const wrong = state.currentAnswers.filter(a => a.status === "err").length;
+      const annulled = state.currentAnswers.filter(a => a.status === "nul").length;
+      const percent = Math.round((correct / total) * 100);
+      const durationSec = Math.max(1, Math.round((Date.now() - state.attemptStartTime) / 1000));
+      const now = new Date();
+
+      const attemptObj = {
+        attemptNumber: state.attemptNumber,
+        total,
+        correct,
+        wrong,
+        annulled,
+        percent,
+        passed: percent >= PASSING_PERCENT,
+        durationSec,
+        tabSwitches: state.tabSwitches,
+        answers: [...state.currentAnswers],
+        dateStr: now.toLocaleDateString("pt-BR"),
+        timeStr: now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
+      };
+
+      state.attemptsData.push(attemptObj);
+
+      if (state.attemptNumber === 1) {
+        renderMidScreen(attemptObj);
+        showView("view-mid");
+      } else {
+        renderChooseScreen();
+        showView("view-choose");
+      }
+    }
+
+    function renderChips(containerId, answers) {
+      const box = document.getElementById(containerId);
+      box.innerHTML = "";
+      answers.forEach(a => {
+        const span = document.createElement("span");
+        span.className = `chip ${a.status}`;
+        const icon = a.status === "ok" ? "✅" : a.status === "err" ? "❌" : "⏱️";
+        span.textContent = `Q${a.qNum}: ${icon}`;
+        box.appendChild(span);
+      });
+    }
+
+    function renderMidScreen(att) {
+      document.getElementById("mid-stats").innerHTML = `
+        <div class="stat-box"><div class="val" style="color:var(--green)">${att.correct}/${att.total}</div><div class="lbl">Acertos</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--red)">${att.wrong}</div><div class="lbl">Erros</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--amber)">${att.annulled}</div><div class="lbl">Anuladas</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--blue-glow)">${att.percent}%</div><div class="lbl">Aproveitamento</div></div>
+      `;
+
+      const banner = document.getElementById("mid-status-banner");
+      banner.className = `status-banner ${att.passed ? "status-pass" : "status-fail"}`;
+      banner.textContent = att.passed
+        ? `DESEMPENHO APTO (${att.percent}%) — Indicado para Entrevista com o Delegado`
+        : `DESEMPENHO ABAIXO DA MÉDIA (${att.percent}%) — Média sugerida: ${PASSING_PERCENT}%`;
+
+      renderChips("mid-chips", att.answers);
+    }
+
+    document.getElementById("btn-finish-a1").addEventListener("click", () => {
+      openFinalReport(0);
+    });
+
+    document.getElementById("btn-retry-a2").addEventListener("click", () => {
+      startAttempt(2);
+    });
+
+    function renderChooseScreen() {
+      const grid = document.getElementById("compare-grid");
+      grid.innerHTML = "";
+      state.chosenAttemptIdx = null;
+      document.getElementById("btn-confirm-choice").disabled = true;
+
+      state.attemptsData.forEach((att, idx) => {
+        const card = document.createElement("div");
+        card.className = "attempt-choice";
+        card.innerHTML = `
+          <h3>${att.attemptNumber}ª Tentativa</h3>
+          <p><strong>Acertos:</strong> ${att.correct} de ${att.total} (${att.percent}%)</p>
+          <p><strong>Erros:</strong> ${att.wrong} | <strong>Anuladas:</strong> ${att.annulled}</p>
+          <p><strong>Tempo total:</strong> ${formatDuration(att.durationSec)}</p>
+          <p style="margin-top:6px; font-weight:700; color:${att.passed ? "#86efac" : "#fca5a5"}">
+            ${att.passed ? "APTO PARA ENTREVISTA" : "ABAIXO DA MÉDIA"}
+          </p>
+        `;
+        card.addEventListener("click", () => {
+          document.querySelectorAll(".attempt-choice").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          state.chosenAttemptIdx = idx;
+          document.getElementById("btn-confirm-choice").disabled = false;
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById("btn-confirm-choice").addEventListener("click", () => {
+      if (state.chosenAttemptIdx === null) return;
+      openFinalReport(state.chosenAttemptIdx);
+    });
+
+    // =========================================================================
+    // GERAÇÃO DO RELATÓRIO PARA WHATSAPP
+    // =========================================================================
+    function openFinalReport(idx) {
+      const att = state.attemptsData[idx];
+      const protocol = buildDiscreetProtocol(att);
+
+      const banner = document.getElementById("final-status-banner");
+      banner.className = `status-banner ${att.passed ? "status-pass" : "status-fail"}`;
+      banner.textContent = att.passed
+        ? `RESULTADO: APTO PARA ENTREVISTA (${att.correct}/${att.total} — ${att.percent}%)`
+        : `RESULTADO: INAPTO NA PROVA OBJETIVA (${att.correct}/${att.total} — ${att.percent}%)`;
+
+      renderChips("final-chips", att.answers);
+
+      const gabaritoResumo = att.answers
+        .map(a => `Q${String(a.qNum).padStart(2, "0")}:${a.status === "ok" ? "✅" : a.status === "err" ? "❌" : "⏱️"}`)
+        .join(" | ");
+
+      const statusText = att.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
+
+      const report = [
+        "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
+        "📋 *RELATÓRIO OFICIAL DE AVALIAÇÃO*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        `👤 *Candidato:* ${state.candidateName}`,
+        `🆔 *ID:* ${state.candidateId}`,
+        `🎖️ *Prova/Cargo:* ${ROLE_CONFIG[state.role].name}`,
+        `📅 *Data/Hora:* ${att.dateStr} às ${att.timeStr}`,
+        `⏱️ *Duração:* ${formatDuration(att.durationSec)}`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        `✅ *Acertos:* ${att.correct}/${att.total}`,
+        `❌ *Erros:* ${att.wrong}`,
+        `⏳ *Anuladas (Tempo):* ${att.annulled}`,
+        `📊 *Aproveitamento:* ${att.percent}%`,
+        `📌 *Situação:* ${statusText}`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        "📝 *Resumo do Gabarito:*",
+        gabaritoResumo,
+        "━━━━━━━━━━━━━━━━━━━━",
+        "🎙️ *Próxima etapa:* Aguardando agendamento de entrevista com o Delegado.",
+        `🔐 *Protocolo:* ${protocol}`
+      ].join("\n");
+
+      document.getElementById("report-text").value = report;
+      showView("view-report");
+    }
+
+    document.getElementById("btn-copy-report").addEventListener("click", async () => {
+      const text = document.getElementById("report-text").value;
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("Relatório copiado! Cole no WhatsApp do Delegado.");
+      } catch {
+        const area = document.getElementById("report-text");
+        area.select();
+        document.execCommand("copy");
+        showToast("Relatório copiado!");
+      }
+    });
+
+    document.getElementById("btn-send-wa").addEventListener("click", () => {
+      const text = document.getElementById("report-text").value;
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    });
+
+    document.getElementById("btn-new-session").addEventListener("click", () => {
+      document.getElementById("access-code").value = "";
+      document.getElementById("start-error").classList.add("hidden");
+      showView("view-start");
+    });
+
+    // =========================================================================
+    // PAINEL OCULTO DE ADMINISTRAÇÃO DE CÓDIGOS
+    // =========================================================================
+    const modal = document.getElementById("admin-modal");
+
+    document.getElementById("btn-secret-admin").addEventListener("click", () => {
+      document.getElementById("admin-login-err").classList.add("hidden");
+      if (state.adminLoggedIn) {
+        updateAdminStats();
+      }
+      modal.classList.remove("hidden");
+    });
+
+    document.getElementById("btn-close-modal").addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.add("hidden");
+    });
+
+    document.getElementById("btn-adm-login").addEventListener("click", () => {
+      const u = document.getElementById("adm-user").value.trim();
+      const p = document.getElementById("adm-pass").value.trim();
+      const err = document.getElementById("admin-login-err");
+
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        state.adminLoggedIn = true;
+        err.classList.add("hidden");
+        document.getElementById("admin-login-box").classList.add("hidden");
+        document.getElementById("admin-panel-box").classList.remove("hidden");
+        updateAdminStats();
+      } else {
+        err.textContent = "Usuário ou senha incorretos.";
+        err.classList.remove("hidden");
+      }
+    });
+
+    function updateAdminStats() {
+      const all = getAllValidCodes();
+      const used = getUsedCodes();
+      const avail = all.filter(c => !used.includes(c)).length;
+
+      document.getElementById("adm-total-codes").textContent = all.length;
+      document.getElementById("adm-used-codes").textContent = used.length;
+      document.getElementById("adm-avail-codes").textContent = avail;
+    }
+
+    document.getElementById("btn-adm-save-codes").addEventListener("click", () => {
+      const raw = document.getElementById("adm-new-codes").value;
+      const tokens = raw
+        .split(/[\s,;]+/)
+        .map(s => s.trim().toUpperCase())
+        .filter(s => s.length >= 4);
+
+      if (!tokens.length) {
+        showToast("Nenhum código válido encontrado para adicionar.");
+        return;
+      }
+
+      const currentExtras = getExtraCodes();
+      const merged = [...new Set([...currentExtras, ...tokens])];
+      saveExtraCodes(merged);
+
+      document.getElementById("adm-new-codes").value = "";
+      updateAdminStats();
+      showToast(`${tokens.length} código(s) processado(s) e salvo(s)!`);
+    });
+
+    document.getElementById("btn-adm-reset-used").addEventListener("click", () => {
+      if (confirm("Deseja limpar a lista de códigos já usados apenas neste dispositivo?")) {
+        localStorage.removeItem(STORAGE_KEYS.USED_CODES);
+        updateAdminStats();
+        showToast("Registro local de códigos usados limpo!");
+      }
+    });
+  </script>
+</body>
+</html>
