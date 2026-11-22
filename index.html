@@ -706,18 +706,18 @@
 
     <!-- VIEW 1: INÍCIO / LOGIN DO CANDIDATO -->
     <section id="view-start" class="card">
-      <div class="section-title">1. Identificação do Candidato</div>
+      <div class="section-title">1. Identificação da Avaliação</div>
 
       <div id="start-error" class="error-msg hidden"></div>
 
       <div class="form-grid">
         <div class="field">
-          <label for="cand-name">Nome RP</label>
+          <label for="cand-name">Nome RP do Candidato</label>
           <input type="text" id="cand-name" placeholder="Ex: Carlos_Silva" autocomplete="off" />
         </div>
         <div class="field">
-          <label for="cand-id">ID no Servidor</label>
-          <input type="text" id="cand-id" placeholder="Ex: 14582" autocomplete="off" />
+          <label for="delegado-name">Delegado Responsável (Quem passou a prova)</label>
+          <input type="text" id="delegado-name" placeholder="Ex: Delegado_Silva" autocomplete="off" />
         </div>
       </div>
 
@@ -842,7 +842,7 @@
 
     <!-- FOOTER COM BOTÃO DISCRETO -->
     <footer class="footer">
-      <span>Polícia Federal • Rio Rise Servidor 11 • PF-S11 v1.0</span>
+      <span>Polícia Federal • Rio Rise Servidor 11 • PF-S11 v1.1</span>
       <button type="button" id="btn-secret-admin" class="secret-btn" title="Acesso restrito" aria-label="Acesso restrito">🔒</button>
     </footer>
   </div>
@@ -1048,7 +1048,7 @@
         { id: "ES27", d: "Muito Difícil", q: "No Código Q, qual a diferença entre 'QRQ' e 'QRS', e o que significa 'QRB'?", o: ["QRQ = Transmita mais depressa; QRS = Transmita mais devagar; QRB = Qual sua distância?", "QRQ = Qual sua distância?; QRS = Transmita mais depressa; QRB = Transmita mais devagar.", "QRQ = Quem está me chamando?; QRS = Às ordens; QRB = Obrigado.", "QRQ = Interferência humana; QRS = Interferência na comunicação; QRB = Fora do ar."], a: 0 },
         { id: "ES28", d: "Muito Difícil", q: "Na Tabela de Crimes, compare 'Tentativa de fuga (TDF)' e 'Desobediência à ordem policial (DOP)': quais são seus artigos e quantas estrelas cada um gera?", o: ["TDF = art. 351 (1 estrela); DOP = art. 330 (2 estrelas).", "TDF = art. 330 (1 estrela); DOP = art. 351 (2 estrelas).", "TDF = art. 129 (2 estrelas); DOP = art. 331 (3 estrelas).", "Ambos são art. 330 com 2 estrelas."], a: 0 },
         { id: "ES29", d: "Muito Difícil", q: "Como Escrivão Policial de turno, você observa um Agente ensinando um comando falso para um GM com intenção de tirar vantagem (EC - 4.23), enquanto o Delegado está ausente da cidade. Quais duas medidas administrativas/operacionais de sua alçada você deve tomar?", o: ["Aplicar aviso disciplinar no Agente e informar ao superior responsável pelo turno, além de assumir a comunicação oficial com outras organizações via /D (na ausência do Delegado).", "Aplicar banimento de 30 dias via painel admin e encerrar o turno de toda a equipe.", "Rebaixar o GM e ignorar a conduta do Agente.", "Usar /su no Agente e prendê-lo no PS por 60 minutos."], a: 0 },
-        { id: "ES30", d: "Muito Difícil", q: "Um civil oferece dinheiro para você não cumprir um mandado de busca (Suborno) e depois tenta matar um policial durante a fuga (Tentativa de homicídio). Quais artigos e quantas estrelas somam esses dois crimes?", o: ["Suborno (art. 363 — 5★) + TDH (art. 121 — 3★), totalizando 8 estrelas.", "Corrupção (art. 333 — 5★) + Homicídio (art. 121 — 4★), totalizando 9 estrelas.", "Suborno (art. 363 — 4★) + TDH (art. 121 — 2★), totalizando 6 estrelas.", "Estelionato (art. 171 — 5★) + TDF (art. 351 — 1★), totalizando 6 estrelas."] , a: 0 }
+        { id: "ES30", d: "Muito Difícil", q: "Um civil oferece dinheiro para você não cumprir um mandado de busca (Suborno) e depois tenta matar um policial durante a fuga (Tentativa de homicídio). Quais artigos e quantas estrelas somam esses dois crimes?", o: ["Suborno (art. 363 — 5★) + TDH (art. 121 — 3★), totalizando 8 estrelas.", "Corrupção (art. 333 — 5★) + Homicídio (art. 121 — 4★), totalizando 9 estrelas.", "Suborno (art. 363 — 4★) + TDH (art. 121 — 2★), totalizando 6 estrelas.", "Estelionato (art. 171 — 5★) + TDF (art. 351 — 1★), totalizando 6 estrelas."], a: 0 }
       ]
     };
 
@@ -1057,7 +1057,7 @@
     // =========================================================================
     const state = {
       candidateName: "",
-      candidateId: "",
+      delegateName: "",
       role: null,
       activeCode: "",
       attemptNumber: 1,
@@ -1170,7 +1170,7 @@
       const hits2 = String(attObj.correct).padStart(2, "0");
       const attemptTag = attObj.attemptNumber === 1 ? "A" : "B";
       const tabs2 = String(Math.min(attObj.tabSwitches, 99)).padStart(2, "0");
-      const raw = `${state.candidateName}|${state.candidateId}|${state.role}|${hits2}|${attemptTag}|${tabs2}|${state.activeCode}`;
+      const raw = `${state.candidateName}|${state.delegateName}|${state.role}|${hits2}|${attemptTag}|${tabs2}|${state.activeCode}`;
       const hash = computeCheckHash(raw);
       return `PF11-${state.role}${hits2}${attemptTag}-${tabs2}-${hash}`;
     }
@@ -1201,14 +1201,14 @@
       errBox.classList.add("hidden");
 
       const name = document.getElementById("cand-name").value.trim();
-      const id = document.getElementById("cand-id").value.trim();
+      const delegate = document.getElementById("delegado-name").value.trim();
       const code = document.getElementById("access-code").value.trim().toUpperCase();
 
       if (!name || name.length < 3) {
         return showStartError("Informe seu Nome RP completo.");
       }
-      if (!id) {
-        return showStartError("Informe seu ID no servidor.");
+      if (!delegate || delegate.length < 3) {
+        return showStartError("Informe o nome do Delegado responsável que passou a avaliação.");
       }
       if (!state.role) {
         return showStartError("Selecione a prova / cargo que você vai realizar.");
@@ -1231,7 +1231,7 @@
       markCodeAsUsed(code);
 
       state.candidateName = name;
-      state.candidateId = id;
+      state.delegateName = delegate;
       state.activeCode = code;
       state.attemptNumber = 1;
       state.usedQuestionIds = new Set();
@@ -1532,7 +1532,7 @@
         "📋 *RELATÓRIO OFICIAL DE AVALIAÇÃO*",
         "━━━━━━━━━━━━━━━━━━━━",
         `👤 *Candidato:* ${state.candidateName}`,
-        `🆔 *ID:* ${state.candidateId}`,
+        `👮 *Delegado Responsável:* ${state.delegateName}`,
         `🎖️ *Prova/Cargo:* ${ROLE_CONFIG[state.role].name}`,
         `📅 *Data/Hora:* ${att.dateStr} às ${att.timeStr}`,
         `⏱️ *Duração:* ${formatDuration(att.durationSec)}`,
