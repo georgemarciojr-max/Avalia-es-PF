@@ -626,6 +626,7 @@
     .chip.ok { border-color: var(--green); color: #86efac; }
     .chip.err { border-color: var(--red); color: #fca5a5; }
     .chip.nul { border-color: var(--amber); color: #fde047; }
+    .chip.nul-tab { border-color: var(--red); color: #fca5a5; background: rgba(239, 68, 68, 0.12); }
 
     .mono-preview {
       width: 100%;
@@ -691,6 +692,7 @@
     .gab-q-card.ok { border-left-color: var(--green); }
     .gab-q-card.err { border-left-color: var(--red); }
     .gab-q-card.nul { border-left-color: var(--amber); }
+    .gab-q-card.nul-tab { border-left-color: var(--red); }
 
     .gab-q-head {
       display: flex;
@@ -707,6 +709,27 @@
       color: #fff;
       line-height: 1.45;
       margin-bottom: 10px;
+    }
+
+    .gab-annul-reason {
+      font-size: 0.8rem;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .gab-annul-reason.time {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+    }
+
+    .gab-annul-reason.tab {
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fecaca;
     }
 
     .gab-opt {
@@ -1027,7 +1050,7 @@
     </header>
 
     <!-- =================================================================== -->
-    <!-- VIEW 1: INÍCIO DA PROVA + FICHA DE ENTREVISTA (CANDIDATO)           -->
+    <!-- VIEW 1: INÍCIO DA PROVA + FICHA DE ENTREVISTA (SOMENTE GM)          -->
     <!-- =================================================================== -->
     <section id="view-start" class="card">
       <div class="section-title">
@@ -1050,93 +1073,96 @@
       <div class="sub-heading">2. Selecione o Cargo / Prova</div>
       <div class="roles-grid" id="roles-grid">
         <button type="button" class="role-card" data-role="GM">
-          <span class="role-tag">10 Questões • Entrada</span>
+          <span class="role-tag">10 Questões • Recrutamento</span>
           <h3>Guarda Municipal (GM)</h3>
-          <p>Recepção, Padrão PS, Códigos Q e Regras da Bíblia RP.</p>
+          <p>Recepção, Padrão PS, Códigos Q, Bíblia RP e Ficha de Entrevista.</p>
         </button>
         <button type="button" class="role-card" data-role="AP">
-          <span class="role-tag">15 Questões • Base/Apoio</span>
+          <span class="role-tag">15 Questões • Promoção</span>
           <h3>Agente Policial (AP)</h3>
           <p>Serviço HP/Mídia/PS, Comandos, Tabela de Crimes, Código Q e Bíblia RP.</p>
         </button>
         <button type="button" class="role-card" data-role="TO">
-          <span class="role-tag">15 Questões • Operacional</span>
+          <span class="role-tag">15 Questões • Promoção</span>
           <h3>Tático Operacional (TO)</h3>
           <p>Controle do PS, Direitos de Detentos, Patrulhamento, Crimes e Bíblia RP.</p>
         </button>
         <button type="button" class="role-card" data-role="ES">
-          <span class="role-tag">15 Questões • Liderança</span>
+          <span class="role-tag">15 Questões • Promoção</span>
           <h3>Escrivão Policial</h3>
           <p>Coordenação, Carregamentos, Avisos, Uso de /D, Crimes, Comandos e Bíblia RP.</p>
         </button>
       </div>
 
-      <div class="sub-heading">3. Ficha de Entrevista (Preenchimento Obrigatório)</div>
-      <div class="form-grid">
+      <!-- FICHA DE ENTREVISTA — EXIBIDA EXCLUSIVAMENTE PARA GUARDA MUNICIPAL (GM) -->
+      <div id="gm-interview-section" class="hidden">
+        <div class="sub-heading">3. Ficha de Entrevista — Recrutamento GM (Obrigatório)</div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="int-age">Sua Idade (OOC) <span class="req">*</span></label>
+            <input type="number" id="int-age" min="10" max="90" placeholder="Ex: 22" />
+          </div>
+          <div class="field">
+            <label for="int-phone">Telefone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="int-phone" placeholder="Ex: (69) 99999-9999" />
+          </div>
+        </div>
+
         <div class="field">
-          <label for="int-age">Sua Idade (OOC) <span class="req">*</span></label>
-          <input type="number" id="int-age" min="10" max="90" placeholder="Ex: 22" />
+          <label for="int-origin">De onde você veio? (Histórico no RP / onde jogava antes) <span class="req">*</span></label>
+          <input type="text" id="int-origin" placeholder="Ex: Vim de outra org / comecei direto na cidade..." />
         </div>
+
         <div class="field">
-          <label for="int-phone">Telefone / WhatsApp <span class="req">*</span></label>
-          <input type="tel" id="int-phone" placeholder="Ex: (69) 99999-9999" />
+          <label for="int-servers">Já trabalhou em algum outro servidor? Se sim, onde e qual era sua função? <span class="req">*</span></label>
+          <input type="text" id="int-servers" placeholder="Ex: Sim, fui Agente no Servidor X / Não, é minha primeira vez..." />
         </div>
-      </div>
 
-      <div class="field">
-        <label for="int-origin">De onde você veio? (Histórico no RP / onde jogava antes) <span class="req">*</span></label>
-        <input type="text" id="int-origin" placeholder="Ex: Vim de outra org / comecei direto na cidade..." />
-      </div>
-
-      <div class="field">
-        <label for="int-servers">Já trabalhou em algum outro servidor? Se sim, onde e qual era sua função? <span class="req">*</span></label>
-        <input type="text" id="int-servers" placeholder="Ex: Sim, fui Agente no Servidor X / Não, é minha primeira vez..." />
-      </div>
-
-      <div class="field">
-        <label for="int-exp">Já tem experiência na área policial, segurança ou recepção? <span class="req">*</span></label>
-        <input type="text" id="int-exp" placeholder="Descreva brevemente sua experiência..." />
-      </div>
-
-      <div class="field">
-        <label for="int-know">Qual o seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q? <span class="req">*</span></label>
-        <input type="text" id="int-know" placeholder="Ex: Básico, intermediário, avançado — explique o que domina..." />
-      </div>
-
-      <div class="field">
-        <label for="int-goal">Qual o seu objetivo ao entrar / subir de cargo na Polícia Federal? <span class="req">*</span></label>
-        <textarea id="int-goal" rows="2" placeholder="Conte qual seu objetivo na corporação..."></textarea>
-      </div>
-
-      <!-- COMPROMISSO CRM DIÁRIO -->
-      <div class="crm-box">
-        <p>
-          <strong>⚠️ Compromisso Operacional — CRMs Diários:</strong><br/>
-          Informamos que realizamos <strong>dois CRMs (carregamentos de materiais) diariamente</strong> e precisamos que você se comprometa a comparecer. Você se compromete a participar dos CRMs diários? <span style="color:var(--gold)">*</span>
-        </p>
-        <div class="radio-row">
-          <label class="radio-pill" id="crm-pill-sim">
-            <input type="radio" name="crm-commit" value="Sim" />
-            <span>✅ Sim, me comprometo</span>
-          </label>
-          <label class="radio-pill" id="crm-pill-nao">
-            <input type="radio" name="crm-commit" value="Não" />
-            <span>❌ Não consigo comparecer</span>
-          </label>
+        <div class="field">
+          <label for="int-exp">Já tem experiência na área policial, segurança ou recepção? <span class="req">*</span></label>
+          <input type="text" id="int-exp" placeholder="Descreva brevemente sua experiência..." />
         </div>
-        <div id="crm-reason-wrap" class="field hidden" style="margin-top: 12px; margin-bottom: 0;">
-          <label for="int-crm-reason">Informe o motivo pelo qual não consegue comparecer aos CRMs diários <span class="req">*</span></label>
-          <textarea id="int-crm-reason" rows="2" placeholder="Explique seu horário de trabalho/estudo ou motivo..."></textarea>
+
+        <div class="field">
+          <label for="int-know">Qual o seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q? <span class="req">*</span></label>
+          <input type="text" id="int-know" placeholder="Ex: Básico, intermediário, avançado — explique o que domina..." />
+        </div>
+
+        <div class="field">
+          <label for="int-goal">Qual o seu objetivo ao entrar na Polícia Federal? <span class="req">*</span></label>
+          <textarea id="int-goal" rows="2" placeholder="Conte qual seu objetivo na corporação..."></textarea>
+        </div>
+
+        <!-- COMPROMISSO CRM DIÁRIO -->
+        <div class="crm-box">
+          <p>
+            <strong>⚠️ Compromisso Operacional — CRMs Diários:</strong><br/>
+            Informamos que realizamos <strong>dois CRMs (carregamentos de materiais) diariamente</strong> e precisamos que você se comprometa a comparecer. Você se compromete a participar dos CRMs diários? <span style="color:var(--gold)">*</span>
+          </p>
+          <div class="radio-row">
+            <label class="radio-pill" id="crm-pill-sim">
+              <input type="radio" name="crm-commit" value="Sim" />
+              <span>✅ Sim, me comprometo</span>
+            </label>
+            <label class="radio-pill" id="crm-pill-nao">
+              <input type="radio" name="crm-commit" value="Não" />
+              <span>❌ Não consigo comparecer</span>
+            </label>
+          </div>
+          <div id="crm-reason-wrap" class="field hidden" style="margin-top: 12px; margin-bottom: 0;">
+            <label for="int-crm-reason">Informe o motivo pelo qual não consegue comparecer aos CRMs diários <span class="req">*</span></label>
+            <textarea id="int-crm-reason" rows="2" placeholder="Explique seu horário de trabalho/estudo ou motivo..."></textarea>
+          </div>
         </div>
       </div>
 
       <div class="info-box">
         <strong>Regras da Avaliação:</strong>
         <ul>
-          <li>Cada questão possui <strong>1 minuto e 30 segundos (90s)</strong>. Ao zerar o tempo, a questão é anulada e avança automaticamente.</li>
+          <li>Cada questão possui <strong>1 minuto e 30 segundos (90s)</strong>. Ao zerar o tempo, a questão é anulada por tempo esgotado e a prova avança automaticamente.</li>
+          <li><strong>Sistema Anti-Cola Ativo:</strong> se você sair da página, trocar de aba ou abrir outro aplicativo durante uma pergunta, a questão atual será <strong>anulada e pulada automaticamente</strong>, registrando o motivo no gabarito.</li>
           <li>Você pode realizar até <strong>2 tentativas</strong> com questões embaralhadas e escolher qual relatório oficial enviar ao Delegado.</li>
           <li>Ao concluir, o sistema salva seu <strong>Gabarito Completo online</strong> e gera o link + mensagem para enviar no WhatsApp do Delegado.</li>
-          <li>Evite trocar de aba ou sair do aplicativo durante a prova — saídas de tela ficam registradas no gabarito.</li>
         </ul>
       </div>
 
@@ -1160,6 +1186,8 @@
       <div class="progress-track">
         <div class="progress-fill" id="timer-bar"></div>
       </div>
+
+      <div id="quiz-tab-warning" class="error-msg hidden"></div>
 
       <div class="question-text" id="question-text">Carregando questão...</div>
       <div class="options-list" id="options-list"></div>
@@ -1234,7 +1262,7 @@
     <!-- =================================================================== -->
     <section id="view-gabarito" class="card hidden">
       <div class="section-title">
-        <span>Gabarito Oficial & Ficha de Entrevista</span>
+        <span id="gab-main-title">Gabarito Oficial da Avaliação</span>
         <span class="pill pill-gold" id="gab-view-id">ID</span>
       </div>
 
@@ -1245,7 +1273,7 @@
         <div id="gab-status-banner" class="status-banner"></div>
         <div class="stats-grid" id="gab-stats"></div>
 
-        <div class="sub-heading">Dados da Avaliação & Ficha de Entrevista</div>
+        <div class="sub-heading" id="gab-info-heading">Dados da Avaliação</div>
         <div class="interview-summary-grid" id="gab-interview-grid"></div>
 
         <div class="btn-row" style="margin: 14px 0 18px;">
@@ -1305,10 +1333,10 @@
         <div class="field">
           <label for="inv-role">Cargo / Prova</label>
           <select id="inv-role">
-            <option value="GM">Guarda Municipal (GM) — 10 questões</option>
-            <option value="AP">Agente Policial (AP) — 15 questões</option>
-            <option value="TO">Tático Operacional (TO) — 15 questões</option>
-            <option value="ES">Escrivão Policial — 15 questões</option>
+            <option value="GM">Guarda Municipal (GM) — 10 questões + Ficha de Entrevista</option>
+            <option value="AP">Agente Policial (AP) — 15 questões (Promoção)</option>
+            <option value="TO">Tático Operacional (TO) — 15 questões (Promoção)</option>
+            <option value="ES">Escrivão Policial — 15 questões (Promoção)</option>
           </select>
         </div>
 
@@ -1699,7 +1727,7 @@
       candidateName: "",
       delegateName: "",
       role: null,
-      interview: {},
+      interview: null,
       attemptNumber: 1,
       usedQuestionIds: new Set(),
       currentQuestions: [],
@@ -1716,6 +1744,8 @@
       lastSavedGabaritoUrl: "",
       lastSavedRecord: null,
       examActive: false,
+      isAdvancing: false,
+      pendingTabAlertMsg: null,
       delegateLoggedIn: sessionStorage.getItem("pf11_del_logged") === "1",
       qmActiveRole: "GM",
       qmEditingId: null,
@@ -1808,6 +1838,22 @@
       lbl.textContent = text;
     }
 
+    // Compatibilidade de contadores de anulação (Tempo vs Saída de página)
+    function getAnnulmentCounts(rec) {
+      const questions = rec.questions || [];
+      const annulledTab = typeof rec.annulledTab === "number"
+        ? rec.annulledTab
+        : questions.filter(q => q.status === "nul" && q.annulReason === "tab").length;
+      const annulledTime = typeof rec.annulledTime === "number"
+        ? rec.annulledTime
+        : questions.filter(q => q.status === "nul" && q.annulReason !== "tab").length;
+      return { annulledTime, annulledTab, total: annulledTime + annulledTab };
+    }
+
+    function hasGmInterview(rec) {
+      return rec && rec.role === "GM" && rec.interview && Object.keys(rec.interview).length > 0;
+    }
+
     // =========================================================================
     // SINCRONIZAÇÃO COM FIRESTORE (QUESTÕES & GABARITOS)
     // =========================================================================
@@ -1859,7 +1905,6 @@
     }
 
     async function saveGabaritoRecord(record) {
-      // Salva backup local imediato
       try {
         localStorage.setItem(`pf11_gab_${record.id}`, JSON.stringify(record));
       } catch {}
@@ -1889,7 +1934,6 @@
         console.error("Erro ao buscar gabarito no Firestore:", err);
       }
 
-      // Fallback local caso tenha acabado de fazer no mesmo dispositivo sem permissão de nuvem
       try {
         const localRaw = localStorage.getItem(`pf11_gab_${gabId}`);
         if (localRaw) return JSON.parse(localRaw);
@@ -1899,30 +1943,45 @@
     }
 
     // =========================================================================
-    // ANTI-COLA (SAÍDA DE ABA / APLICATIVO)
+    // ANTI-COLA: SAIR DA PÁGINA ANULA E PULA A QUESTÃO AUTOMATICAMENTE
     // =========================================================================
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden && state.examActive) {
+      if (document.hidden && state.examActive && !state.isAdvancing) {
+        state.isAdvancing = true;
+        clearInterval(state.timerInterval);
         state.tabSwitches++;
-        showToast("Atenção: saída da tela durante a prova foi registrada no gabarito.", 3500);
+        const annulledNum = state.currentIndex + 1;
+        state.pendingTabAlertMsg = `🚫 Questão ${annulledNum} foi ANULADA e pulada automaticamente porque você saiu da página/aba.`;
+        recordAnswer("tab");
+        advanceQuestion();
+      } else if (!document.hidden && state.pendingTabAlertMsg) {
+        const msg = state.pendingTabAlertMsg;
+        state.pendingTabAlertMsg = null;
+        showToast(msg, 5000);
+        if (state.examActive) {
+          const warnBox = document.getElementById("quiz-tab-warning");
+          warnBox.textContent = msg;
+          warnBox.classList.remove("hidden");
+        }
       }
     });
 
     // =========================================================================
-    // TELA INICIAL: SELEÇÃO DE CARGO, COMPROMISSO CRM E INÍCIO
+    // TELA INICIAL: SELEÇÃO DE CARGO (FICHA APENAS GM), COMPROMISSO CRM E INÍCIO
     // =========================================================================
     function selectRoleCard(roleCode) {
       document.querySelectorAll(".role-card").forEach(b => {
         b.classList.toggle("selected", b.dataset.role === roleCode);
       });
       state.role = roleCode;
+      document.getElementById("gm-interview-section").classList.toggle("hidden", roleCode !== "GM");
     }
 
     document.querySelectorAll(".role-card").forEach(btn => {
       btn.addEventListener("click", () => selectRoleCard(btn.dataset.role));
     });
 
-    // Radio Sim / Não dos 2 CRMs diários
+    // Radio Sim / Não dos 2 CRMs diários (somente GM)
     const crmPillSim = document.getElementById("crm-pill-sim");
     const crmPillNao = document.getElementById("crm-pill-nao");
     const crmReasonWrap = document.getElementById("crm-reason-wrap");
@@ -1951,30 +2010,39 @@
 
       const candName = document.getElementById("cand-name").value.trim();
       const delName = document.getElementById("delegado-name").value.trim();
-      const age = document.getElementById("int-age").value.trim();
-      const phone = document.getElementById("int-phone").value.trim();
-      const origin = document.getElementById("int-origin").value.trim();
-      const servers = document.getElementById("int-servers").value.trim();
-      const exp = document.getElementById("int-exp").value.trim();
-      const know = document.getElementById("int-know").value.trim();
-      const goal = document.getElementById("int-goal").value.trim();
-      const crmRadio = document.querySelector('input[name="crm-commit"]:checked');
-      const crmCommit = crmRadio ? crmRadio.value : "";
-      const crmReason = document.getElementById("int-crm-reason").value.trim();
 
       if (candName.length < 3) return showStartError("Informe seu Nome RP completo.");
       if (delName.length < 3) return showStartError("Informe o nome do Delegado responsável que passou a prova.");
       if (!state.role) return showStartError("Selecione o cargo / prova que deseja realizar.");
-      if (!age || Number(age) < 10) return showStartError("Informe sua idade (OOC).");
-      if (phone.length < 8) return showStartError("Informe seu número de telefone / WhatsApp.");
-      if (origin.length < 3) return showStartError("Informe de onde você veio (seu histórico no RP).");
-      if (servers.length < 2) return showStartError("Responda se já trabalhou em algum outro servidor.");
-      if (exp.length < 2) return showStartError("Informe sua experiência na área policial/segurança/recepção.");
-      if (know.length < 2) return showStartError("Informe seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q.");
-      if (goal.length < 5) return showStartError("Informe qual o seu objetivo ao entrar / subir de cargo na PF.");
-      if (!crmCommit) return showStartError("Selecione Sim ou Não sobre o compromisso com os 2 CRMs diários.");
-      if (crmCommit === "Não" && crmReason.length < 5) {
-        return showStartError("Como você marcou 'Não' nos CRMs diários, escreva o motivo no campo obrigatório.");
+
+      let interviewData = null;
+
+      // Validação da Ficha de Entrevista EXCLUSIVA para Guarda Municipal (GM)
+      if (state.role === "GM") {
+        const age = document.getElementById("int-age").value.trim();
+        const phone = document.getElementById("int-phone").value.trim();
+        const origin = document.getElementById("int-origin").value.trim();
+        const servers = document.getElementById("int-servers").value.trim();
+        const exp = document.getElementById("int-exp").value.trim();
+        const know = document.getElementById("int-know").value.trim();
+        const goal = document.getElementById("int-goal").value.trim();
+        const crmRadio = document.querySelector('input[name="crm-commit"]:checked');
+        const crmCommit = crmRadio ? crmRadio.value : "";
+        const crmReason = document.getElementById("int-crm-reason").value.trim();
+
+        if (!age || Number(age) < 10) return showStartError("Informe sua idade (OOC).");
+        if (phone.length < 8) return showStartError("Informe seu número de telefone / WhatsApp.");
+        if (origin.length < 3) return showStartError("Informe de onde você veio (seu histórico no RP).");
+        if (servers.length < 2) return showStartError("Responda se já trabalhou em algum outro servidor.");
+        if (exp.length < 2) return showStartError("Informe sua experiência na área policial/segurança/recepção.");
+        if (know.length < 2) return showStartError("Informe seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q.");
+        if (goal.length < 5) return showStartError("Informe qual o seu objetivo ao entrar na PF.");
+        if (!crmCommit) return showStartError("Selecione Sim ou Não sobre o compromisso com os 2 CRMs diários.");
+        if (crmCommit === "Não" && crmReason.length < 5) {
+          return showStartError("Como você marcou 'Não' nos CRMs diários, escreva o motivo no campo obrigatório.");
+        }
+
+        interviewData = { age, phone, origin, servers, exp, know, goal, crmCommit, crmReason };
       }
 
       const btn = document.getElementById("btn-start-exam");
@@ -1992,7 +2060,7 @@
 
       state.candidateName = candName;
       state.delegateName = delName;
-      state.interview = { age, phone, origin, servers, exp, know, goal, crmCommit, crmReason };
+      state.interview = interviewData;
       state.attemptNumber = 1;
       state.usedQuestionIds = new Set();
       state.attemptsData = [];
@@ -2002,7 +2070,7 @@
     });
 
     // =========================================================================
-    // MOTOR DA PROVA (SORTEIO SEM REPETIÇÃO + 90s + REGISTRO COMPLETO)
+    // MOTOR DA PROVA (SORTEIO SEM REPETIÇÃO + 90s + ANULAÇÃO DETALHADA)
     // =========================================================================
     function startAttempt(num) {
       state.attemptNumber = num;
@@ -2033,15 +2101,19 @@
       state.currentIndex = 0;
       state.currentDetailedAnswers = [];
       state.tabSwitches = 0;
+      state.pendingTabAlertMsg = null;
       state.attemptStartTime = Date.now();
       state.examActive = true;
+      state.isAdvancing = false;
 
+      document.getElementById("quiz-tab-warning").classList.add("hidden");
       showView("view-quiz");
       renderQuestion();
     }
 
     function renderQuestion() {
       clearInterval(state.timerInterval);
+      state.isAdvancing = false;
       const qObj = state.currentQuestions[state.currentIndex];
       const total = state.currentQuestions.length;
 
@@ -2070,6 +2142,7 @@
           btn.classList.add("selected");
           state.selectedOptionIdx = idx;
           btnNext.disabled = false;
+          document.getElementById("quiz-tab-warning").classList.add("hidden");
         });
         listEl.appendChild(btn);
       });
@@ -2084,10 +2157,11 @@
       state.timerInterval = setInterval(() => {
         state.timeLeft--;
         updateTimerUI();
-        if (state.timeLeft <= 0) {
+        if (state.timeLeft <= 0 && !state.isAdvancing) {
+          state.isAdvancing = true;
           clearInterval(state.timerInterval);
-          recordAnswer(true);
-          showToast("Tempo esgotado! Questão anulada — avançando...", 2200);
+          recordAnswer("time");
+          showToast("⏱️ Tempo esgotado! Questão anulada por tempo — avançando...", 2400);
           advanceQuestion();
         }
       }, 1000);
@@ -2114,16 +2188,20 @@
     }
 
     document.getElementById("btn-next-q").addEventListener("click", () => {
-      if (state.selectedOptionIdx === null) return;
+      if (state.selectedOptionIdx === null || state.isAdvancing) return;
+      state.isAdvancing = true;
       clearInterval(state.timerInterval);
-      recordAnswer(false);
+      document.getElementById("quiz-tab-warning").classList.add("hidden");
+      recordAnswer(null);
       advanceQuestion();
     });
 
-    function recordAnswer(isTimeout) {
+    // annulReason: null | "time" | "tab"
+    function recordAnswer(annulReason) {
       const qObj = state.currentQuestions[state.currentIndex];
-      const chosenIdx = (isTimeout || state.selectedOptionIdx === null) ? -1 : state.selectedOptionIdx;
-      const status = chosenIdx === -1 ? "nul" : (chosenIdx === qObj.correctIdx ? "ok" : "err");
+      const isAnnulled = annulReason === "time" || annulReason === "tab" || state.selectedOptionIdx === null;
+      const chosenIdx = isAnnulled ? -1 : state.selectedOptionIdx;
+      const status = isAnnulled ? "nul" : (chosenIdx === qObj.correctIdx ? "ok" : "err");
 
       state.currentDetailedAnswers.push({
         qNum: state.currentIndex + 1,
@@ -2132,7 +2210,8 @@
         options: qObj.options,
         chosenIdx,
         correctIdx: qObj.correctIdx,
-        status
+        status,
+        annulReason: isAnnulled ? (annulReason || "time") : null
       });
     }
 
@@ -2148,11 +2227,14 @@
     function finishAttempt() {
       clearInterval(state.timerInterval);
       state.examActive = false;
+      state.isAdvancing = false;
 
       const total = state.currentQuestions.length;
       const correct = state.currentDetailedAnswers.filter(a => a.status === "ok").length;
       const wrong = state.currentDetailedAnswers.filter(a => a.status === "err").length;
-      const annulled = state.currentDetailedAnswers.filter(a => a.status === "nul").length;
+      const annulledTime = state.currentDetailedAnswers.filter(a => a.status === "nul" && a.annulReason !== "tab").length;
+      const annulledTab = state.currentDetailedAnswers.filter(a => a.status === "nul" && a.annulReason === "tab").length;
+      const annulled = annulledTime + annulledTab;
       const percent = Math.round((correct / total) * 100);
       const durationSec = Math.max(1, Math.round((Date.now() - state.attemptStartTime) / 1000));
       const now = new Date();
@@ -2163,6 +2245,8 @@
         correct,
         wrong,
         annulled,
+        annulledTime,
+        annulledTab,
         percent,
         passed: percent >= PASSING_PERCENT,
         durationSec,
@@ -2189,18 +2273,28 @@
       box.innerHTML = "";
       questions.forEach(a => {
         const span = document.createElement("span");
-        span.className = `chip ${a.status}`;
-        const icon = a.status === "ok" ? "✅" : a.status === "err" ? "❌" : "⏱️";
-        span.textContent = `Q${a.qNum}: ${icon}`;
+        if (a.status === "nul" && a.annulReason === "tab") {
+          span.className = "chip nul-tab";
+          span.title = "Anulada por saída da página/aba";
+          span.textContent = `Q${a.qNum}: 🚫`;
+        } else if (a.status === "nul") {
+          span.className = "chip nul";
+          span.title = "Anulada por tempo esgotado";
+          span.textContent = `Q${a.qNum}: ⏱️`;
+        } else {
+          span.className = `chip ${a.status}`;
+          span.textContent = `Q${a.qNum}: ${a.status === "ok" ? "✅" : "❌"}`;
+        }
         box.appendChild(span);
       });
     }
 
     function renderMidScreen(att) {
+      const annulSub = att.annulled > 0 ? `⏱️${att.annulledTime} / 🚫${att.annulledTab}` : "Anuladas";
       document.getElementById("mid-stats").innerHTML = `
         <div class="stat-box"><div class="val" style="color:var(--green)">${att.correct}/${att.total}</div><div class="lbl">Acertos</div></div>
         <div class="stat-box"><div class="val" style="color:var(--red)">${att.wrong}</div><div class="lbl">Erros</div></div>
-        <div class="stat-box"><div class="val" style="color:var(--amber)">${att.annulled}</div><div class="lbl">Anuladas</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--amber)">${att.annulled}</div><div class="lbl">${annulSub}</div></div>
         <div class="stat-box"><div class="val" style="color:var(--blue-glow)">${att.percent}%</div><div class="lbl">Aproveitamento</div></div>
       `;
 
@@ -2228,7 +2322,7 @@
         card.innerHTML = `
           <h3>${att.attemptNumber}ª Tentativa</h3>
           <p><strong>Acertos:</strong> ${att.correct} de ${att.total} (${att.percent}%)</p>
-          <p><strong>Erros:</strong> ${att.wrong} | <strong>Anuladas:</strong> ${att.annulled}</p>
+          <p><strong>Erros:</strong> ${att.wrong} | <strong>Anuladas:</strong> ${att.annulled} (⏱️${att.annulledTime} / 🚫${att.annulledTab})</p>
           <p><strong>Tempo total:</strong> ${formatDuration(att.durationSec)}</p>
           <p style="margin-top:6px; font-weight:700; color:${att.passed ? "#86efac" : "#fca5a5"}">
             ${att.passed ? "APTO PARA ENTREVISTA" : "ABAIXO DA MÉDIA"}
@@ -2255,12 +2349,19 @@
     function buildCandidateReportMessage(rec) {
       const gabUrl = getGabaritoUrl(rec.id);
       const statusText = rec.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
-      const gabaritoResumo = rec.questions
-        .map(q => `Q${String(q.qNum).padStart(2, "0")}:${q.status === "ok" ? "✅" : q.status === "err" ? "❌" : "⏱️"}`)
+      const { annulledTime, annulledTab } = getAnnulmentCounts(rec);
+
+      const gabaritoResumo = (rec.questions || [])
+        .map(q => {
+          const icon = q.status === "ok" ? "✅" : q.status === "err" ? "❌" : (q.annulReason === "tab" ? "🚫" : "⏱️");
+          return `Q${String(q.qNum).padStart(2, "0")}:${icon}`;
+        })
         .join(" | ");
-      const crmText = rec.interview.crmCommit === "Sim"
-        ? "Sim, comprometeu-se"
-        : `Não (Motivo: ${rec.interview.crmReason})`;
+
+      const isGm = hasGmInterview(rec);
+      const crmLine = isGm
+        ? `📦 *Compromisso 2 CRMs/dia:* ${rec.interview.crmCommit === "Sim" ? "Sim, comprometeu-se" : `Não (Motivo: ${rec.interview.crmReason})`}`
+        : null;
 
       return [
         "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
@@ -2271,22 +2372,25 @@
         `🎖️ *Prova/Cargo:* ${rec.roleName}`,
         `📅 *Data/Hora:* ${rec.dateStr} às ${rec.timeStr}`,
         `⏱️ *Duração:* ${formatDuration(rec.durationSec)}`,
-        `📦 *Compromisso 2 CRMs/dia:* ${crmText}`,
+        crmLine,
         "━━━━━━━━━━━━━━━━━━━━",
         `✅ *Acertos:* ${rec.correct}/${rec.total}`,
         `❌ *Erros:* ${rec.wrong}`,
-        `⏳ *Anuladas (Tempo):* ${rec.annulled}`,
+        `⏳ *Anuladas (Tempo):* ${annulledTime}`,
+        `🚫 *Anuladas (Saída de Página):* ${annulledTab}`,
         `📊 *Aproveitamento:* ${rec.percent}%`,
         `📌 *Situação:* ${statusText}`,
         "━━━━━━━━━━━━━━━━━━━━",
-        "📝 *Resumo do Gabarito:*",
+        "📝 *Resumo do Gabarito:* (✅ Certa | ❌ Errada | ⏱️ Tempo | 🚫 Saiu da página)",
         gabaritoResumo,
         "━━━━━━━━━━━━━━━━━━━━",
-        "🔗 *Link do Gabarito Completo (Questões + Entrevista):*",
+        isGm
+          ? "🔗 *Link do Gabarito Completo (Questões + Ficha de Entrevista):*"
+          : "🔗 *Link do Gabarito Completo (Todas as Questões):*",
         gabUrl,
         "━━━━━━━━━━━━━━━━━━━━",
         `🆔 *Registro:* ${rec.id}`
-      ].join("\n");
+      ].filter(Boolean).join("\n");
     }
 
     async function finalizeAndSaveAttempt(idx) {
@@ -2300,12 +2404,14 @@
         delegateName: state.delegateName,
         role: state.role,
         roleName: ROLE_CONFIG[state.role].name,
-        interview: { ...state.interview },
+        interview: state.role === "GM" ? { ...state.interview } : null,
         attemptNumber: att.attemptNumber,
         total: att.total,
         correct: att.correct,
         wrong: att.wrong,
         annulled: att.annulled,
+        annulledTime: att.annulledTime,
+        annulledTab: att.annulledTab,
         percent: att.percent,
         passed: att.passed,
         durationSec: att.durationSec,
@@ -2389,6 +2495,16 @@
 
     function renderGabaritoView(rec) {
       state.currentViewingGabarito = rec;
+      const isGm = hasGmInterview(rec);
+      const { annulledTime, annulledTab, total: totalAnnulled } = getAnnulmentCounts(rec);
+
+      document.getElementById("gab-main-title").textContent = isGm
+        ? "Gabarito Oficial & Ficha de Entrevista (GM)"
+        : "Gabarito Oficial da Avaliação";
+      document.getElementById("gab-info-heading").textContent = isGm
+        ? "Dados da Avaliação & Ficha de Entrevista (GM)"
+        : "Dados da Avaliação (Promoção)";
+
       document.getElementById("gab-view-id").textContent = rec.id;
       document.getElementById("gab-loading").classList.add("hidden");
       document.getElementById("gab-not-found").classList.add("hidden");
@@ -2401,44 +2517,72 @@
         ? `✅ APTO PARA ENTREVISTA — ${rec.roleName} (${rec.correct}/${rec.total} • ${rec.percent}%)`
         : `❌ INAPTO NA PROVA OBJETIVA — ${rec.roleName} (${rec.correct}/${rec.total} • ${rec.percent}%)`;
 
+      const annulSub = totalAnnulled > 0 ? `⏱️${annulledTime} Tempo / 🚫${annulledTab} Saída` : "Anuladas";
       document.getElementById("gab-stats").innerHTML = `
         <div class="stat-box"><div class="val" style="color:var(--green)">${rec.correct}/${rec.total}</div><div class="lbl">Acertos</div></div>
         <div class="stat-box"><div class="val" style="color:var(--red)">${rec.wrong}</div><div class="lbl">Erros</div></div>
-        <div class="stat-box"><div class="val" style="color:var(--amber)">${rec.annulled}</div><div class="lbl">Anuladas</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--amber)">${totalAnnulled}</div><div class="lbl">${annulSub}</div></div>
         <div class="stat-box"><div class="val" style="color:var(--blue-glow)">${rec.percent}%</div><div class="lbl">Aproveitamento</div></div>
       `;
 
-      const iv = rec.interview || {};
-      const crmHtml = iv.crmCommit === "Sim"
-        ? `<span style="color:#86efac; font-weight:700;">✅ Sim, comprometeu-se com os 2 CRMs diários</span>`
-        : `<span style="color:#fca5a5; font-weight:700;">❌ Não consegue comparecer</span><br/><small style="color:#fde047;">Motivo: ${escapeHtml(iv.crmReason || "Não informado")}</small>`;
+      const annulDetailHtml = totalAnnulled === 0
+        ? `<span style="color:#86efac; font-weight:700;">Nenhuma questão anulada</span>`
+        : `<span style="color:#fde047; font-weight:700;">⏱️ ${annulledTime} por tempo esgotado</span> &nbsp;|&nbsp; <span style="color:#fca5a5; font-weight:700;">🚫 ${annulledTab} por saída da página/aba</span>`;
 
-      const tabsHtml = rec.tabSwitches === 0
-        ? `<span style="color:#86efac; font-weight:700;">0 saídas (Limpo)</span>`
-        : `<span style="color:#fca5a5; font-weight:700;">⚠️ ${rec.tabSwitches} saída(s) de aba/app detectada(s)</span>`;
-
-      document.getElementById("gab-interview-grid").innerHTML = `
+      let infoHtml = `
         <div class="interview-item"><div class="k">Candidato (Nome RP)</div><div class="v"><strong>${escapeHtml(rec.candidateName)}</strong></div></div>
         <div class="interview-item"><div class="k">Delegado Responsável</div><div class="v">${escapeHtml(rec.delegateName)}</div></div>
         <div class="interview-item"><div class="k">Data / Duração</div><div class="v">${escapeHtml(rec.dateStr)} às ${escapeHtml(rec.timeStr)} • ${formatDuration(rec.durationSec)}</div></div>
-        <div class="interview-item"><div class="k">Tentativa & Anti-Cola</div><div class="v">${rec.attemptNumber}ª Tentativa • ${tabsHtml}</div></div>
-        <div class="interview-item"><div class="k">Idade (OOC)</div><div class="v">${escapeHtml(iv.age || "-")} anos</div></div>
-        <div class="interview-item"><div class="k">Telefone / WhatsApp</div><div class="v">${escapeHtml(iv.phone || "-")}</div></div>
-        <div class="interview-item full"><div class="k">De onde veio (Histórico no RP)</div><div class="v">${escapeHtml(iv.origin || "-")}</div></div>
-        <div class="interview-item full"><div class="k">Já trabalhou em outro servidor?</div><div class="v">${escapeHtml(iv.servers || "-")}</div></div>
-        <div class="interview-item full"><div class="k">Experiência (Polícia / Segurança / Recepção)</div><div class="v">${escapeHtml(iv.exp || "-")}</div></div>
-        <div class="interview-item full"><div class="k">Nível de conhecimento (RP / Bíblia RP / Código Q)</div><div class="v">${escapeHtml(iv.know || "-")}</div></div>
-        <div class="interview-item full"><div class="k">Objetivo na Polícia Federal</div><div class="v">${escapeHtml(iv.goal || "-")}</div></div>
-        <div class="interview-item full"><div class="k">Compromisso com os 2 CRMs Diários</div><div class="v">${crmHtml}</div></div>
+        <div class="interview-item"><div class="k">Tentativa Enviada</div><div class="v"><strong>${rec.attemptNumber}ª Tentativa</strong></div></div>
+        <div class="interview-item full"><div class="k">Detalhamento de Anulações</div><div class="v">${annulDetailHtml}</div></div>
       `;
+
+      if (isGm) {
+        const iv = rec.interview;
+        const crmHtml = iv.crmCommit === "Sim"
+          ? `<span style="color:#86efac; font-weight:700;">✅ Sim, comprometeu-se com os 2 CRMs diários</span>`
+          : `<span style="color:#fca5a5; font-weight:700;">❌ Não consegue comparecer</span><br/><small style="color:#fde047;">Motivo: ${escapeHtml(iv.crmReason || "Não informado")}</small>`;
+
+        infoHtml += `
+          <div class="interview-item"><div class="k">Idade (OOC)</div><div class="v">${escapeHtml(iv.age || "-")} anos</div></div>
+          <div class="interview-item"><div class="k">Telefone / WhatsApp</div><div class="v">${escapeHtml(iv.phone || "-")}</div></div>
+          <div class="interview-item full"><div class="k">De onde veio (Histórico no RP)</div><div class="v">${escapeHtml(iv.origin || "-")}</div></div>
+          <div class="interview-item full"><div class="k">Já trabalhou em outro servidor?</div><div class="v">${escapeHtml(iv.servers || "-")}</div></div>
+          <div class="interview-item full"><div class="k">Experiência (Polícia / Segurança / Recepção)</div><div class="v">${escapeHtml(iv.exp || "-")}</div></div>
+          <div class="interview-item full"><div class="k">Nível de conhecimento (RP / Bíblia RP / Código Q)</div><div class="v">${escapeHtml(iv.know || "-")}</div></div>
+          <div class="interview-item full"><div class="k">Objetivo na Polícia Federal</div><div class="v">${escapeHtml(iv.goal || "-")}</div></div>
+          <div class="interview-item full"><div class="k">Compromisso com os 2 CRMs Diários</div><div class="v">${crmHtml}</div></div>
+        `;
+      }
+
+      document.getElementById("gab-interview-grid").innerHTML = infoHtml;
 
       const qList = document.getElementById("gab-questions-list");
       qList.innerHTML = "";
       const letters = ["A", "B", "C", "D"];
 
       (rec.questions || []).forEach(item => {
-        const badgeClass = item.status === "ok" ? "pill-green" : item.status === "err" ? "pill-red" : "pill-amber";
-        const badgeText = item.status === "ok" ? "✅ Correta" : item.status === "err" ? "❌ Errada" : "⏱️ Anulada (Tempo)";
+        const isTabAnnul = item.status === "nul" && item.annulReason === "tab";
+        const isTimeAnnul = item.status === "nul" && !isTabAnnul;
+
+        const badgeClass = item.status === "ok"
+          ? "pill-green"
+          : (item.status === "err" || isTabAnnul) ? "pill-red" : "pill-amber";
+
+        const badgeText = item.status === "ok"
+          ? "✅ Correta"
+          : item.status === "err"
+            ? "❌ Errada"
+            : isTabAnnul
+              ? "🚫 Anulada (Saída da página/aba)"
+              : "⏱️ Anulada (Tempo esgotado)";
+
+        let reasonHtml = "";
+        if (isTabAnnul) {
+          reasonHtml = `<div class="gab-annul-reason tab">🚫 Motivo da anulação: o candidato saiu da página/aba durante esta questão, que foi anulada e pulada automaticamente pelo sistema anti-cola.</div>`;
+        } else if (isTimeAnnul) {
+          reasonHtml = `<div class="gab-annul-reason time">⏱️ Motivo da anulação: o cronômetro de 1min30s zerou antes que o candidato confirmasse uma alternativa.</div>`;
+        }
 
         let optsHtml = "";
         (item.options || []).forEach((optText, idx) => {
@@ -2458,13 +2602,14 @@
         });
 
         const card = document.createElement("div");
-        card.className = `gab-q-card ${item.status}`;
+        card.className = `gab-q-card ${isTabAnnul ? "nul-tab" : item.status}`;
         card.innerHTML = `
           <div class="gab-q-head">
             <span class="pill">${escapeHtml(item.difficulty || "Médio")}</span>
             <span class="pill ${badgeClass}">${badgeText}</span>
           </div>
           <div class="gab-q-title">${item.qNum}. ${escapeHtml(item.question)}</div>
+          ${reasonHtml}
           ${optsHtml}
         `;
         qList.appendChild(card);
@@ -2492,7 +2637,6 @@
     });
 
     document.getElementById("btn-gab-back-home").addEventListener("click", () => {
-      // Remove parâmetro ?gabarito da URL sem recarregar
       try { window.history.replaceState({}, "", window.location.pathname); } catch {}
       showView("view-start");
     });
@@ -2581,9 +2725,9 @@
         `🎖️ *Prova/Cargo:* ${roleInfo.name} (${roleInfo.count} questões)`,
         `🌐 *Link da Prova:* ${fullLink}`,
         "━━━━━━━━━━━━━━━━━━━━",
-        "📝 Preencha a ficha de entrevista completa antes de iniciar.",
-        "⏱️ Cada questão possui *1min30s* (evite sair da tela durante a prova).",
-        "📩 Ao finalizar, envie a mensagem com o *link do gabarito* aqui no WhatsApp para seguirmos com sua entrevista."
+        role === "GM" ? "📝 Preencha a ficha de entrevista completa antes de iniciar." : null,
+        "⏱️ Cada questão possui *1min30s*. Atenção: sair da página/aba *anula e pula a questão automaticamente*.",
+        "📩 Ao finalizar, envie a mensagem com o *link do gabarito* aqui no WhatsApp."
       ].filter(Boolean).join("\n");
 
       document.getElementById("invite-link-out").textContent = fullLink;
@@ -2615,13 +2759,16 @@
     function buildDelegatesGroupMessage(rec, isFraud, fraudNote) {
       const gabUrl = getGabaritoUrl(rec.id);
       const statusText = rec.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
-      const iv = rec.interview || {};
-      const crmText = iv.crmCommit === "Sim"
-        ? "Sim"
-        : `Não (${iv.crmReason || "Sem motivo"})`;
-      const tabsText = rec.tabSwitches === 0
-        ? "0 saídas (Limpo)"
-        : `⚠️ ${rec.tabSwitches} saída(s) de tela`;
+      const isGm = hasGmInterview(rec);
+      const { annulledTime, annulledTab, total: totalAnnulled } = getAnnulmentCounts(rec);
+
+      const crmLine = isGm
+        ? `📦 *Compromisso 2 CRMs/dia:* ${rec.interview.crmCommit === "Sim" ? "Sim" : `Não (${rec.interview.crmReason || "Sem motivo"})`}`
+        : null;
+
+      const annulText = totalAnnulled === 0
+        ? "0 anulações (Limpo)"
+        : `⏱️ ${annulledTime} por tempo | 🚫 ${annulledTab} por saída da página`;
 
       return [
         "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
@@ -2634,16 +2781,18 @@
         "━━━━━━━━━━━━━━━━━━━━",
         `📊 *Resultado Real:* ${rec.correct}/${rec.total} (${rec.percent}%)`,
         `🔄 *Tentativa:* ${rec.attemptNumber}ª Tentativa`,
-        `👀 *Saídas de Tela:* ${tabsText}`,
-        `📦 *Compromisso 2 CRMs/dia:* ${crmText}`,
+        `🚫 *Anulações:* ${annulText}`,
+        crmLine,
         `📌 *Situação:* ${isFraud ? `${statusText} (FRAUDE DETECTADA)` : statusText}`,
         `🛡️ *Auditoria:* ${isFraud ? "🚨 FRAUDE — MENSAGEM ADULTERADA PELO CANDIDATO" : "✅ AUTÊNTICA (Confirmada no Banco)"}`,
         fraudNote ? `⚠️ *Alteração detectada:* ${fraudNote}` : null,
         "━━━━━━━━━━━━━━━━━━━━",
-        `🔗 *Gabarito Completo & Entrevista:* ${gabUrl}`,
+        isGm
+          ? `🔗 *Gabarito Completo & Entrevista:* ${gabUrl}`
+          : `🔗 *Gabarito Completo:* ${gabUrl}`,
         isFraud
           ? "⚠️ *Encaminhamento:* Candidato alterou o resultado antes de enviar — ciência ao comando."
-          : (rec.passed ? "🎙️ *Encaminhamento:* Liberado para entrevista." : "📌 *Encaminhamento:* Reprovado na prova objetiva.")
+          : (rec.passed ? "🎙️ *Encaminhamento:* Aprovado na prova objetiva." : "📌 *Encaminhamento:* Reprovado na prova objetiva.")
       ].filter(Boolean).join("\n");
     }
 
@@ -2690,7 +2839,6 @@
       groupWrap.classList.add("hidden");
       lastVerifiedGabaritoRec = null;
 
-      // Extrai ID do Gabarito (PF11-GM-XXXXXX) do link ou do texto
       const idMatch = raw.toUpperCase().match(/PF11-(?:GM|AP|TO|ES)-[A-Z0-9]{6}/);
 
       if (!idMatch) {
@@ -2723,6 +2871,7 @@
       lastVerifiedGabaritoRec = rec;
       openWrap.classList.remove("hidden");
 
+      const { annulledTime, annulledTab, total: totalAnnulled } = getAnnulmentCounts(rec);
       const isFullMessage = /Acertos:|Aproveitamento:|Situa[çc][ãa]o:|Candidato:/i.test(raw);
       const fraudReasons = [];
 
@@ -2737,8 +2886,10 @@
         const msgTotal = hitsMatch ? parseInt(hitsMatch[2], 10) : null;
         const wrongMatch = raw.match(/Erros:\*?\s*(\d+)/i);
         const msgWrong = wrongMatch ? parseInt(wrongMatch[1], 10) : null;
-        const annMatch = raw.match(/Anuladas(?:\s*\(Tempo\))?:\*?\s*(\d+)/i);
-        const msgAnn = annMatch ? parseInt(annMatch[1], 10) : null;
+        const annTimeMatch = raw.match(/Anuladas\s*\(Tempo\):\*?\s*(\d+)/i);
+        const msgAnnTime = annTimeMatch ? parseInt(annTimeMatch[1], 10) : null;
+        const annTabMatch = raw.match(/Anuladas\s*\(Sa[íi]da de P[áa]gina\):\*?\s*(\d+)/i);
+        const msgAnnTab = annTabMatch ? parseInt(annTabMatch[1], 10) : null;
         const pctMatch = raw.match(/Aproveitamento:\*?\s*(\d+)\s*%/i);
         const msgPct = pctMatch ? parseInt(pctMatch[1], 10) : null;
 
@@ -2759,8 +2910,11 @@
         if (msgWrong !== null && msgWrong !== rec.wrong) {
           fraudReasons.push(`Erros adulterados: enviou "${msgWrong}", mas o real é "${rec.wrong}".`);
         }
-        if (msgAnn !== null && msgAnn !== rec.annulled) {
-          fraudReasons.push(`Anuladas adulteradas: enviou "${msgAnn}", mas o real é "${rec.annulled}".`);
+        if (msgAnnTime !== null && msgAnnTime !== annulledTime) {
+          fraudReasons.push(`Anuladas (Tempo) adulteradas: enviou "${msgAnnTime}", mas o real é "${annulledTime}".`);
+        }
+        if (msgAnnTab !== null && msgAnnTab !== annulledTab) {
+          fraudReasons.push(`Anuladas (Saída de Página) adulteradas: enviou "${msgAnnTab}", mas o real é "${annulledTab}".`);
         }
         if (msgPct !== null && msgPct !== rec.percent) {
           fraudReasons.push(`Aproveitamento adulterado: enviou "${msgPct}%", mas o real é "${rec.percent}%".`);
@@ -2770,9 +2924,13 @@
         }
       }
 
-      const tabsHtml = rec.tabSwitches === 0
-        ? `<strong style="color:#86efac;">0 saídas (Limpo)</strong>`
-        : `<strong style="color:#fca5a5;">⚠️ ${rec.tabSwitches} saída(s) de aba/app</strong>`;
+      const annulHtml = totalAnnulled === 0
+        ? `<strong style="color:#86efac;">0 anulações (Limpo)</strong>`
+        : `<strong style="color:#fde047;">⏱️ ${annulledTime} tempo</strong> &nbsp;|&nbsp; <strong style="color:#fca5a5;">🚫 ${annulledTab} saída de página</strong>`;
+
+      const crmRow = hasGmInterview(rec)
+        ? `<div class="decode-row"><span>Compromisso 2 CRMs/dia (GM):</span><strong>${escapeHtml(rec.interview.crmCommit || "-")}</strong></div>`
+        : "";
 
       details.innerHTML = `
         <div class="decode-row"><span>Registro Oficial:</span><strong>${escapeHtml(rec.id)}</strong></div>
@@ -2781,8 +2939,8 @@
         <div class="decode-row"><span>Cargo:</span><strong>${escapeHtml(rec.roleName)}</strong></div>
         <div class="decode-row"><span>Resultado Real no Banco:</span><strong>${rec.correct}/${rec.total} (${rec.percent}%) — ${rec.passed ? "APTO" : "INAPTO"}</strong></div>
         <div class="decode-row"><span>Tentativa:</span><strong>${rec.attemptNumber}ª Tentativa</strong></div>
-        <div class="decode-row"><span>Saídas de Tela:</span>${tabsHtml}</div>
-        <div class="decode-row"><span>Compromisso 2 CRMs/dia:</span><strong>${escapeHtml(rec.interview?.crmCommit || "-")}</strong></div>
+        <div class="decode-row"><span>Anulações:</span><span>${annulHtml}</span></div>
+        ${crmRow}
       `;
 
       if (fraudReasons.length === 0) {
@@ -2844,6 +3002,11 @@
 
       container.innerHTML = "";
       filtered.forEach(rec => {
+        const { annulledTab } = getAnnulmentCounts(rec);
+        const tabBadge = annulledTab > 0
+          ? `<span class="pill pill-red" style="margin-left:4px;">🚫${annulledTab}</span>`
+          : "";
+
         const div = document.createElement("div");
         div.className = "saved-gab-item";
         div.innerHTML = `
@@ -2851,6 +3014,7 @@
             <div style="font-weight:700; color:#fff; font-size:0.93rem;">
               ${escapeHtml(rec.candidateName)}
               <span class="pill ${rec.passed ? "pill-green" : "pill-red"}" style="margin-left:6px;">${rec.correct}/${rec.total} (${rec.percent}%)</span>
+              ${tabBadge}
             </div>
             <div style="font-size:0.78rem; color:var(--muted); margin-top:4px;">
               ${escapeHtml(rec.roleName)} • Del: ${escapeHtml(rec.delegateName)} • ${rec.attemptNumber}ª Tent. • ${escapeHtml(rec.dateStr)} ${escapeHtml(rec.timeStr)}
@@ -3063,13 +3227,11 @@
       const params = new URLSearchParams(window.location.search);
       const gabParam = params.get("gabarito");
 
-      // Se abriu um link de Gabarito salvo
       if (gabParam) {
         await openGabaritoById(gabParam.trim().toUpperCase());
         return;
       }
 
-      // Pré-preenchimento vindo do link personalizado do Delegado
       const candParam = params.get("candidato");
       const delParam = params.get("delegado");
       const roleParam = (params.get("cargo") || "").toUpperCase();
