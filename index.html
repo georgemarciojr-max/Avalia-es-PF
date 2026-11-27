@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Polícia Federal | Portal de Avaliações - Rio Rise S11</title>
+  <title>Polícia Federal | Portal de Avaliações — Rio Rise S11</title>
   <style>
     :root {
       --bg-dark: #050a14;
       --bg-card: #0c1527;
       --bg-card-alt: #12203b;
+      --bg-input: #070e1c;
       --border: #1e355e;
       --blue: #2563eb;
       --blue-glow: #38bdf8;
@@ -19,6 +20,7 @@
       --amber: #f59e0b;
       --text: #f1f5f9;
       --muted: #94a3b8;
+      --radius: 14px;
     }
 
     * {
@@ -29,121 +31,161 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #0f1f3d 0%, var(--bg-dark) 65%);
+      background: radial-gradient(circle at top, #0f1f3d 0%, var(--bg-dark) 68%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 12px 32px;
+      padding: 16px 12px 64px;
     }
 
     .container {
       width: 100%;
-      max-width: 760px;
+      max-width: 820px;
     }
+
+    .hidden { display: none !important; }
 
     /* Header */
     .header {
       text-align: center;
       padding: 18px 16px;
-      background: linear-gradient(180deg, rgba(18, 32, 59, 0.95), rgba(12, 21, 39, 0.95));
+      background: linear-gradient(180deg, rgba(18, 32, 59, 0.96), rgba(12, 21, 39, 0.96));
       border: 1px solid var(--border);
       border-top: 3px solid var(--gold);
-      border-radius: 14px;
-      margin-bottom: 18px;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      position: relative;
     }
 
     .badge-svg {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 8px;
+      width: 54px;
+      height: 54px;
+      margin-bottom: 6px;
       filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.35));
     }
 
     .header h1 {
-      font-size: 1.35rem;
-      letter-spacing: 1.5px;
+      font-size: 1.32rem;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       color: #fff;
     }
 
     .header .subtitle {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--gold-soft);
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       margin-top: 4px;
       font-weight: 600;
     }
 
-    /* Cards & Views */
+    .cloud-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: rgba(5, 10, 20, 0.65);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .cloud-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .cloud-dot.online { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .cloud-dot.error { background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+    /* Cards */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: var(--radius);
       padding: 20px;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
       margin-bottom: 16px;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
     .section-title {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       color: var(--blue-glow);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(30, 53, 94, 0.7);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    /* Form Controls */
+    .sub-heading {
+      font-size: 0.85rem;
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin: 18px 0 10px;
+      font-weight: 700;
+    }
+
+    /* Forms */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    @media (max-width: 560px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 580px) {
+      .form-grid { grid-template-columns: 1fr; }
     }
+
+    .field { margin-bottom: 12px; }
+    .form-grid .field { margin-bottom: 0; }
 
     .field label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-weight: 700;
     }
 
+    .field label .req { color: var(--gold); }
+
     .field input,
+    .field select,
     .field textarea {
       width: 100%;
-      padding: 12px 14px;
-      background: #070e1c;
+      padding: 11px 13px;
+      background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: 10px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .field input:focus,
+    .field select:focus,
     .field textarea:focus {
       border-color: var(--blue-glow);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
     }
 
     /* Role Selector */
@@ -154,10 +196,8 @@
       margin-bottom: 16px;
     }
 
-    @media (max-width: 520px) {
-      .roles-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 540px) {
+      .roles-grid { grid-template-columns: 1fr; }
     }
 
     .role-card {
@@ -168,7 +208,6 @@
       cursor: pointer;
       transition: all 0.2s ease;
       text-align: left;
-      position: relative;
     }
 
     .role-card:hover {
@@ -178,13 +217,13 @@
 
     .role-card.selected {
       border-color: var(--gold);
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(234, 179, 8, 0.12));
-      box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(234, 179, 8, 0.14));
+      box-shadow: 0 0 16px rgba(234, 179, 8, 0.22);
     }
 
     .role-card .role-tag {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 99px;
@@ -200,71 +239,123 @@
     }
 
     .role-card h3 {
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       color: #fff;
       margin-bottom: 4px;
     }
 
     .role-card p {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--muted);
       line-height: 1.35;
     }
 
-    /* Info Box */
-    .rules-box {
+    /* CRM Commitment Box */
+    .crm-box {
+      background: rgba(234, 179, 8, 0.08);
+      border: 1px solid rgba(234, 179, 8, 0.45);
+      border-left: 4px solid var(--gold);
+      border-radius: 11px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .crm-box p {
+      font-size: 0.86rem;
+      line-height: 1.48;
+      color: #fef9c3;
+      margin-bottom: 12px;
+    }
+
+    .radio-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .radio-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px;
+      border-radius: 10px;
+      background: #081020;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+
+    .radio-pill input { display: none; }
+
+    .radio-pill.active-sim {
+      border-color: var(--green);
+      background: rgba(34, 197, 94, 0.15);
+      color: #86efac;
+    }
+
+    .radio-pill.active-nao {
+      border-color: var(--red);
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+    }
+
+    /* Info / Alert Boxes */
+    .info-box {
       background: rgba(37, 99, 235, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
       border-left: 4px solid var(--blue-glow);
       border-radius: 10px;
       padding: 12px 14px;
-      margin: 14px 0 18px;
+      margin: 12px 0;
       font-size: 0.83rem;
       color: #cbd5e1;
       line-height: 1.5;
     }
 
-    .rules-box ul {
-      padding-left: 18px;
-      margin-top: 6px;
-    }
+    .info-box ul { padding-left: 18px; margin-top: 6px; }
+    .info-box li { margin-bottom: 4px; }
 
-    .rules-box li {
-      margin-bottom: 4px;
+    .error-msg {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--red);
+      color: #fecaca;
+      padding: 11px 13px;
+      border-radius: 9px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      line-height: 1.45;
     }
 
     /* Buttons */
     .btn {
       width: 100%;
-      padding: 14px 18px;
+      padding: 13px 16px;
       border: none;
       border-radius: 10px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.7px;
       cursor: pointer;
       transition: transform 0.15s, opacity 0.2s, background 0.2s;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      text-decoration: none;
     }
 
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
     .btn-primary {
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #fff;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.38);
     }
 
     .btn-gold {
@@ -285,26 +376,46 @@
       color: var(--text);
     }
 
+    .btn-outline:hover { border-color: var(--blue-glow); }
+
     .btn-danger {
       background: rgba(239, 68, 68, 0.15);
       border: 1px solid var(--red);
       color: #fca5a5;
     }
 
+    .btn-sm {
+      width: auto;
+      padding: 7px 12px;
+      font-size: 0.75rem;
+      border-radius: 8px;
+    }
+
     .btn-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
-    @media (max-width: 520px) {
-      .btn-row {
-        grid-template-columns: 1fr;
-      }
+    .btn-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
     }
 
-    /* Quiz Top Bar */
+    @media (max-width: 560px) {
+      .btn-row, .btn-row-3 { grid-template-columns: 1fr; }
+    }
+
+    /* Quiz UI */
+    .no-select {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
     .quiz-topbar {
       display: flex;
       justify-content: space-between;
@@ -319,12 +430,12 @@
     .quiz-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
     }
 
     .pill {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 99px;
@@ -334,17 +445,17 @@
       text-transform: uppercase;
     }
 
-    .pill-gold {
-      color: var(--gold-soft);
-      border-color: rgba(234, 179, 8, 0.45);
-    }
+    .pill-gold { color: var(--gold-soft); border-color: rgba(234, 179, 8, 0.45); }
+    .pill-green { color: #86efac; border-color: rgba(34, 197, 94, 0.45); }
+    .pill-red { color: #fca5a5; border-color: rgba(239, 68, 68, 0.45); }
+    .pill-amber { color: #fde047; border-color: rgba(245, 158, 11, 0.45); }
 
     .timer-box {
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       font-weight: 800;
       padding: 6px 14px;
       border-radius: 10px;
-      background: #070e1c;
+      background: var(--bg-input);
       border: 2px solid var(--blue-glow);
       color: #fff;
       font-variant-numeric: tabular-nums;
@@ -352,16 +463,8 @@
       text-align: center;
     }
 
-    .timer-box.warn {
-      border-color: var(--amber);
-      color: var(--amber);
-    }
-
-    .timer-box.danger {
-      border-color: var(--red);
-      color: var(--red);
-      animation: pulse 0.8s infinite;
-    }
+    .timer-box.warn { border-color: var(--amber); color: var(--amber); }
+    .timer-box.danger { border-color: var(--red); color: var(--red); animation: pulse 0.8s infinite; }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
@@ -371,7 +474,7 @@
     .progress-track {
       width: 100%;
       height: 7px;
-      background: #070e1c;
+      background: var(--bg-input);
       border-radius: 99px;
       overflow: hidden;
       margin-bottom: 18px;
@@ -384,16 +487,8 @@
       transition: width 0.4s linear, background 0.3s;
     }
 
-    /* Question Area (No Select) */
-    .no-select {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
     .question-text {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       line-height: 1.5;
       font-weight: 600;
       color: #fff;
@@ -424,15 +519,8 @@
       transition: all 0.15s;
     }
 
-    .option-btn:hover {
-      border-color: var(--blue-glow);
-      background: #0f1d38;
-    }
-
-    .option-btn.selected {
-      border-color: var(--gold);
-      background: rgba(234, 179, 8, 0.12);
-    }
+    .option-btn:hover { border-color: var(--blue-glow); background: #0f1d38; }
+    .option-btn.selected { border-color: var(--gold); background: rgba(234, 179, 8, 0.12); }
 
     .opt-letter {
       flex-shrink: 0;
@@ -455,7 +543,7 @@
       border-color: var(--gold);
     }
 
-    /* Results & Stats */
+    /* Stats & Status */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -464,30 +552,19 @@
     }
 
     @media (max-width: 520px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .stat-box {
       background: #081020;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 12px;
+      padding: 12px 8px;
       text-align: center;
     }
 
-    .stat-box .val {
-      font-size: 1.4rem;
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-
-    .stat-box .lbl {
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
+    .stat-box .val { font-size: 1.35rem; font-weight: 800; margin-bottom: 2px; }
+    .stat-box .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
 
     .status-banner {
       padding: 14px;
@@ -495,22 +572,15 @@
       text-align: center;
       font-weight: 700;
       margin: 14px 0;
-      border: 1px solid;
+      border: 2px solid;
+      line-height: 1.4;
     }
 
-    .status-pass {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: var(--green);
-      color: #86efac;
-    }
+    .status-pass { background: rgba(34, 197, 94, 0.12); border-color: var(--green); color: #86efac; }
+    .status-fail { background: rgba(239, 68, 68, 0.12); border-color: var(--red); color: #fca5a5; }
+    .status-warn { background: rgba(245, 158, 11, 0.14); border-color: var(--amber); color: #fef3c7; }
 
-    .status-fail {
-      background: rgba(239, 68, 68, 0.12);
-      border-color: var(--red);
-      color: #fca5a5;
-    }
-
-    /* Attempt Comparison */
+    /* Compare Attempts */
     .compare-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -519,9 +589,7 @@
     }
 
     @media (max-width: 560px) {
-      .compare-grid {
-        grid-template-columns: 1fr;
-      }
+      .compare-grid { grid-template-columns: 1fr; }
     }
 
     .attempt-choice {
@@ -533,44 +601,12 @@
       transition: all 0.2s;
     }
 
-    .attempt-choice:hover {
-      border-color: var(--blue-glow);
-    }
+    .attempt-choice:hover { border-color: var(--blue-glow); }
+    .attempt-choice.selected { border-color: var(--gold); background: rgba(234, 179, 8, 0.1); }
+    .attempt-choice h3 { font-size: 1rem; color: var(--gold-soft); margin-bottom: 8px; }
+    .attempt-choice p { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 4px; }
 
-    .attempt-choice.selected {
-      border-color: var(--gold);
-      background: rgba(234, 179, 8, 0.1);
-    }
-
-    .attempt-choice h3 {
-      font-size: 1rem;
-      color: var(--gold-soft);
-      margin-bottom: 8px;
-    }
-
-    .attempt-choice p {
-      font-size: 0.86rem;
-      color: #cbd5e1;
-      margin-bottom: 4px;
-    }
-
-    /* Report Box */
-    .report-preview {
-      width: 100%;
-      min-height: 240px;
-      background: #050a14;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      color: #e2e8f0;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.82rem;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      margin: 12px 0;
-      resize: vertical;
-    }
-
+    /* Chips & Monospace Previews */
     .gabarito-chips {
       display: flex;
       flex-wrap: wrap;
@@ -579,7 +615,7 @@
     }
 
     .chip {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       padding: 4px 8px;
       border-radius: 6px;
@@ -591,38 +627,297 @@
     .chip.err { border-color: var(--red); color: #fca5a5; }
     .chip.nul { border-color: var(--amber); color: #fde047; }
 
-    /* Alerts / Toast */
-    .error-msg {
-      background: rgba(239, 68, 68, 0.14);
-      border: 1px solid var(--red);
-      color: #fecaca;
+    .mono-preview {
+      width: 100%;
+      min-height: 220px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px;
+      color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      margin: 10px 0;
+      resize: vertical;
+    }
+
+    .link-box {
+      background: #081020;
+      border: 2px dashed var(--gold);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 12px 0;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      color: var(--gold-soft);
+      text-align: center;
+    }
+
+    /* Full Gabarito Sheet View */
+    .interview-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 580px) {
+      .interview-summary-grid { grid-template-columns: 1fr; }
+    }
+
+    .interview-item {
+      background: #081020;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.84rem;
+    }
+
+    .interview-item.full { grid-column: 1 / -1; }
+    .interview-item .k { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+    .interview-item .v { font-size: 0.88rem; color: #f8fafc; line-height: 1.45; white-space: pre-wrap; }
+
+    .gab-q-card {
+      background: #081020;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--border);
+      border-radius: 11px;
+      padding: 14px;
       margin-bottom: 12px;
     }
 
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0f172a;
-      border: 1px solid var(--gold);
-      color: #fff;
-      padding: 11px 18px;
-      border-radius: 10px;
-      font-size: 0.86rem;
+    .gab-q-card.ok { border-left-color: var(--green); }
+    .gab-q-card.err { border-left-color: var(--red); }
+    .gab-q-card.nul { border-left-color: var(--amber); }
+
+    .gab-q-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .gab-q-title {
+      font-size: 0.94rem;
       font-weight: 600;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      max-width: 92vw;
+      color: #fff;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .gab-opt {
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      margin-bottom: 6px;
+      background: rgba(12, 21, 39, 0.8);
+      border: 1px solid rgba(30, 53, 94, 0.6);
+      color: #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .gab-opt.correct {
+      background: rgba(34, 197, 94, 0.14);
+      border-color: var(--green);
+      color: #dcfce7;
+      font-weight: 600;
+    }
+
+    .gab-opt.wrong-chosen {
+      background: rgba(239, 68, 68, 0.16);
+      border-color: var(--red);
+      color: #fecaca;
+      font-weight: 600;
+    }
+
+    .gab-tag {
+      flex-shrink: 0;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Delegate Tabs */
+    .tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .tabs-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .tab-btn {
+      padding: 11px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #081020;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      transition: all 0.2s;
       text-align: center;
+    }
+
+    .tab-btn:hover { border-color: var(--blue-glow); color: #fff; }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: var(--blue-glow);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Role Filter Pills for Question Manager */
+    .role-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 520px) {
+      .role-tabs { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .role-tab-btn {
+      padding: 9px 8px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #081020;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .role-tab-btn.active {
+      border-color: var(--gold);
+      background: rgba(234, 179, 8, 0.14);
+      color: var(--gold-soft);
+    }
+
+    /* Question Admin List Cards */
+    .q-admin-card {
+      background: #081020;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+
+    .q-admin-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .q-admin-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .q-admin-opts {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .q-admin-opts .is-correct {
+      color: #86efac;
+      font-weight: 700;
+    }
+
+    /* Saved Gabaritos List */
+    .saved-gab-item {
+      background: #081020;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Verification & Antifraud Output */
+    .verify-banner {
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-top: 14px;
+      border: 2px solid;
+      line-height: 1.45;
+    }
+
+    .verify-ok { background: rgba(34, 197, 94, 0.13); border-color: var(--green); color: #dcfce7; }
+    .verify-warn { background: rgba(245, 158, 11, 0.14); border-color: var(--amber); color: #fef3c7; }
+    .verify-fraud { background: rgba(239, 68, 68, 0.18); border-color: var(--red); color: #fee2e2; }
+    .verify-banner h3 { font-size: 0.98rem; text-transform: uppercase; margin-bottom: 6px; }
+    .fraud-list { margin-top: 8px; padding-left: 18px; font-size: 0.84rem; }
+    .fraud-list li { margin-bottom: 4px; }
+
+    .decode-result {
+      margin-top: 12px;
+      background: #081020;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.86rem;
+    }
+
+    .decode-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(30, 53, 94, 0.5);
+      padding: 6px 0;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .decode-row:last-child { border-bottom: none; }
+
+    .group-msg-box {
+      margin-top: 14px;
+      background: #050a14;
+      border: 2px solid var(--green);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .group-msg-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #86efac;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 8px;
     }
 
     /* Footer & Discreet Admin Button */
     .footer {
-      margin-top: 16px;
+      margin-top: 14px;
       text-align: center;
       font-size: 0.75rem;
       color: #475569;
@@ -635,25 +930,22 @@
     .secret-btn {
       background: transparent;
       border: none;
-      color: #334155;
+      color: #475569;
       cursor: pointer;
-      padding: 4px 6px;
+      padding: 4px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
-      opacity: 0.45;
+      font-size: 0.8rem;
+      opacity: 0.55;
       transition: opacity 0.2s, color 0.2s;
     }
 
-    .secret-btn:hover {
-      opacity: 0.9;
-      color: var(--muted);
-    }
+    .secret-btn:hover { opacity: 1; color: var(--gold-soft); }
 
     /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(2, 6, 15, 0.82);
+      background: rgba(2, 6, 15, 0.84);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -663,14 +955,14 @@
 
     .modal {
       width: 100%;
-      max-width: 480px;
+      max-width: 540px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-top: 3px solid var(--gold);
       border-radius: 14px;
       padding: 20px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
-      max-height: 90vh;
+      max-height: 92vh;
       overflow-y: auto;
     }
 
@@ -685,9 +977,35 @@
       background: transparent;
       border: none;
       color: var(--muted);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       cursor: pointer;
       line-height: 1;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .loader-box {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
   </style>
 </head>
@@ -701,27 +1019,35 @@
         <polygon points="32,17 35.6,26.2 45.5,26.8 37.8,33.1 40.3,42.7 32,37.3 23.7,42.7 26.2,33.1 18.5,26.8 28.4,26.2" fill="#eab308"/>
       </svg>
       <h1>Polícia Federal — Rio Rise</h1>
-      <div class="subtitle">Servidor 11 • Portal Oficial de Provas & Promoções</div>
+      <div class="subtitle">Servidor 11 • Portal Oficial de Provas, Entrevistas & Promoções</div>
+      <div class="cloud-indicator">
+        <span class="cloud-dot" id="cloud-dot"></span>
+        <span id="cloud-label">Conectando ao banco de dados...</span>
+      </div>
     </header>
 
-    <!-- VIEW 1: INÍCIO / LOGIN DO CANDIDATO -->
+    <!-- =================================================================== -->
+    <!-- VIEW 1: INÍCIO DA PROVA + FICHA DE ENTREVISTA (CANDIDATO)           -->
+    <!-- =================================================================== -->
     <section id="view-start" class="card">
-      <div class="section-title">1. Identificação da Avaliação</div>
+      <div class="section-title">
+        <span>1. Identificação & Prova</span>
+      </div>
 
       <div id="start-error" class="error-msg hidden"></div>
 
       <div class="form-grid">
         <div class="field">
-          <label for="cand-name">Nome RP do Candidato</label>
+          <label for="cand-name">Nome RP do Candidato <span class="req">*</span></label>
           <input type="text" id="cand-name" placeholder="Ex: Carlos_Silva" autocomplete="off" />
         </div>
         <div class="field">
-          <label for="delegado-name">Delegado Responsável (Quem passou a prova)</label>
-          <input type="text" id="delegado-name" placeholder="Ex: Delegado_Silva" autocomplete="off" />
+          <label for="delegado-name">Delegado Responsável (Quem passou a prova) <span class="req">*</span></label>
+          <input type="text" id="delegado-name" placeholder="Ex: Dom_Alcapone" autocomplete="off" />
         </div>
       </div>
 
-      <div class="section-title">2. Selecione a Prova / Cargo</div>
+      <div class="sub-heading">2. Selecione o Cargo / Prova</div>
       <div class="roles-grid" id="roles-grid">
         <button type="button" class="role-card" data-role="GM">
           <span class="role-tag">10 Questões • Entrada</span>
@@ -745,25 +1071,81 @@
         </button>
       </div>
 
-      <div class="field" style="margin-bottom: 10px;">
-        <label for="access-code">3. Código de Acesso (Fornecido pelo Delegado)</label>
-        <input type="text" id="access-code" placeholder="Ex: PF11-7K2M" style="text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;" autocomplete="off" />
+      <div class="sub-heading">3. Ficha de Entrevista (Preenchimento Obrigatório)</div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="int-age">Sua Idade (OOC) <span class="req">*</span></label>
+          <input type="number" id="int-age" min="10" max="90" placeholder="Ex: 22" />
+        </div>
+        <div class="field">
+          <label for="int-phone">Telefone / WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="int-phone" placeholder="Ex: (69) 99999-9999" />
+        </div>
       </div>
 
-      <div class="rules-box">
-        <strong>Instruções importantes antes de começar:</strong>
+      <div class="field">
+        <label for="int-origin">De onde você veio? (Histórico no RP / onde jogava antes) <span class="req">*</span></label>
+        <input type="text" id="int-origin" placeholder="Ex: Vim de outra org / comecei direto na cidade..." />
+      </div>
+
+      <div class="field">
+        <label for="int-servers">Já trabalhou em algum outro servidor? Se sim, onde e qual era sua função? <span class="req">*</span></label>
+        <input type="text" id="int-servers" placeholder="Ex: Sim, fui Agente no Servidor X / Não, é minha primeira vez..." />
+      </div>
+
+      <div class="field">
+        <label for="int-exp">Já tem experiência na área policial, segurança ou recepção? <span class="req">*</span></label>
+        <input type="text" id="int-exp" placeholder="Descreva brevemente sua experiência..." />
+      </div>
+
+      <div class="field">
+        <label for="int-know">Qual o seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q? <span class="req">*</span></label>
+        <input type="text" id="int-know" placeholder="Ex: Básico, intermediário, avançado — explique o que domina..." />
+      </div>
+
+      <div class="field">
+        <label for="int-goal">Qual o seu objetivo ao entrar / subir de cargo na Polícia Federal? <span class="req">*</span></label>
+        <textarea id="int-goal" rows="2" placeholder="Conte qual seu objetivo na corporação..."></textarea>
+      </div>
+
+      <!-- COMPROMISSO CRM DIÁRIO -->
+      <div class="crm-box">
+        <p>
+          <strong>⚠️ Compromisso Operacional — CRMs Diários:</strong><br/>
+          Informamos que realizamos <strong>dois CRMs (carregamentos de materiais) diariamente</strong> e precisamos que você se comprometa a comparecer. Você se compromete a participar dos CRMs diários? <span style="color:var(--gold)">*</span>
+        </p>
+        <div class="radio-row">
+          <label class="radio-pill" id="crm-pill-sim">
+            <input type="radio" name="crm-commit" value="Sim" />
+            <span>✅ Sim, me comprometo</span>
+          </label>
+          <label class="radio-pill" id="crm-pill-nao">
+            <input type="radio" name="crm-commit" value="Não" />
+            <span>❌ Não consigo comparecer</span>
+          </label>
+        </div>
+        <div id="crm-reason-wrap" class="field hidden" style="margin-top: 12px; margin-bottom: 0;">
+          <label for="int-crm-reason">Informe o motivo pelo qual não consegue comparecer aos CRMs diários <span class="req">*</span></label>
+          <textarea id="int-crm-reason" rows="2" placeholder="Explique seu horário de trabalho/estudo ou motivo..."></textarea>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Regras da Avaliação:</strong>
         <ul>
-          <li>Cada questão possui <strong>1 minuto e 30 segundos (90s)</strong>. Caso o tempo zere sem resposta, a questão é anulada automaticamente e a prova avança.</li>
-          <li>Você poderá realizar até <strong>2 tentativas</strong> com o mesmo código, caso queira tentar melhorar seu desempenho.</li>
-          <li>Ao concluir, o sistema gera o <strong>relatório oficial para envio no WhatsApp do Delegado</strong>, que servirá de base para a <strong>entrevista oral/prática</strong>.</li>
-          <li>O código de acesso é de <strong>uso único</strong>. Evite recarregar a página ou alternar de aplicativo durante a avaliação.</li>
+          <li>Cada questão possui <strong>1 minuto e 30 segundos (90s)</strong>. Ao zerar o tempo, a questão é anulada e avança automaticamente.</li>
+          <li>Você pode realizar até <strong>2 tentativas</strong> com questões embaralhadas e escolher qual relatório oficial enviar ao Delegado.</li>
+          <li>Ao concluir, o sistema salva seu <strong>Gabarito Completo online</strong> e gera o link + mensagem para enviar no WhatsApp do Delegado.</li>
+          <li>Evite trocar de aba ou sair do aplicativo durante a prova — saídas de tela ficam registradas no gabarito.</li>
         </ul>
       </div>
 
       <button type="button" id="btn-start-exam" class="btn btn-gold">Iniciar Avaliação Oficial</button>
     </section>
 
-    <!-- VIEW 2: PROVA EM ANDAMENTO -->
+    <!-- =================================================================== -->
+    <!-- VIEW 2: PROVA EM ANDAMENTO                                          -->
+    <!-- =================================================================== -->
     <section id="view-quiz" class="card hidden no-select">
       <div class="quiz-topbar">
         <div class="quiz-meta">
@@ -780,143 +1162,393 @@
       </div>
 
       <div class="question-text" id="question-text">Carregando questão...</div>
-
       <div class="options-list" id="options-list"></div>
 
       <button type="button" id="btn-next-q" class="btn btn-primary" disabled>Confirmar e Avançar</button>
     </section>
 
-    <!-- VIEW 3: FIM DA 1ª TENTATIVA (ESCOLHA DO CANDIDATO) -->
+    <!-- =================================================================== -->
+    <!-- VIEW 3: FIM DA 1ª TENTATIVA                                         -->
+    <!-- =================================================================== -->
     <section id="view-mid" class="card hidden">
       <div class="section-title">1ª Tentativa Concluída</div>
-      <p style="font-size: 0.88rem; color: var(--muted); margin-bottom: 10px;">
-        Confira seu desempenho abaixo. Você pode <strong>finalizar agora e gerar seu relatório</strong> ou <strong>realizar a 2ª tentativa</strong> (com novas questões embaralhadas) e escolher qual resultado enviar ao Delegado no final.
+      <p style="font-size: 0.87rem; color: var(--muted); margin-bottom: 10px;">
+        Confira seu resultado abaixo. Você pode <strong>finalizar agora e gerar o link do seu gabarito</strong> ou <strong>fazer a 2ª tentativa</strong> (com novas questões embaralhadas) e escolher no final qual tentativa enviar.
       </p>
 
       <div class="stats-grid" id="mid-stats"></div>
       <div id="mid-status-banner" class="status-banner"></div>
-
-      <div style="font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; font-weight: 600;">Resumo por questão:</div>
       <div class="gabarito-chips" id="mid-chips"></div>
 
-      <div class="btn-row" style="margin-top: 18px;">
-        <button type="button" id="btn-finish-a1" class="btn btn-green">Finalizar e Gerar Relatório</button>
+      <div class="btn-row" style="margin-top: 16px;">
+        <button type="button" id="btn-finish-a1" class="btn btn-green">Finalizar e Salvar Gabarito</button>
         <button type="button" id="btn-retry-a2" class="btn btn-gold">Refazer Prova (2ª Tentativa)</button>
       </div>
     </section>
 
-    <!-- VIEW 4: FIM DA 2ª TENTATIVA (ESCOLHA DO RELATÓRIO) -->
+    <!-- =================================================================== -->
+    <!-- VIEW 4: ESCOLHA ENTRE 1ª E 2ª TENTATIVA                             -->
+    <!-- =================================================================== -->
     <section id="view-choose" class="card hidden">
-      <div class="section-title">Selecione o Relatório Oficial</div>
-      <p style="font-size: 0.88rem; color: var(--muted);">
-        Você concluiu as 2 tentativas permitidas. Toque na tentativa que deseja enviar para o Delegado no WhatsApp:
+      <div class="section-title">Escolha Qual Tentativa Enviar</div>
+      <p style="font-size: 0.87rem; color: var(--muted);">
+        Você concluiu as 2 tentativas permitidas. Toque na tentativa que deseja salvar e enviar ao Delegado:
       </p>
-
       <div class="compare-grid" id="compare-grid"></div>
-
-      <button type="button" id="btn-confirm-choice" class="btn btn-gold" disabled>Gerar Relatório Selecionado</button>
+      <button type="button" id="btn-confirm-choice" class="btn btn-gold" disabled>Salvar Gabarito Selecionado</button>
     </section>
 
-    <!-- VIEW 5: RELATÓRIO FINAL WHATSAPP -->
+    <!-- =================================================================== -->
+    <!-- VIEW 5: RELATÓRIO FINAL + LINK DO GABARITO SALVO                    -->
+    <!-- =================================================================== -->
     <section id="view-report" class="card hidden">
-      <div class="section-title">Relatório Oficial da Avaliação</div>
-
-      <div class="rules-box" style="margin-top: 0;">
-        <strong>Próxima Etapa — Entrevista com o Delegado:</strong><br/>
-        Copie ou envie este relatório diretamente no WhatsApp do Delegado responsável. Ele avaliará sua pontuação objetiva e conduzirá a <strong>entrevista oral/prática</strong> antes de definir sua aprovação ou promoção na Polícia Federal.
+      <div class="section-title">
+        <span>Avaliação Finalizada & Salva</span>
+        <span class="pill pill-green" id="report-saved-badge">Salvo na Nuvem</span>
       </div>
 
       <div id="final-status-banner" class="status-banner"></div>
       <div class="gabarito-chips" id="final-chips"></div>
 
-      <label style="font-size: 0.78rem; color: var(--muted); text-transform: uppercase; font-weight: 700;">Prévia do Relatório (Não altere os dados):</label>
-      <textarea id="report-text" class="report-preview" readonly></textarea>
+      <div class="sub-heading">Link Oficial do seu Gabarito Completo</div>
+      <div class="link-box" id="gabarito-link-display">Salvando gabarito...</div>
+
+      <div class="btn-row" style="margin-bottom: 14px;">
+        <button type="button" id="btn-open-gabarito-tab" class="btn btn-gold">Abrir Aba do Gabarito Completo</button>
+        <button type="button" id="btn-copy-gab-link" class="btn btn-outline">Copiar Apenas o Link</button>
+      </div>
+
+      <div class="sub-heading">Mensagem Pronta para o WhatsApp do Delegado</div>
+      <textarea id="report-text" class="mono-preview" readonly></textarea>
 
       <div class="btn-row">
-        <button type="button" id="btn-copy-report" class="btn btn-primary">Copiar Relatório</button>
+        <button type="button" id="btn-copy-report" class="btn btn-primary">Copiar Mensagem</button>
         <button type="button" id="btn-send-wa" class="btn btn-green">Enviar no WhatsApp</button>
       </div>
 
       <button type="button" id="btn-new-session" class="btn btn-outline" style="margin-top: 12px;">Voltar à Tela Inicial</button>
     </section>
 
-    <!-- FOOTER COM BOTÃO DISCRETO -->
+    <!-- =================================================================== -->
+    <!-- VIEW 6: FOLHA COMPLETA DO GABARITO SALVO (?gabarito=ID)             -->
+    <!-- =================================================================== -->
+    <section id="view-gabarito" class="card hidden">
+      <div class="section-title">
+        <span>Gabarito Oficial & Ficha de Entrevista</span>
+        <span class="pill pill-gold" id="gab-view-id">ID</span>
+      </div>
+
+      <div id="gab-loading" class="loader-box hidden">Carregando gabarito salvo no banco de dados...</div>
+      <div id="gab-not-found" class="error-msg hidden">Gabarito não encontrado. Verifique se o link está completo ou se o registro foi excluído.</div>
+
+      <div id="gab-content" class="hidden">
+        <div id="gab-status-banner" class="status-banner"></div>
+        <div class="stats-grid" id="gab-stats"></div>
+
+        <div class="sub-heading">Dados da Avaliação & Ficha de Entrevista</div>
+        <div class="interview-summary-grid" id="gab-interview-grid"></div>
+
+        <div class="btn-row" style="margin: 14px 0 18px;">
+          <button type="button" id="btn-gab-copy-link" class="btn btn-outline">Copiar Link deste Gabarito</button>
+          <button type="button" id="btn-gab-gen-group" class="btn btn-green">Gerar Mensagem p/ Grupo dos Delegados</button>
+        </div>
+
+        <div id="gab-group-box" class="group-msg-box hidden" style="margin-bottom: 18px;">
+          <div class="group-msg-title">📢 Mensagem Pronta para o Grupo dos Delegados</div>
+          <textarea id="gab-group-text" class="mono-preview" style="min-height: 180px;" readonly></textarea>
+          <div class="btn-row" style="margin-top: 0;">
+            <button type="button" id="btn-gab-copy-group" class="btn btn-primary">Copiar Mensagem</button>
+            <button type="button" id="btn-gab-send-group" class="btn btn-green">Enviar no WhatsApp</button>
+          </div>
+        </div>
+
+        <div class="sub-heading">Questões Completas (Corretas, Erradas & Anuladas)</div>
+        <div id="gab-questions-list"></div>
+
+        <button type="button" id="btn-gab-back-home" class="btn btn-outline" style="margin-top: 12px;">Ir para Página Principal de Provas</button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 7: PAINEL COMPLETO DOS DELEGADOS (ABAS)                        -->
+    <!-- =================================================================== -->
+    <section id="view-delegate" class="card hidden">
+      <div class="section-title">
+        <span>Painel dos Delegados — PF S11</span>
+        <button type="button" id="btn-del-exit" class="btn btn-outline btn-sm">Sair p/ Prova</button>
+      </div>
+
+      <div class="tabs-bar">
+        <button type="button" class="tab-btn active" data-tab="tab-invite">1. Enviar Link</button>
+        <button type="button" class="tab-btn" data-tab="tab-verify">2. Conferir & Grupo</button>
+        <button type="button" class="tab-btn" data-tab="tab-archive">3. Gabaritos Salvos</button>
+        <button type="button" class="tab-btn" data-tab="tab-questions">4. Banco de Questões</button>
+      </div>
+
+      <!-- ABA 1: ENVIAR LINK PERSONALIZADO (SEM CÓDIGO) -->
+      <div id="tab-invite" class="del-tab">
+        <div class="info-box" style="margin-top: 0;">
+          Gere um convite personalizado com o link oficial da prova (<strong>https://avaliacoespf11.netlify.app</strong>). Ao abrir, o nome, o Delegado e o cargo já vêm pré-preenchidos para o candidato.
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="inv-cand">Nome RP do Candidato</label>
+            <input type="text" id="inv-cand" placeholder="Ex: Carlos_Silva" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="inv-del">Delegado Responsável (Seu Nome RP)</label>
+            <input type="text" id="inv-del" placeholder="Ex: Dom_Alcapone" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="inv-role">Cargo / Prova</label>
+          <select id="inv-role">
+            <option value="GM">Guarda Municipal (GM) — 10 questões</option>
+            <option value="AP">Agente Policial (AP) — 15 questões</option>
+            <option value="TO">Tático Operacional (TO) — 15 questões</option>
+            <option value="ES">Escrivão Policial — 15 questões</option>
+          </select>
+        </div>
+
+        <button type="button" id="btn-gen-invite" class="btn btn-gold">Gerar Convite & Link Personalizado</button>
+
+        <div id="invite-result-box" class="hidden" style="margin-top: 14px;">
+          <div class="sub-heading" style="margin-top: 4px;">Link Personalizado</div>
+          <div class="link-box" id="invite-link-out"></div>
+          <div class="sub-heading" style="margin-top: 8px;">Mensagem Pronta para o Candidato</div>
+          <textarea id="invite-msg-out" class="mono-preview" style="min-height: 170px;" readonly></textarea>
+          <div class="btn-row-3">
+            <button type="button" id="btn-inv-copy-msg" class="btn btn-primary">Copiar Mensagem</button>
+            <button type="button" id="btn-inv-send-wa" class="btn btn-green">Enviar WhatsApp</button>
+            <button type="button" id="btn-inv-copy-link" class="btn btn-outline">Copiar Só Link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 2: CONFERÊNCIA DA MENSAGEM + GRUPO DOS DELEGADOS -->
+      <div id="tab-verify" class="del-tab hidden">
+        <div class="info-box" style="margin-top: 0;">
+          Cole a <strong>mensagem completa</strong> enviada pelo candidato no WhatsApp (ou apenas o <strong>link/ID do gabarito</strong>). O sistema busca o registro real salvo no banco de dados, alerta se o candidato modificou qualquer dado na mensagem e já gera o resumo oficial para o <strong>Grupo dos Delegados</strong>.
+        </div>
+
+        <div class="field">
+          <label for="ver-input">Mensagem do Candidato ou Link do Gabarito</label>
+          <textarea id="ver-input" rows="5" placeholder="Cole aqui a mensagem recebida no WhatsApp..."></textarea>
+        </div>
+
+        <div class="btn-row" style="margin-top: 0;">
+          <button type="button" id="btn-run-verify" class="btn btn-primary">Conferir & Gerar Mensagem p/ Grupo</button>
+          <button type="button" id="btn-clear-verify" class="btn btn-outline">Limpar</button>
+        </div>
+
+        <div id="ver-output-wrap" class="hidden">
+          <div id="ver-banner" class="verify-banner"></div>
+          <div id="ver-details" class="decode-result"></div>
+
+          <div id="ver-open-gab-wrap" class="hidden" style="margin-top: 10px;">
+            <button type="button" id="btn-ver-open-gab" class="btn btn-gold">Abrir Gabarito Completo com Todas as Questões</button>
+          </div>
+
+          <div id="ver-corrected-wrap" class="hidden" style="margin-top: 14px; border: 2px solid var(--gold); border-radius: 12px; padding: 14px; background: #050a14;">
+            <div style="font-size: 0.82rem; font-weight: 800; color: var(--gold-soft); text-transform: uppercase; margin-bottom: 8px;">📄 Mensagem Real (Como ela foi salva originalmente no sistema)</div>
+            <textarea id="ver-corrected-text" class="mono-preview" readonly></textarea>
+            <button type="button" id="btn-ver-copy-corrected" class="btn btn-gold">Copiar Mensagem Real</button>
+          </div>
+
+          <div id="ver-group-wrap" class="group-msg-box hidden">
+            <div class="group-msg-title">📢 Mensagem Automática para o Grupo dos Delegados</div>
+            <textarea id="ver-group-text" class="mono-preview" style="min-height: 200px;" readonly></textarea>
+            <div class="btn-row" style="margin-top: 0;">
+              <button type="button" id="btn-ver-copy-group" class="btn btn-primary">Copiar p/ Grupo</button>
+              <button type="button" id="btn-ver-send-group" class="btn btn-green">Enviar no WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 3: ARQUIVO DE GABARITOS SALVOS NO FIREBASE -->
+      <div id="tab-archive" class="del-tab hidden">
+        <div class="form-grid">
+          <div class="field">
+            <label for="arch-search">Buscar por Candidato ou Delegado</label>
+            <input type="text" id="arch-search" placeholder="Digite o nome..." autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="arch-role-filter">Filtrar por Cargo</label>
+            <select id="arch-role-filter">
+              <option value="ALL">Todos os Cargos</option>
+              <option value="GM">Guarda Municipal (GM)</option>
+              <option value="AP">Agente Policial (AP)</option>
+              <option value="TO">Tático Operacional (TO)</option>
+              <option value="ES">Escrivão Policial</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="button" id="btn-refresh-archive" class="btn btn-outline btn-sm" style="margin-bottom: 12px;">🔄 Atualizar Lista da Nuvem</button>
+
+        <div id="archive-list">
+          <div class="loader-box">Carregando gabaritos salvos...</div>
+        </div>
+      </div>
+
+      <!-- ABA 4: GERENCIADOR DO BANCO DE QUESTÕES (ADICIONAR / EDITAR / EXCLUIR) -->
+      <div id="tab-questions" class="del-tab hidden">
+        <div class="info-box" style="margin-top: 0;">
+          Selecione um cargo abaixo para visualizar todas as questões salvas na nuvem. Você pode <strong>adicionar novas perguntas</strong>, <strong>editar</strong> ou <strong>excluir</strong> qualquer questão existente. Todas as alterações entram em vigor imediatamente nas próximas provas.
+        </div>
+
+        <div class="role-tabs" id="qm-role-tabs">
+          <button type="button" class="role-tab-btn active" data-qrole="GM">GM</button>
+          <button type="button" class="role-tab-btn" data-qrole="AP">Agente (AP)</button>
+          <button type="button" class="role-tab-btn" data-qrole="TO">Tático (TO)</button>
+          <button type="button" class="role-tab-btn" data-qrole="ES">Escrivão</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <div>
+            <strong id="qm-role-title" style="color: #fff;">Guarda Municipal (GM)</strong>
+            <div id="qm-count-info" style="font-size: 0.78rem; color: var(--muted);">Carregando...</div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" id="btn-qm-add" class="btn btn-gold btn-sm">+ Nova Questão</button>
+            <button type="button" id="btn-qm-restore" class="btn btn-danger btn-sm">Restaurar Padrão</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" id="qm-search" placeholder="Filtrar questões por palavra-chave..." autocomplete="off" />
+        </div>
+
+        <div id="qm-list">
+          <div class="loader-box">Carregando questões...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER COM BOTÃO DISCRETO DO PAINEL DE DELEGADOS -->
     <footer class="footer">
-      <span>Polícia Federal • Rio Rise Servidor 11 • PF-S11 v1.1</span>
-      <button type="button" id="btn-secret-admin" class="secret-btn" title="Acesso restrito" aria-label="Acesso restrito">🔒</button>
+      <span>Polícia Federal • Rio Rise Servidor 11 • avaliacoespf11.netlify.app</span>
+      <button type="button" id="btn-secret-delegate" class="secret-btn" title="Painel dos Delegados" aria-label="Painel dos Delegados">🔒</button>
     </footer>
   </div>
 
-  <!-- MODAL ADMIN (OCULTO) -->
-  <div id="admin-modal" class="modal-backdrop hidden">
+  <!-- MODAL DE LOGIN DOS DELEGADOS -->
+  <div id="login-modal" class="modal-backdrop hidden">
+    <div class="modal" style="max-width: 420px;">
+      <div class="modal-header">
+        <strong style="color: var(--gold-soft); letter-spacing: 1px; text-transform: uppercase;">Acesso Restrito — Delegados</strong>
+        <button type="button" id="btn-close-login" class="modal-close">&times;</button>
+      </div>
+      <div id="login-err" class="error-msg hidden"></div>
+      <div class="field">
+        <label for="adm-user">Usuário</label>
+        <input type="text" id="adm-user" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="adm-pass">Senha</label>
+        <input type="password" id="adm-pass" autocomplete="off" />
+      </div>
+      <button type="button" id="btn-do-login" class="btn btn-gold">Entrar no Painel</button>
+    </div>
+  </div>
+
+  <!-- MODAL ADICIONAR / EDITAR QUESTÃO -->
+  <div id="q-modal" class="modal-backdrop hidden">
     <div class="modal">
       <div class="modal-header">
-        <strong style="color: var(--gold-soft); letter-spacing: 1px; text-transform: uppercase;">Painel Restrito — Códigos</strong>
-        <button type="button" id="btn-close-modal" class="modal-close">&times;</button>
+        <strong id="q-modal-title" style="color: var(--gold-soft); letter-spacing: 1px; text-transform: uppercase;">Nova Questão</strong>
+        <button type="button" id="btn-close-qmodal" class="modal-close">&times;</button>
+      </div>
+      <div id="q-modal-err" class="error-msg hidden"></div>
+
+      <div class="field">
+        <label for="qm-input-diff">Nível de Dificuldade</label>
+        <select id="qm-input-diff">
+          <option value="Fácil">Fácil</option>
+          <option value="Médio">Médio</option>
+          <option value="Difícil">Difícil</option>
+          <option value="Muito Difícil">Muito Difícil</option>
+        </select>
       </div>
 
-      <!-- LOGIN ADMIN -->
-      <div id="admin-login-box">
-        <div id="admin-login-err" class="error-msg hidden"></div>
-        <div class="field" style="margin-bottom: 12px;">
-          <label for="adm-user">Usuário</label>
-          <input type="text" id="adm-user" autocomplete="off" />
-        </div>
-        <div class="field" style="margin-bottom: 14px;">
-          <label for="adm-pass">Senha</label>
-          <input type="password" id="adm-pass" autocomplete="off" />
-        </div>
-        <button type="button" id="btn-adm-login" class="btn btn-gold">Entrar</button>
+      <div class="field">
+        <label for="qm-input-q">Enunciado da Questão</label>
+        <textarea id="qm-input-q" rows="3" placeholder="Digite a pergunta..."></textarea>
       </div>
 
-      <!-- PAINEL LOGADO -->
-      <div id="admin-panel-box" class="hidden">
-        <div class="rules-box" style="margin-top: 0;">
-          <div><strong>Códigos no sistema (Base + Extras):</strong> <span id="adm-total-codes">0</span></div>
-          <div><strong>Códigos já consumidos neste dispositivo:</strong> <span id="adm-used-codes">0</span></div>
-          <div><strong>Disponíveis neste dispositivo:</strong> <span id="adm-avail-codes">0</span></div>
-        </div>
-
-        <div class="field" style="margin-bottom: 12px;">
-          <label for="adm-new-codes">Inserir novos códigos (um por linha, vírgula ou espaço)</label>
-          <textarea id="adm-new-codes" rows="5" placeholder="Cole aqui os novos códigos gerados na página do Delegado..."></textarea>
-        </div>
-
-        <button type="button" id="btn-adm-save-codes" class="btn btn-green" style="margin-bottom: 10px;">Adicionar Novos Códigos</button>
-        <button type="button" id="btn-adm-reset-used" class="btn btn-danger">Limpar Registro Local de Usados (Teste)</button>
+      <div class="field">
+        <label for="qm-input-o0">Alternativa 1</label>
+        <input type="text" id="qm-input-o0" placeholder="Texto da alternativa 1..." />
       </div>
+      <div class="field">
+        <label for="qm-input-o1">Alternativa 2</label>
+        <input type="text" id="qm-input-o1" placeholder="Texto da alternativa 2..." />
+      </div>
+      <div class="field">
+        <label for="qm-input-o2">Alternativa 3</label>
+        <input type="text" id="qm-input-o2" placeholder="Texto da alternativa 3..." />
+      </div>
+      <div class="field">
+        <label for="qm-input-o3">Alternativa 4</label>
+        <input type="text" id="qm-input-o3" placeholder="Texto da alternativa 4..." />
+      </div>
+
+      <div class="field">
+        <label for="qm-input-correct">Qual alternativa é a CORRETA?</label>
+        <select id="qm-input-correct">
+          <option value="0">Alternativa 1</option>
+          <option value="1">Alternativa 2</option>
+          <option value="2">Alternativa 3</option>
+          <option value="3">Alternativa 4</option>
+        </select>
+      </div>
+
+      <button type="button" id="btn-qm-save" class="btn btn-green">Salvar Questão na Nuvem</button>
     </div>
   </div>
 
   <div id="toast" class="toast hidden"></div>
 
-  <script>
-    // =========================================================================
-    // CONFIGURAÇÕES PRINCIPAIS (MESMAS CREDENCIAIS E CÓDIGOS DA PÁGINA DELEGADO)
-    // =========================================================================
-    const ADMIN_USER = "delegadopf";
-    const ADMIN_PASS = "PF11@2026";
-    const QUESTION_TIME_SECONDS = 90; // 1 minuto e 30 segundos por questão
-    const PASSING_PERCENT = 70;       // Média mínima sugerida para Apto à Entrevista
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      deleteDoc,
+      collection,
+      getDocs,
+      query,
+      orderBy,
+      limit
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const STORAGE_KEYS = {
-      EXTRA_CODES: "pf11_exam_extra_codes_v1",
-      USED_CODES: "pf11_exam_used_codes_v1"
+    // =========================================================================
+    // CONFIGURAÇÃO DO FIREBASE (MESMO PROJETO ponto-policia-rp, COLEÇÕES ISOLADAS)
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCJ1WclEAps3KejkYKpiqfhn_ZgjdFVop4",
+      authDomain: "ponto-policia-rp.firebaseapp.com",
+      projectId: "ponto-policia-rp",
+      storageBucket: "ponto-policia-rp.firebasestorage.app",
+      messagingSenderId: "56122951079",
+      appId: "1:56122951079:web:89c1e7c2ef63dc6f2ea282",
+      measurementId: "G-R6XHCJPPWD"
     };
 
-    // 100 CÓDIGOS PRÉ-DEFINIDOS (IDÊNTICOS AOS DA PÁGINA DO DELEGADO)
-    const DEFAULT_CODES = [
-      "PF11-7K2M", "PF11-4X9P", "PF11-8B3R", "PF11-2N6W", "PF11-9D5H", "PF11-3V8J", "PF11-6T4C", "PF11-5F7Q", "PF11-2Y9Z", "PF11-8G3S",
-      "PF11-4M6K", "PF11-9P2X", "PF11-3R8B", "PF11-6W5N", "PF11-7H4D", "PF11-2J9V", "PF11-8C3T", "PF11-5Q7F", "PF11-9Z2Y", "PF11-4S6G",
-      "PF11-6A9E", "PF11-3U7K", "PF11-8M2P", "PF11-5X4R", "PF11-9B6W", "PF11-2N8H", "PF11-7D3J", "PF11-4V5C", "PF11-8T9Q", "PF11-3F2Z",
-      "PF11-5E8A", "PF11-9K3U", "PF11-2P7M", "PF11-6R4X", "PF11-8W5B", "PF11-3H9N", "PF11-7J2D", "PF11-4C8V", "PF11-9Q3T", "PF11-2Z6F",
-      "PF11-7Y4S", "PF11-3G8A", "PF11-6E2U", "PF11-9K5M", "PF11-4P7X", "PF11-8R3B", "PF11-2W9N", "PF11-5H6D", "PF11-7J4V", "PF11-3C8Q",
-      "PF11-8S2Y", "PF11-4A7G", "PF11-9U3E", "PF11-2M6K", "PF11-5X8P", "PF11-7B4R", "PF11-3N9W", "PF11-6D2H", "PF11-8V5J", "PF11-4Q7C",
-      "PF11-9T3F", "PF11-2Z8S", "PF11-6Y4A", "PF11-3G9U", "PF11-7E2M", "PF11-4K6X", "PF11-8P3B", "PF11-5R7N", "PF11-2W4D", "PF11-9H8V",
-      "PF11-3F7T", "PF11-6S2Z", "PF11-8A5Y", "PF11-4U9G", "PF11-2M3E", "PF11-7X6K", "PF11-9B4P", "PF11-3N8R", "PF11-5D2W", "PF11-8V7H",
-      "PF11-4J9C", "PF11-7Q2F", "PF11-3Z6S", "PF11-8Y4G", "PF11-5A9E", "PF11-2U7K", "PF11-6M3X", "PF11-9P5R", "PF11-4B8N", "PF11-7W2D",
-      "PF11-8C4J", "PF11-3F9Q", "PF11-5S7Z", "PF11-9G2Y", "PF11-4E6A", "PF11-7K3U", "PF11-2X8M", "PF11-6R5P", "PF11-8N4B", "PF11-3D9W"
-    ];
+    const BASE_SITE_URL = "https://avaliacoespf11.netlify.app";
+    const ADMIN_USER = "delegadopf";
+    const ADMIN_PASS = "PF11@2026";
+    const QUESTION_TIME_SECONDS = 90; // 1min30s por questão
+    const PASSING_PERCENT = 70;
+
+    // Coleções exclusivas deste sistema (não interferem no app de ponto)
+    const COL_QUESTIONS = "provas_pf_questoes";
+    const COL_GABARITOS = "provas_pf_gabaritos";
 
     const ROLE_CONFIG = {
       GM: { name: "Guarda Municipal (GM)", count: 10 },
@@ -925,10 +1557,14 @@
       ES: { name: "Escrivão Policial", count: 15 }
     };
 
+    // Inicializa Firebase + Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     // =========================================================================
-    // BANCO DE QUESTÕES (GM: 20 | AP: 30 | TO: 30 | ES: 30)
+    // BANCO INICIAL DE QUESTÕES (GM: 20 | AP: 30 | TO: 30 | ES: 30)
     // =========================================================================
-    const QUESTION_BANK = {
+    const DEFAULT_QUESTION_BANK = {
       GM: [
         { id: "GM1", d: "Fácil", q: "Qual é a principal função do Guarda Municipal (GM) na corporação?", o: ["Garantir a recepção do servidor, organização, apoio e informações aos jogadores, mantendo um ambiente saudável.", "Realizar patrulhamento tático ostensivo e prisões de alta periculosidade.", "Emitir mandados de busca e revogar licenças de armamento.", "Substituir o Delegado na comunicação com outras organizações."], a: 0 },
         { id: "GM2", d: "Fácil", q: "No Código Q, o que significa a sigla 'QAP'?", o: ["Na escuta.", "Entendido.", "Aguarde.", "Endereço ou local."], a: 0 },
@@ -951,7 +1587,6 @@
         { id: "GM19", d: "Difícil", q: "No Código Q, o que significam 'QRM', 'QRN' e 'QRT', respectivamente?", o: ["Interferência humana?, Interferência na comunicação? e Parar de transmitir fora do ar.", "Motorista, Viatura e Obrigado.", "Transmita mais depressa, Transmita mais devagar e Repetir mensagem.", "Quem está me chamando?, Qual sua distância? e Estou ocupado."], a: 0 },
         { id: "GM20", d: "Difícil", q: "Na Bíblia RP, o que caracterizam as regras 'DMA (4.18)' e 'TK (4.9)'?", o: ["DMA é causar danos a veículos públicos ou pessoais sem motivo; TK é matar ou causar dano a integrantes da própria facção ou aliadas sem motivo válido.", "DMA é matar em local de spawn; TK é falar fora do RP.", "DMA é usar arma no hospital; TK é fugir de abordagem.", "DMA é desrespeitar a fila da recepção; TK é usar múltiplas contas."], a: 0 }
       ],
-
       AP: [
         { id: "AP1", d: "Fácil", q: "Qual é o tripé da patente de Agente Policial (AP) e quais patentes superiores ele auxilia diretamente?", o: ["Base, Apoio e Compromisso; auxilia Tático, Escrivão e Delegado.", "Força, Estratégia e Controle; auxilia apenas o Comandante Geral.", "Organização, Liderança e Informação; auxilia apenas o GM.", "Honra, Lealdade e Justiça; auxilia apenas o Escrivão."], a: 0 },
         { id: "AP2", d: "Fácil", q: "Além de auxiliar seus superiores, qual responsabilidade de instrução o Agente Policial possui?", o: ["Treinar e instruir a patente de GM, pois já passou por essa patente e possui o conhecimento necessário.", "Aplicar avisos disciplinares em Delegados.", "Autorizar gravações da mídia sozinho.", "Revogar licenças de armas de Táticos."], a: 0 },
@@ -984,7 +1619,6 @@
         { id: "AP29", d: "Muito Difícil", q: "Se um indivíduo comete 'Porte ilegal de armas (PIA)' e 'Multas pendentes (MP)', quais são as respectivas pontuações de estrelas na Tabela de Crimes?", o: ["PIA = 3 estrelas e MP = 2 estrelas.", "PIA = 2 estrelas e MP = 1 estrela.", "PIA = 4 estrelas e MP = 2 estrelas.", "PIA = 3 estrelas e MP = 3 estrelas."], a: 0 },
         { id: "AP30", d: "Muito Difícil", q: "Qual comando revoga as licenças de um jogador e qual a punição na Bíblia RP para 'FAIL (4.22 - Ação Falha)'?", o: ["/revokelicense (revokelic) [ID] — Punição de FAIL: Prisão de 60 minutos / Ban 3–5 dias / Warn.", "/clear [ID] — Punição de FAIL: Prisão de 20 minutos.", "/ticket [ID] — Punição de FAIL: Chute do servidor.", "/pullmask — Punição de FAIL: Ban permanente."], a: 0 }
       ],
-
       TO: [
         { id: "TO1", d: "Fácil", q: "Qual é o lema operacional do Tático Operacional (TO) no Rio Rise?", o: ["Força, Estratégia, Controle e Resultados.", "Base, Apoio e Compromisso.", "Recepção, Organização e Suporte.", "Planejar, Redigir e Arquivar."], a: 0 },
         { id: "TO2", d: "Fácil", q: "Quais patentes o Tático Operacional é responsável por instruir e orientar conforme o manual de 'Instrução e Treinamento'?", o: ["As patentes abaixo de seu cargo: Agente e GM.", "Apenas Escrivães e Delegados.", "Apenas civis recém-chegados na cidade.", "Comandante Geral e Administração."], a: 0 },
@@ -1017,7 +1651,6 @@
         { id: "TO29", d: "Muito Difícil", q: "No Serviço no HP (Hospital), qual a postura exigida do Tático Operacional em relação às demais patentes?", o: ["Garantir total segurança e organização do HP, atuar juntamente com Agente e patentes acima, controlar o fluxo de pessoas e evitar tumultos.", "Atuar isoladamente sem comunicar o PS.", "Subordinar-se operacionalmente aos Guardas Municipais no local.", "Aplicar /revokelic em todos os civis que entrarem no hospital."], a: 0 },
         { id: "TO30", d: "Muito Difícil", q: "Um detento foi preso pela Administração e solicita advogado no PS; outro detento comum pede banho de sol às 19h30. Quais pedidos devem ser negados pelo Tático?", o: ["Ambos devem ser negados: preso por Administração não tem direito a advogado, e o banho de sol é permitido apenas das 08h às 18h.", "Apenas o pedido de advogado; o banho de sol pode ocorrer às 19h30.", "Apenas o banho de sol; preso por Administração tem direito a advogado.", "Nenhum deve ser negado; ambos devem ser liberados imediatamente."], a: 0 }
       ],
-
       ES: [
         { id: "ES1", d: "Fácil", q: "Qual é o lema institucional da patente de Escrivão Policial?", o: ["Organização, Coordenação, Disciplina e Resultados.", "Base, Apoio e Compromisso.", "Força, Estratégia, Controle e Resultados.", "Recepção, Informação e Suporte."], a: 0 },
         { id: "ES2", d: "Fácil", q: "Em relação à hierarquia, qual é a responsabilidade central do Escrivão Policial sobre o efetivo?", o: ["Coordenar e organizar todo o efetivo abaixo dele, manter as hierarquias e a disciplina, e informar sobre as QTHs.", "Apenas cuidar da recepção quando não houver GM.", "Comandar exclusivamente as viaturas de trânsito.", "Subordinar-se ao Agente Policial durante operações."], a: 0 },
@@ -1053,13 +1686,20 @@
     };
 
     // =========================================================================
-    // ESTADO DA APLICAÇÃO
+    // ESTADO GLOBAL DA APLICAÇÃO
     // =========================================================================
     const state = {
+      cloudOnline: false,
+      questionBanks: {
+        GM: structuredClone(DEFAULT_QUESTION_BANK.GM),
+        AP: structuredClone(DEFAULT_QUESTION_BANK.AP),
+        TO: structuredClone(DEFAULT_QUESTION_BANK.TO),
+        ES: structuredClone(DEFAULT_QUESTION_BANK.ES)
+      },
       candidateName: "",
       delegateName: "",
       role: null,
-      activeCode: "",
+      interview: {},
       attemptNumber: 1,
       usedQuestionIds: new Set(),
       currentQuestions: [],
@@ -1069,53 +1709,31 @@
       timeLeft: QUESTION_TIME_SECONDS,
       attemptStartTime: 0,
       tabSwitches: 0,
-      currentAnswers: [], // { qNum, status: 'ok'|'err'|'nul', letterChosen }
-      attemptsData: [],   // [ attempt1Obj, attempt2Obj ]
+      currentDetailedAnswers: [],
+      attemptsData: [],
       chosenAttemptIdx: null,
+      lastSavedGabaritoId: null,
+      lastSavedGabaritoUrl: "",
+      lastSavedRecord: null,
       examActive: false,
-      adminLoggedIn: false
+      delegateLoggedIn: sessionStorage.getItem("pf11_del_logged") === "1",
+      qmActiveRole: "GM",
+      qmEditingId: null,
+      archiveRecords: [],
+      currentViewingGabarito: null
     };
 
     // =========================================================================
-    // UTILITÁRIOS DE ARMAZENAMENTO DE CÓDIGOS
+    // UTILITÁRIOS
     // =========================================================================
-    function getExtraCodes() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEYS.EXTRA_CODES);
-        return raw ? JSON.parse(raw) : [];
-      } catch {
-        return [];
-      }
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
     }
 
-    function saveExtraCodes(arr) {
-      localStorage.setItem(STORAGE_KEYS.EXTRA_CODES, JSON.stringify([...new Set(arr)]));
-    }
-
-    function getUsedCodes() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEYS.USED_CODES);
-        return raw ? JSON.parse(raw) : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function markCodeAsUsed(code) {
-      const used = getUsedCodes();
-      if (!used.includes(code)) {
-        used.push(code);
-        localStorage.setItem(STORAGE_KEYS.USED_CODES, JSON.stringify(used));
-      }
-    }
-
-    function getAllValidCodes() {
-      return [...new Set([...DEFAULT_CODES, ...getExtraCodes()])];
-    }
-
-    // =========================================================================
-    // UTILITÁRIOS GERAIS
-    // =========================================================================
     function shuffleArray(arr) {
       const copy = [...arr];
       for (let i = copy.length - 1; i > 0; i--) {
@@ -1125,7 +1743,7 @@
       return copy;
     }
 
-    function showToast(msg, duration = 3000) {
+    function showToast(msg, duration = 3200) {
       const el = document.getElementById("toast");
       el.textContent = msg;
       el.classList.remove("hidden");
@@ -1133,8 +1751,24 @@
       el._timer = setTimeout(() => el.classList.add("hidden"), duration);
     }
 
+    async function copyToClipboard(text, successMsg) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(successMsg);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast(successMsg);
+      }
+    }
+
     function showView(viewId) {
-      ["view-start", "view-quiz", "view-mid", "view-choose", "view-report"].forEach(id => {
+      const views = ["view-start", "view-quiz", "view-mid", "view-choose", "view-report", "view-gabarito", "view-delegate"];
+      views.forEach(id => {
         document.getElementById(id).classList.toggle("hidden", id !== viewId);
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1152,87 +1786,213 @@
       return `${m}min ${String(s).padStart(2, "0")}s`;
     }
 
-    // Gera hash curto verificador (3 chars)
-    function computeCheckHash(str) {
-      let h = 2166136261;
-      for (let i = 0; i < str.length; i++) {
-        h ^= str.charCodeAt(i);
-        h = Math.imul(h, 16777619);
-      }
+    function generateGabaritoId(roleCode) {
       const chars = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
-      const v = Math.abs(h);
-      return chars[v % chars.length] + chars[Math.floor(v / 31) % chars.length] + chars[Math.floor(v / 961) % chars.length];
+      let rand = "";
+      for (let i = 0; i < 6; i++) {
+        rand += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return `PF11-${roleCode}-${rand}`;
     }
 
-    // Protocolo discreto: PF11-{CARGO}{ACERTOS2D}{A/B}-{ABAS2D}-{HASH3}
-    // A = 1ª tentativa | B = 2ª tentativa
-    function buildDiscreetProtocol(attObj) {
-      const hits2 = String(attObj.correct).padStart(2, "0");
-      const attemptTag = attObj.attemptNumber === 1 ? "A" : "B";
-      const tabs2 = String(Math.min(attObj.tabSwitches, 99)).padStart(2, "0");
-      const raw = `${state.candidateName}|${state.delegateName}|${state.role}|${hits2}|${attemptTag}|${tabs2}|${state.activeCode}`;
-      const hash = computeCheckHash(raw);
-      return `PF11-${state.role}${hits2}${attemptTag}-${tabs2}-${hash}`;
+    function getGabaritoUrl(gabId) {
+      return `${BASE_SITE_URL}/?gabarito=${encodeURIComponent(gabId)}`;
+    }
+
+    function setCloudStatus(status, text) {
+      const dot = document.getElementById("cloud-dot");
+      const lbl = document.getElementById("cloud-label");
+      dot.classList.remove("online", "error");
+      if (status === "online") dot.classList.add("online");
+      if (status === "error") dot.classList.add("error");
+      lbl.textContent = text;
     }
 
     // =========================================================================
-    // ANTI-COLA (TROCA DE ABA / APLICATIVO)
+    // SINCRONIZAÇÃO COM FIRESTORE (QUESTÕES & GABARITOS)
+    // =========================================================================
+    async function loadRoleQuestionsFromCloud(role) {
+      try {
+        const ref = doc(db, COL_QUESTIONS, role);
+        const snap = await getDoc(ref);
+        if (snap.exists() && Array.isArray(snap.data().questions) && snap.data().questions.length > 0) {
+          state.questionBanks[role] = snap.data().questions;
+        } else {
+          state.questionBanks[role] = structuredClone(DEFAULT_QUESTION_BANK[role]);
+        }
+        state.cloudOnline = true;
+        return state.questionBanks[role];
+      } catch (err) {
+        console.error("Erro Firestore ao carregar questões:", err);
+        state.cloudOnline = false;
+        setCloudStatus("error", "Modo local (verifique regras do Firestore)");
+        return state.questionBanks[role];
+      }
+    }
+
+    async function loadAllQuestionBanks() {
+      try {
+        await Promise.all(["GM", "AP", "TO", "ES"].map(r => loadRoleQuestionsFromCloud(r)));
+        if (state.cloudOnline) {
+          setCloudStatus("online", "Banco de dados online (Firebase)");
+        }
+      } catch {
+        setCloudStatus("error", "Modo local (sem acesso ao Firestore)");
+      }
+    }
+
+    async function saveRoleQuestionsToCloud(role) {
+      try {
+        const ref = doc(db, COL_QUESTIONS, role);
+        await setDoc(ref, {
+          role,
+          questions: state.questionBanks[role],
+          updatedAt: Date.now()
+        });
+        setCloudStatus("online", "Banco de dados online (Firebase)");
+        return true;
+      } catch (err) {
+        console.error("Erro ao salvar questões:", err);
+        showToast("Erro ao salvar no Firebase. Verifique as regras do Firestore!", 4500);
+        return false;
+      }
+    }
+
+    async function saveGabaritoRecord(record) {
+      // Salva backup local imediato
+      try {
+        localStorage.setItem(`pf11_gab_${record.id}`, JSON.stringify(record));
+      } catch {}
+
+      try {
+        const ref = doc(db, COL_GABARITOS, record.id);
+        await setDoc(ref, record);
+        setCloudStatus("online", "Banco de dados online (Firebase)");
+        return true;
+      } catch (err) {
+        console.error("Erro ao salvar gabarito no Firestore:", err);
+        setCloudStatus("error", "Erro ao gravar na nuvem (regras Firestore)");
+        return false;
+      }
+    }
+
+    async function fetchGabaritoRecord(gabId) {
+      try {
+        const ref = doc(db, COL_GABARITOS, gabId);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          state.cloudOnline = true;
+          setCloudStatus("online", "Banco de dados online (Firebase)");
+          return snap.data();
+        }
+      } catch (err) {
+        console.error("Erro ao buscar gabarito no Firestore:", err);
+      }
+
+      // Fallback local caso tenha acabado de fazer no mesmo dispositivo sem permissão de nuvem
+      try {
+        const localRaw = localStorage.getItem(`pf11_gab_${gabId}`);
+        if (localRaw) return JSON.parse(localRaw);
+      } catch {}
+
+      return null;
+    }
+
+    // =========================================================================
+    // ANTI-COLA (SAÍDA DE ABA / APLICATIVO)
     // =========================================================================
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && state.examActive) {
         state.tabSwitches++;
-        showToast("Atenção: saída da tela durante a prova foi registrada.", 3500);
+        showToast("Atenção: saída da tela durante a prova foi registrada no gabarito.", 3500);
       }
     });
 
     // =========================================================================
-    // SELEÇÃO DE CARGO E INÍCIO DA PROVA
+    // TELA INICIAL: SELEÇÃO DE CARGO, COMPROMISSO CRM E INÍCIO
     // =========================================================================
+    function selectRoleCard(roleCode) {
+      document.querySelectorAll(".role-card").forEach(b => {
+        b.classList.toggle("selected", b.dataset.role === roleCode);
+      });
+      state.role = roleCode;
+    }
+
     document.querySelectorAll(".role-card").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".role-card").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        state.role = btn.dataset.role;
+      btn.addEventListener("click", () => selectRoleCard(btn.dataset.role));
+    });
+
+    // Radio Sim / Não dos 2 CRMs diários
+    const crmPillSim = document.getElementById("crm-pill-sim");
+    const crmPillNao = document.getElementById("crm-pill-nao");
+    const crmReasonWrap = document.getElementById("crm-reason-wrap");
+
+    document.querySelectorAll('input[name="crm-commit"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        const val = radio.value;
+        crmPillSim.classList.toggle("active-sim", val === "Sim");
+        crmPillNao.classList.toggle("active-nao", val === "Não");
+        crmReasonWrap.classList.toggle("hidden", val !== "Não");
+        if (val === "Sim") {
+          document.getElementById("int-crm-reason").value = "";
+        }
       });
     });
 
-    document.getElementById("btn-start-exam").addEventListener("click", () => {
-      const errBox = document.getElementById("start-error");
-      errBox.classList.add("hidden");
+    function showStartError(msg) {
+      const box = document.getElementById("start-error");
+      box.textContent = msg;
+      box.classList.remove("hidden");
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 
-      const name = document.getElementById("cand-name").value.trim();
-      const delegate = document.getElementById("delegado-name").value.trim();
-      const code = document.getElementById("access-code").value.trim().toUpperCase();
+    document.getElementById("btn-start-exam").addEventListener("click", async () => {
+      document.getElementById("start-error").classList.add("hidden");
 
-      if (!name || name.length < 3) {
-        return showStartError("Informe seu Nome RP completo.");
-      }
-      if (!delegate || delegate.length < 3) {
-        return showStartError("Informe o nome do Delegado responsável que passou a avaliação.");
-      }
-      if (!state.role) {
-        return showStartError("Selecione a prova / cargo que você vai realizar.");
-      }
-      if (!code) {
-        return showStartError("Insira o Código de Acesso fornecido pelo Delegado.");
+      const candName = document.getElementById("cand-name").value.trim();
+      const delName = document.getElementById("delegado-name").value.trim();
+      const age = document.getElementById("int-age").value.trim();
+      const phone = document.getElementById("int-phone").value.trim();
+      const origin = document.getElementById("int-origin").value.trim();
+      const servers = document.getElementById("int-servers").value.trim();
+      const exp = document.getElementById("int-exp").value.trim();
+      const know = document.getElementById("int-know").value.trim();
+      const goal = document.getElementById("int-goal").value.trim();
+      const crmRadio = document.querySelector('input[name="crm-commit"]:checked');
+      const crmCommit = crmRadio ? crmRadio.value : "";
+      const crmReason = document.getElementById("int-crm-reason").value.trim();
+
+      if (candName.length < 3) return showStartError("Informe seu Nome RP completo.");
+      if (delName.length < 3) return showStartError("Informe o nome do Delegado responsável que passou a prova.");
+      if (!state.role) return showStartError("Selecione o cargo / prova que deseja realizar.");
+      if (!age || Number(age) < 10) return showStartError("Informe sua idade (OOC).");
+      if (phone.length < 8) return showStartError("Informe seu número de telefone / WhatsApp.");
+      if (origin.length < 3) return showStartError("Informe de onde você veio (seu histórico no RP).");
+      if (servers.length < 2) return showStartError("Responda se já trabalhou em algum outro servidor.");
+      if (exp.length < 2) return showStartError("Informe sua experiência na área policial/segurança/recepção.");
+      if (know.length < 2) return showStartError("Informe seu nível de conhecimento sobre RP, Bíblia RP e Códigos Q.");
+      if (goal.length < 5) return showStartError("Informe qual o seu objetivo ao entrar / subir de cargo na PF.");
+      if (!crmCommit) return showStartError("Selecione Sim ou Não sobre o compromisso com os 2 CRMs diários.");
+      if (crmCommit === "Não" && crmReason.length < 5) {
+        return showStartError("Como você marcou 'Não' nos CRMs diários, escreva o motivo no campo obrigatório.");
       }
 
-      const validCodes = getAllValidCodes();
-      const usedCodes = getUsedCodes();
+      const btn = document.getElementById("btn-start-exam");
+      btn.disabled = true;
+      btn.textContent = "Carregando questões atualizadas...";
 
-      if (!validCodes.includes(code)) {
-        return showStartError("Código de acesso inválido. Verifique com o Delegado.");
+      await loadRoleQuestionsFromCloud(state.role);
+
+      btn.disabled = false;
+      btn.textContent = "Iniciar Avaliação Oficial";
+
+      if (!state.questionBanks[state.role] || state.questionBanks[state.role].length === 0) {
+        return showStartError("Não há questões cadastradas para este cargo no momento. Avise o Delegado.");
       }
-      if (usedCodes.includes(code)) {
-        return showStartError("Este código de acesso já foi utilizado e não pode ser reutilizado.");
-      }
 
-      // Queima o código imediatamente ao iniciar para impedir reinício por F5
-      markCodeAsUsed(code);
-
-      state.candidateName = name;
-      state.delegateName = delegate;
-      state.activeCode = code;
+      state.candidateName = candName;
+      state.delegateName = delName;
+      state.interview = { age, phone, origin, servers, exp, know, goal, crmCommit, crmReason };
       state.attemptNumber = 1;
       state.usedQuestionIds = new Set();
       state.attemptsData = [];
@@ -1241,35 +2001,29 @@
       startAttempt(1);
     });
 
-    function showStartError(msg) {
-      const errBox = document.getElementById("start-error");
-      errBox.textContent = msg;
-      errBox.classList.remove("hidden");
-    }
-
     // =========================================================================
-    // MOTOR DA PROVA (SORTEIO SEM REPETIÇÃO + EMBARALHAMENTO + 90s)
+    // MOTOR DA PROVA (SORTEIO SEM REPETIÇÃO + 90s + REGISTRO COMPLETO)
     // =========================================================================
     function startAttempt(num) {
       state.attemptNumber = num;
-      const bank = QUESTION_BANK[state.role];
-      const needed = ROLE_CONFIG[state.role].count;
+      const bank = state.questionBanks[state.role];
+      const desiredCount = Math.min(ROLE_CONFIG[state.role].count, bank.length);
 
-      // Prioriza questões ainda não usadas na 1ª tentativa
       let pool = bank.filter(q => !state.usedQuestionIds.has(q.id));
-      if (pool.length < needed) {
+      if (pool.length < desiredCount) {
         pool = [...bank];
       }
 
-      const selected = shuffleArray(pool).slice(0, needed).map(q => {
-        // Embaralha alternativas preservando qual é a correta
-        const mappedOpts = q.o.map((text, idx) => ({ text, isCorrect: idx === q.a }));
+      const selected = shuffleArray(pool).slice(0, desiredCount).map(q => {
+        const mappedOpts = q.o.map((text, idx) => ({ text, isCorrect: idx === Number(q.a) }));
         const shuffledOpts = shuffleArray(mappedOpts);
+        const correctIdx = shuffledOpts.findIndex(o => o.isCorrect);
         return {
           id: q.id,
-          d: q.d,
+          d: q.d || "Médio",
           q: q.q,
-          options: shuffledOpts
+          options: shuffledOpts.map(o => o.text),
+          correctIdx
         };
       });
 
@@ -1277,7 +2031,7 @@
 
       state.currentQuestions = selected;
       state.currentIndex = 0;
-      state.currentAnswers = [];
+      state.currentDetailedAnswers = [];
       state.tabSwitches = 0;
       state.attemptStartTime = Date.now();
       state.examActive = true;
@@ -1292,9 +2046,9 @@
       const total = state.currentQuestions.length;
 
       state.selectedOptionIdx = null;
-      document.getElementById("btn-next-q").disabled = true;
-      document.getElementById("btn-next-q").textContent =
-        state.currentIndex === total - 1 ? "Finalizar Tentativa" : "Confirmar e Avançar";
+      const btnNext = document.getElementById("btn-next-q");
+      btnNext.disabled = true;
+      btnNext.textContent = state.currentIndex === total - 1 ? "Finalizar Tentativa" : "Confirmar e Avançar";
 
       document.getElementById("quiz-role-badge").textContent = ROLE_CONFIG[state.role].name;
       document.getElementById("quiz-progress-badge").textContent = `Questão ${state.currentIndex + 1} / ${total}`;
@@ -1306,16 +2060,16 @@
       listEl.innerHTML = "";
       const letters = ["A", "B", "C", "D"];
 
-      qObj.options.forEach((opt, idx) => {
+      qObj.options.forEach((optText, idx) => {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "option-btn";
-        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${opt.text}</span>`;
+        btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${escapeHtml(optText)}</span>`;
         btn.addEventListener("click", () => {
           document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
           state.selectedOptionIdx = idx;
-          document.getElementById("btn-next-q").disabled = false;
+          btnNext.disabled = false;
         });
         listEl.appendChild(btn);
       });
@@ -1332,7 +2086,7 @@
         updateTimerUI();
         if (state.timeLeft <= 0) {
           clearInterval(state.timerInterval);
-          recordAnswer(true); // Anulada por tempo esgotado
+          recordAnswer(true);
           showToast("Tempo esgotado! Questão anulada — avançando...", 2200);
           advanceQuestion();
         }
@@ -1368,22 +2122,18 @@
 
     function recordAnswer(isTimeout) {
       const qObj = state.currentQuestions[state.currentIndex];
-      const letters = ["A", "B", "C", "D"];
+      const chosenIdx = (isTimeout || state.selectedOptionIdx === null) ? -1 : state.selectedOptionIdx;
+      const status = chosenIdx === -1 ? "nul" : (chosenIdx === qObj.correctIdx ? "ok" : "err");
 
-      if (isTimeout || state.selectedOptionIdx === null) {
-        state.currentAnswers.push({
-          qNum: state.currentIndex + 1,
-          status: "nul",
-          letterChosen: "-"
-        });
-      } else {
-        const chosen = qObj.options[state.selectedOptionIdx];
-        state.currentAnswers.push({
-          qNum: state.currentIndex + 1,
-          status: chosen.isCorrect ? "ok" : "err",
-          letterChosen: letters[state.selectedOptionIdx]
-        });
-      }
+      state.currentDetailedAnswers.push({
+        qNum: state.currentIndex + 1,
+        difficulty: qObj.d,
+        question: qObj.q,
+        options: qObj.options,
+        chosenIdx,
+        correctIdx: qObj.correctIdx,
+        status
+      });
     }
 
     function advanceQuestion() {
@@ -1395,17 +2145,14 @@
       }
     }
 
-    // =========================================================================
-    // FINALIZAÇÃO DE TENTATIVA E ESCOLHA DO RELATÓRIO
-    // =========================================================================
     function finishAttempt() {
       clearInterval(state.timerInterval);
       state.examActive = false;
 
       const total = state.currentQuestions.length;
-      const correct = state.currentAnswers.filter(a => a.status === "ok").length;
-      const wrong = state.currentAnswers.filter(a => a.status === "err").length;
-      const annulled = state.currentAnswers.filter(a => a.status === "nul").length;
+      const correct = state.currentDetailedAnswers.filter(a => a.status === "ok").length;
+      const wrong = state.currentDetailedAnswers.filter(a => a.status === "err").length;
+      const annulled = state.currentDetailedAnswers.filter(a => a.status === "nul").length;
       const percent = Math.round((correct / total) * 100);
       const durationSec = Math.max(1, Math.round((Date.now() - state.attemptStartTime) / 1000));
       const now = new Date();
@@ -1420,9 +2167,10 @@
         passed: percent >= PASSING_PERCENT,
         durationSec,
         tabSwitches: state.tabSwitches,
-        answers: [...state.currentAnswers],
+        questions: [...state.currentDetailedAnswers],
         dateStr: now.toLocaleDateString("pt-BR"),
-        timeStr: now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
+        timeStr: now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
+        createdAt: Date.now()
       };
 
       state.attemptsData.push(attemptObj);
@@ -1436,10 +2184,10 @@
       }
     }
 
-    function renderChips(containerId, answers) {
+    function renderChips(containerId, questions) {
       const box = document.getElementById(containerId);
       box.innerHTML = "";
-      answers.forEach(a => {
+      questions.forEach(a => {
         const span = document.createElement("span");
         span.className = `chip ${a.status}`;
         const icon = a.status === "ok" ? "✅" : a.status === "err" ? "❌" : "⏱️";
@@ -1462,16 +2210,11 @@
         ? `DESEMPENHO APTO (${att.percent}%) — Indicado para Entrevista com o Delegado`
         : `DESEMPENHO ABAIXO DA MÉDIA (${att.percent}%) — Média sugerida: ${PASSING_PERCENT}%`;
 
-      renderChips("mid-chips", att.answers);
+      renderChips("mid-chips", att.questions);
     }
 
-    document.getElementById("btn-finish-a1").addEventListener("click", () => {
-      openFinalReport(0);
-    });
-
-    document.getElementById("btn-retry-a2").addEventListener("click", () => {
-      startAttempt(2);
-    });
+    document.getElementById("btn-finish-a1").addEventListener("click", () => finalizeAndSaveAttempt(0));
+    document.getElementById("btn-retry-a2").addEventListener("click", () => startAttempt(2));
 
     function renderChooseScreen() {
       const grid = document.getElementById("compare-grid");
@@ -1503,15 +2246,86 @@
 
     document.getElementById("btn-confirm-choice").addEventListener("click", () => {
       if (state.chosenAttemptIdx === null) return;
-      openFinalReport(state.chosenAttemptIdx);
+      finalizeAndSaveAttempt(state.chosenAttemptIdx);
     });
 
     // =========================================================================
-    // GERAÇÃO DO RELATÓRIO PARA WHATSAPP
+    // SALVAR GABARITO COMPLETO + GERAR RELATÓRIO PARA WHATSAPP
     // =========================================================================
-    function openFinalReport(idx) {
+    function buildCandidateReportMessage(rec) {
+      const gabUrl = getGabaritoUrl(rec.id);
+      const statusText = rec.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
+      const gabaritoResumo = rec.questions
+        .map(q => `Q${String(q.qNum).padStart(2, "0")}:${q.status === "ok" ? "✅" : q.status === "err" ? "❌" : "⏱️"}`)
+        .join(" | ");
+      const crmText = rec.interview.crmCommit === "Sim"
+        ? "Sim, comprometeu-se"
+        : `Não (Motivo: ${rec.interview.crmReason})`;
+
+      return [
+        "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
+        "📋 *RELATÓRIO OFICIAL DE AVALIAÇÃO*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        `👤 *Candidato:* ${rec.candidateName}`,
+        `👮 *Delegado Responsável:* ${rec.delegateName}`,
+        `🎖️ *Prova/Cargo:* ${rec.roleName}`,
+        `📅 *Data/Hora:* ${rec.dateStr} às ${rec.timeStr}`,
+        `⏱️ *Duração:* ${formatDuration(rec.durationSec)}`,
+        `📦 *Compromisso 2 CRMs/dia:* ${crmText}`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        `✅ *Acertos:* ${rec.correct}/${rec.total}`,
+        `❌ *Erros:* ${rec.wrong}`,
+        `⏳ *Anuladas (Tempo):* ${rec.annulled}`,
+        `📊 *Aproveitamento:* ${rec.percent}%`,
+        `📌 *Situação:* ${statusText}`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        "📝 *Resumo do Gabarito:*",
+        gabaritoResumo,
+        "━━━━━━━━━━━━━━━━━━━━",
+        "🔗 *Link do Gabarito Completo (Questões + Entrevista):*",
+        gabUrl,
+        "━━━━━━━━━━━━━━━━━━━━",
+        `🆔 *Registro:* ${rec.id}`
+      ].join("\n");
+    }
+
+    async function finalizeAndSaveAttempt(idx) {
       const att = state.attemptsData[idx];
-      const protocol = buildDiscreetProtocol(att);
+      const gabId = generateGabaritoId(state.role);
+      const gabUrl = getGabaritoUrl(gabId);
+
+      const fullRecord = {
+        id: gabId,
+        candidateName: state.candidateName,
+        delegateName: state.delegateName,
+        role: state.role,
+        roleName: ROLE_CONFIG[state.role].name,
+        interview: { ...state.interview },
+        attemptNumber: att.attemptNumber,
+        total: att.total,
+        correct: att.correct,
+        wrong: att.wrong,
+        annulled: att.annulled,
+        percent: att.percent,
+        passed: att.passed,
+        durationSec: att.durationSec,
+        tabSwitches: att.tabSwitches,
+        questions: att.questions,
+        dateStr: att.dateStr,
+        timeStr: att.timeStr,
+        createdAt: att.createdAt
+      };
+
+      showToast("Salvando gabarito completo na nuvem...", 2500);
+      const savedCloud = await saveGabaritoRecord(fullRecord);
+
+      state.lastSavedGabaritoId = gabId;
+      state.lastSavedGabaritoUrl = gabUrl;
+      state.lastSavedRecord = fullRecord;
+
+      const badge = document.getElementById("report-saved-badge");
+      badge.textContent = savedCloud ? "Salvo na Nuvem" : "Salvo Localmente";
+      badge.className = `pill ${savedCloud ? "pill-green" : "pill-amber"}`;
 
       const banner = document.getElementById("final-status-banner");
       banner.className = `status-banner ${att.passed ? "status-pass" : "status-fail"}`;
@@ -1519,142 +2333,755 @@
         ? `RESULTADO: APTO PARA ENTREVISTA (${att.correct}/${att.total} — ${att.percent}%)`
         : `RESULTADO: INAPTO NA PROVA OBJETIVA (${att.correct}/${att.total} — ${att.percent}%)`;
 
-      renderChips("final-chips", att.answers);
+      renderChips("final-chips", att.questions);
+      document.getElementById("gabarito-link-display").textContent = gabUrl;
+      document.getElementById("report-text").value = buildCandidateReportMessage(fullRecord);
 
-      const gabaritoResumo = att.answers
-        .map(a => `Q${String(a.qNum).padStart(2, "0")}:${a.status === "ok" ? "✅" : a.status === "err" ? "❌" : "⏱️"}`)
-        .join(" | ");
-
-      const statusText = att.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
-
-      const report = [
-        "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
-        "📋 *RELATÓRIO OFICIAL DE AVALIAÇÃO*",
-        "━━━━━━━━━━━━━━━━━━━━",
-        `👤 *Candidato:* ${state.candidateName}`,
-        `👮 *Delegado Responsável:* ${state.delegateName}`,
-        `🎖️ *Prova/Cargo:* ${ROLE_CONFIG[state.role].name}`,
-        `📅 *Data/Hora:* ${att.dateStr} às ${att.timeStr}`,
-        `⏱️ *Duração:* ${formatDuration(att.durationSec)}`,
-        "━━━━━━━━━━━━━━━━━━━━",
-        `✅ *Acertos:* ${att.correct}/${att.total}`,
-        `❌ *Erros:* ${att.wrong}`,
-        `⏳ *Anuladas (Tempo):* ${att.annulled}`,
-        `📊 *Aproveitamento:* ${att.percent}%`,
-        `📌 *Situação:* ${statusText}`,
-        "━━━━━━━━━━━━━━━━━━━━",
-        "📝 *Resumo do Gabarito:*",
-        gabaritoResumo,
-        "━━━━━━━━━━━━━━━━━━━━",
-        "🎙️ *Próxima etapa:* Aguardando agendamento de entrevista com o Delegado.",
-        `🔐 *Protocolo:* ${protocol}`
-      ].join("\n");
-
-      document.getElementById("report-text").value = report;
       showView("view-report");
     }
 
-    document.getElementById("btn-copy-report").addEventListener("click", async () => {
-      const text = document.getElementById("report-text").value;
-      try {
-        await navigator.clipboard.writeText(text);
-        showToast("Relatório copiado! Cole no WhatsApp do Delegado.");
-      } catch {
-        const area = document.getElementById("report-text");
-        area.select();
-        document.execCommand("copy");
-        showToast("Relatório copiado!");
-      }
+    document.getElementById("btn-open-gabarito-tab").addEventListener("click", () => {
+      if (!state.lastSavedRecord) return;
+      renderGabaritoView(state.lastSavedRecord);
+      showView("view-gabarito");
+    });
+
+    document.getElementById("btn-copy-gab-link").addEventListener("click", () => {
+      if (!state.lastSavedGabaritoUrl) return;
+      copyToClipboard(state.lastSavedGabaritoUrl, "Link do gabarito copiado!");
+    });
+
+    document.getElementById("btn-copy-report").addEventListener("click", () => {
+      const txt = document.getElementById("report-text").value;
+      copyToClipboard(txt, "Relatório copiado! Cole no WhatsApp do Delegado.");
     });
 
     document.getElementById("btn-send-wa").addEventListener("click", () => {
-      const text = document.getElementById("report-text").value;
-      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-      window.open(url, "_blank");
+      const txt = document.getElementById("report-text").value;
+      window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, "_blank");
     });
 
     document.getElementById("btn-new-session").addEventListener("click", () => {
-      document.getElementById("access-code").value = "";
-      document.getElementById("start-error").classList.add("hidden");
       showView("view-start");
     });
 
     // =========================================================================
-    // PAINEL OCULTO DE ADMINISTRAÇÃO DE CÓDIGOS
+    // VIEW 6: PÁGINA DO GABARITO COMPLETO (?gabarito=ID)
     // =========================================================================
-    const modal = document.getElementById("admin-modal");
+    async function openGabaritoById(gabId) {
+      showView("view-gabarito");
+      document.getElementById("gab-view-id").textContent = gabId;
+      document.getElementById("gab-loading").classList.remove("hidden");
+      document.getElementById("gab-not-found").classList.add("hidden");
+      document.getElementById("gab-content").classList.add("hidden");
+      document.getElementById("gab-group-box").classList.add("hidden");
 
-    document.getElementById("btn-secret-admin").addEventListener("click", () => {
-      document.getElementById("admin-login-err").classList.add("hidden");
-      if (state.adminLoggedIn) {
-        updateAdminStats();
+      const rec = await fetchGabaritoRecord(gabId);
+      document.getElementById("gab-loading").classList.add("hidden");
+
+      if (!rec) {
+        document.getElementById("gab-not-found").classList.remove("hidden");
+        return;
       }
-      modal.classList.remove("hidden");
+
+      renderGabaritoView(rec);
+    }
+
+    function renderGabaritoView(rec) {
+      state.currentViewingGabarito = rec;
+      document.getElementById("gab-view-id").textContent = rec.id;
+      document.getElementById("gab-loading").classList.add("hidden");
+      document.getElementById("gab-not-found").classList.add("hidden");
+      document.getElementById("gab-content").classList.remove("hidden");
+      document.getElementById("gab-group-box").classList.add("hidden");
+
+      const banner = document.getElementById("gab-status-banner");
+      banner.className = `status-banner ${rec.passed ? "status-pass" : "status-fail"}`;
+      banner.textContent = rec.passed
+        ? `✅ APTO PARA ENTREVISTA — ${rec.roleName} (${rec.correct}/${rec.total} • ${rec.percent}%)`
+        : `❌ INAPTO NA PROVA OBJETIVA — ${rec.roleName} (${rec.correct}/${rec.total} • ${rec.percent}%)`;
+
+      document.getElementById("gab-stats").innerHTML = `
+        <div class="stat-box"><div class="val" style="color:var(--green)">${rec.correct}/${rec.total}</div><div class="lbl">Acertos</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--red)">${rec.wrong}</div><div class="lbl">Erros</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--amber)">${rec.annulled}</div><div class="lbl">Anuladas</div></div>
+        <div class="stat-box"><div class="val" style="color:var(--blue-glow)">${rec.percent}%</div><div class="lbl">Aproveitamento</div></div>
+      `;
+
+      const iv = rec.interview || {};
+      const crmHtml = iv.crmCommit === "Sim"
+        ? `<span style="color:#86efac; font-weight:700;">✅ Sim, comprometeu-se com os 2 CRMs diários</span>`
+        : `<span style="color:#fca5a5; font-weight:700;">❌ Não consegue comparecer</span><br/><small style="color:#fde047;">Motivo: ${escapeHtml(iv.crmReason || "Não informado")}</small>`;
+
+      const tabsHtml = rec.tabSwitches === 0
+        ? `<span style="color:#86efac; font-weight:700;">0 saídas (Limpo)</span>`
+        : `<span style="color:#fca5a5; font-weight:700;">⚠️ ${rec.tabSwitches} saída(s) de aba/app detectada(s)</span>`;
+
+      document.getElementById("gab-interview-grid").innerHTML = `
+        <div class="interview-item"><div class="k">Candidato (Nome RP)</div><div class="v"><strong>${escapeHtml(rec.candidateName)}</strong></div></div>
+        <div class="interview-item"><div class="k">Delegado Responsável</div><div class="v">${escapeHtml(rec.delegateName)}</div></div>
+        <div class="interview-item"><div class="k">Data / Duração</div><div class="v">${escapeHtml(rec.dateStr)} às ${escapeHtml(rec.timeStr)} • ${formatDuration(rec.durationSec)}</div></div>
+        <div class="interview-item"><div class="k">Tentativa & Anti-Cola</div><div class="v">${rec.attemptNumber}ª Tentativa • ${tabsHtml}</div></div>
+        <div class="interview-item"><div class="k">Idade (OOC)</div><div class="v">${escapeHtml(iv.age || "-")} anos</div></div>
+        <div class="interview-item"><div class="k">Telefone / WhatsApp</div><div class="v">${escapeHtml(iv.phone || "-")}</div></div>
+        <div class="interview-item full"><div class="k">De onde veio (Histórico no RP)</div><div class="v">${escapeHtml(iv.origin || "-")}</div></div>
+        <div class="interview-item full"><div class="k">Já trabalhou em outro servidor?</div><div class="v">${escapeHtml(iv.servers || "-")}</div></div>
+        <div class="interview-item full"><div class="k">Experiência (Polícia / Segurança / Recepção)</div><div class="v">${escapeHtml(iv.exp || "-")}</div></div>
+        <div class="interview-item full"><div class="k">Nível de conhecimento (RP / Bíblia RP / Código Q)</div><div class="v">${escapeHtml(iv.know || "-")}</div></div>
+        <div class="interview-item full"><div class="k">Objetivo na Polícia Federal</div><div class="v">${escapeHtml(iv.goal || "-")}</div></div>
+        <div class="interview-item full"><div class="k">Compromisso com os 2 CRMs Diários</div><div class="v">${crmHtml}</div></div>
+      `;
+
+      const qList = document.getElementById("gab-questions-list");
+      qList.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      (rec.questions || []).forEach(item => {
+        const badgeClass = item.status === "ok" ? "pill-green" : item.status === "err" ? "pill-red" : "pill-amber";
+        const badgeText = item.status === "ok" ? "✅ Correta" : item.status === "err" ? "❌ Errada" : "⏱️ Anulada (Tempo)";
+
+        let optsHtml = "";
+        (item.options || []).forEach((optText, idx) => {
+          let cls = "gab-opt";
+          let tag = "";
+          if (idx === item.correctIdx && idx === item.chosenIdx) {
+            cls += " correct";
+            tag = `<span class="gab-tag" style="background:var(--green);color:#050a14;">Marcou • Correta</span>`;
+          } else if (idx === item.correctIdx) {
+            cls += " correct";
+            tag = `<span class="gab-tag" style="background:rgba(34,197,94,0.25);color:#86efac;">Correta</span>`;
+          } else if (idx === item.chosenIdx) {
+            cls += " wrong-chosen";
+            tag = `<span class="gab-tag" style="background:var(--red);color:#fff;">Marcada pelo Candidato</span>`;
+          }
+          optsHtml += `<div class="${cls}"><span><strong>${letters[idx]})</strong> ${escapeHtml(optText)}</span>${tag}</div>`;
+        });
+
+        const card = document.createElement("div");
+        card.className = `gab-q-card ${item.status}`;
+        card.innerHTML = `
+          <div class="gab-q-head">
+            <span class="pill">${escapeHtml(item.difficulty || "Médio")}</span>
+            <span class="pill ${badgeClass}">${badgeText}</span>
+          </div>
+          <div class="gab-q-title">${item.qNum}. ${escapeHtml(item.question)}</div>
+          ${optsHtml}
+        `;
+        qList.appendChild(card);
+      });
+    }
+
+    document.getElementById("btn-gab-copy-link").addEventListener("click", () => {
+      if (!state.currentViewingGabarito) return;
+      copyToClipboard(getGabaritoUrl(state.currentViewingGabarito.id), "Link do gabarito copiado!");
     });
 
-    document.getElementById("btn-close-modal").addEventListener("click", () => {
-      modal.classList.add("hidden");
+    document.getElementById("btn-gab-gen-group").addEventListener("click", () => {
+      if (!state.currentViewingGabarito) return;
+      document.getElementById("gab-group-text").value = buildDelegatesGroupMessage(state.currentViewingGabarito, false, null);
+      document.getElementById("gab-group-box").classList.remove("hidden");
     });
 
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) modal.classList.add("hidden");
+    document.getElementById("btn-gab-copy-group").addEventListener("click", () => {
+      copyToClipboard(document.getElementById("gab-group-text").value, "Mensagem para o grupo dos delegados copiada!");
     });
 
-    document.getElementById("btn-adm-login").addEventListener("click", () => {
+    document.getElementById("btn-gab-send-group").addEventListener("click", () => {
+      const txt = document.getElementById("gab-group-text").value;
+      window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, "_blank");
+    });
+
+    document.getElementById("btn-gab-back-home").addEventListener("click", () => {
+      // Remove parâmetro ?gabarito da URL sem recarregar
+      try { window.history.replaceState({}, "", window.location.pathname); } catch {}
+      showView("view-start");
+    });
+
+    // =========================================================================
+    // PAINEL DOS DELEGADOS: LOGIN, ABAS & CONVITE PERSONALIZADO
+    // =========================================================================
+    const loginModal = document.getElementById("login-modal");
+
+    document.getElementById("btn-secret-delegate").addEventListener("click", () => {
+      if (state.delegateLoggedIn) {
+        openDelegatePanel();
+      } else {
+        document.getElementById("login-err").classList.add("hidden");
+        loginModal.classList.remove("hidden");
+      }
+    });
+
+    document.getElementById("btn-close-login").addEventListener("click", () => loginModal.classList.add("hidden"));
+    loginModal.addEventListener("click", e => { if (e.target === loginModal) loginModal.classList.add("hidden"); });
+
+    document.getElementById("btn-do-login").addEventListener("click", () => {
       const u = document.getElementById("adm-user").value.trim();
       const p = document.getElementById("adm-pass").value.trim();
-      const err = document.getElementById("admin-login-err");
+      const err = document.getElementById("login-err");
 
       if (u === ADMIN_USER && p === ADMIN_PASS) {
-        state.adminLoggedIn = true;
-        err.classList.add("hidden");
-        document.getElementById("admin-login-box").classList.add("hidden");
-        document.getElementById("admin-panel-box").classList.remove("hidden");
-        updateAdminStats();
+        state.delegateLoggedIn = true;
+        sessionStorage.setItem("pf11_del_logged", "1");
+        loginModal.classList.add("hidden");
+        openDelegatePanel();
       } else {
         err.textContent = "Usuário ou senha incorretos.";
         err.classList.remove("hidden");
       }
     });
 
-    function updateAdminStats() {
-      const all = getAllValidCodes();
-      const used = getUsedCodes();
-      const avail = all.filter(c => !used.includes(c)).length;
-
-      document.getElementById("adm-total-codes").textContent = all.length;
-      document.getElementById("adm-used-codes").textContent = used.length;
-      document.getElementById("adm-avail-codes").textContent = avail;
+    function openDelegatePanel() {
+      const savedDel = localStorage.getItem("pf11_last_del_name") || "";
+      if (savedDel && !document.getElementById("inv-del").value) {
+        document.getElementById("inv-del").value = savedDel;
+      }
+      showView("view-delegate");
     }
 
-    document.getElementById("btn-adm-save-codes").addEventListener("click", () => {
-      const raw = document.getElementById("adm-new-codes").value;
-      const tokens = raw
-        .split(/[\s,;]+/)
-        .map(s => s.trim().toUpperCase())
-        .filter(s => s.length >= 4);
+    document.getElementById("btn-del-exit").addEventListener("click", () => {
+      showView("view-start");
+    });
 
-      if (!tokens.length) {
-        showToast("Nenhum código válido encontrado para adicionar.");
+    // Navegação entre as 4 abas do Delegado
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const target = btn.dataset.tab;
+        document.querySelectorAll(".del-tab").forEach(panel => {
+          panel.classList.toggle("hidden", panel.id !== target);
+        });
+        if (target === "tab-archive") loadArchiveList();
+        if (target === "tab-questions") renderQuestionManager();
+      });
+    });
+
+    // --- ABA 1: ENVIAR CONVITE / LINK PERSONALIZADO (SEM CÓDIGO) ---
+    document.getElementById("btn-gen-invite").addEventListener("click", () => {
+      const cand = document.getElementById("inv-cand").value.trim();
+      const del = document.getElementById("inv-del").value.trim();
+      const role = document.getElementById("inv-role").value;
+
+      if (del) localStorage.setItem("pf11_last_del_name", del);
+
+      const params = new URLSearchParams();
+      if (cand) params.set("candidato", cand);
+      if (del) params.set("delegado", del);
+      params.set("cargo", role);
+
+      const fullLink = `${BASE_SITE_URL}/?${params.toString()}`;
+      const roleInfo = ROLE_CONFIG[role];
+
+      const msg = [
+        "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
+        "📋 *CONVOCAÇÃO PARA AVALIAÇÃO OFICIAL*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        cand ? `👤 *Candidato:* ${cand}` : null,
+        del ? `👮 *Delegado Responsável:* ${del}` : null,
+        `🎖️ *Prova/Cargo:* ${roleInfo.name} (${roleInfo.count} questões)`,
+        `🌐 *Link da Prova:* ${fullLink}`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        "📝 Preencha a ficha de entrevista completa antes de iniciar.",
+        "⏱️ Cada questão possui *1min30s* (evite sair da tela durante a prova).",
+        "📩 Ao finalizar, envie a mensagem com o *link do gabarito* aqui no WhatsApp para seguirmos com sua entrevista."
+      ].filter(Boolean).join("\n");
+
+      document.getElementById("invite-link-out").textContent = fullLink;
+      document.getElementById("invite-msg-out").value = msg;
+      document.getElementById("invite-result-box").classList.remove("hidden");
+      showToast("Convite personalizado gerado!");
+    });
+
+    document.getElementById("btn-inv-copy-msg").addEventListener("click", () => {
+      copyToClipboard(document.getElementById("invite-msg-out").value, "Convite copiado!");
+    });
+
+    document.getElementById("btn-inv-send-wa").addEventListener("click", () => {
+      const txt = document.getElementById("invite-msg-out").value;
+      window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, "_blank");
+    });
+
+    document.getElementById("btn-inv-copy-link").addEventListener("click", () => {
+      copyToClipboard(document.getElementById("invite-link-out").textContent, "Link personalizado copiado!");
+    });
+
+    // --- ABA 2: CONFERÊNCIA DE RESULTADO + GRUPO DOS DELEGADOS ---
+    function extractField(rawText, regex) {
+      const m = rawText.match(regex);
+      if (!m || !m[1]) return null;
+      return m[1].replace(/^\*+|\*+$/g, "").trim();
+    }
+
+    function buildDelegatesGroupMessage(rec, isFraud, fraudNote) {
+      const gabUrl = getGabaritoUrl(rec.id);
+      const statusText = rec.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
+      const iv = rec.interview || {};
+      const crmText = iv.crmCommit === "Sim"
+        ? "Sim"
+        : `Não (${iv.crmReason || "Sem motivo"})`;
+      const tabsText = rec.tabSwitches === 0
+        ? "0 saídas (Limpo)"
+        : `⚠️ ${rec.tabSwitches} saída(s) de tela`;
+
+      return [
+        "🚔 *POLÍCIA FEDERAL — RIO RISE (SERV 11)*",
+        "📢 *REGISTRO DE AVALIAÇÃO — GRUPO DOS DELEGADOS*",
+        "━━━━━━━━━━━━━━━━━━━━",
+        `👤 *Candidato:* ${rec.candidateName}`,
+        `👮 *Delegado Responsável:* ${rec.delegateName}`,
+        `🎖️ *Prova/Cargo:* ${rec.roleName}`,
+        `📅 *Data/Hora:* ${rec.dateStr} às ${rec.timeStr} (${formatDuration(rec.durationSec)})`,
+        "━━━━━━━━━━━━━━━━━━━━",
+        `📊 *Resultado Real:* ${rec.correct}/${rec.total} (${rec.percent}%)`,
+        `🔄 *Tentativa:* ${rec.attemptNumber}ª Tentativa`,
+        `👀 *Saídas de Tela:* ${tabsText}`,
+        `📦 *Compromisso 2 CRMs/dia:* ${crmText}`,
+        `📌 *Situação:* ${isFraud ? `${statusText} (FRAUDE DETECTADA)` : statusText}`,
+        `🛡️ *Auditoria:* ${isFraud ? "🚨 FRAUDE — MENSAGEM ADULTERADA PELO CANDIDATO" : "✅ AUTÊNTICA (Confirmada no Banco)"}`,
+        fraudNote ? `⚠️ *Alteração detectada:* ${fraudNote}` : null,
+        "━━━━━━━━━━━━━━━━━━━━",
+        `🔗 *Gabarito Completo & Entrevista:* ${gabUrl}`,
+        isFraud
+          ? "⚠️ *Encaminhamento:* Candidato alterou o resultado antes de enviar — ciência ao comando."
+          : (rec.passed ? "🎙️ *Encaminhamento:* Liberado para entrevista." : "📌 *Encaminhamento:* Reprovado na prova objetiva.")
+      ].filter(Boolean).join("\n");
+    }
+
+    let lastVerifiedGabaritoRec = null;
+
+    document.getElementById("btn-clear-verify").addEventListener("click", () => {
+      document.getElementById("ver-input").value = "";
+      document.getElementById("ver-output-wrap").classList.add("hidden");
+    });
+
+    document.getElementById("btn-ver-open-gab").addEventListener("click", () => {
+      if (!lastVerifiedGabaritoRec) return;
+      renderGabaritoView(lastVerifiedGabaritoRec);
+      showView("view-gabarito");
+    });
+
+    document.getElementById("btn-ver-copy-corrected").addEventListener("click", () => {
+      copyToClipboard(document.getElementById("ver-corrected-text").value, "Mensagem real copiada!");
+    });
+
+    document.getElementById("btn-ver-copy-group").addEventListener("click", () => {
+      copyToClipboard(document.getElementById("ver-group-text").value, "Mensagem para o grupo dos delegados copiada!");
+    });
+
+    document.getElementById("btn-ver-send-group").addEventListener("click", () => {
+      const txt = document.getElementById("ver-group-text").value;
+      window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, "_blank");
+    });
+
+    document.getElementById("btn-run-verify").addEventListener("click", async () => {
+      const raw = document.getElementById("ver-input").value.trim();
+      if (!raw) return showToast("Cole a mensagem enviada pelo candidato ou o link do gabarito.");
+
+      const wrap = document.getElementById("ver-output-wrap");
+      const banner = document.getElementById("ver-banner");
+      const details = document.getElementById("ver-details");
+      const openWrap = document.getElementById("ver-open-gab-wrap");
+      const corrWrap = document.getElementById("ver-corrected-wrap");
+      const groupWrap = document.getElementById("ver-group-wrap");
+
+      wrap.classList.remove("hidden");
+      openWrap.classList.add("hidden");
+      corrWrap.classList.add("hidden");
+      groupWrap.classList.add("hidden");
+      lastVerifiedGabaritoRec = null;
+
+      // Extrai ID do Gabarito (PF11-GM-XXXXXX) do link ou do texto
+      const idMatch = raw.toUpperCase().match(/PF11-(?:GM|AP|TO|ES)-[A-Z0-9]{6}/);
+
+      if (!idMatch) {
+        banner.className = "verify-banner verify-fraud";
+        banner.innerHTML = `
+          <h3>🚨 ALERTA: LINK / REGISTRO DO GABARITO AUSENTE!</h3>
+          <p>A mensagem colada não contém o link nem o código de registro oficial (<code>PF11-XX-XXXXXX</code>). O candidato pode ter apagado o link do gabarito — solicite o link oficial ou consulte na aba <strong>Gabaritos Salvos</strong>.</p>
+        `;
+        details.innerHTML = `<div class="decode-row"><span>Status:</span><strong style="color:#fca5a5;">Registro não identificado</strong></div>`;
         return;
       }
 
-      const currentExtras = getExtraCodes();
-      const merged = [...new Set([...currentExtras, ...tokens])];
-      saveExtraCodes(merged);
+      const gabId = idMatch[0];
+      banner.className = "verify-banner verify-warn";
+      banner.innerHTML = `<h3>⏳ Consultando registro oficial ${gabId} no Firebase...</h3>`;
+      details.innerHTML = "";
 
-      document.getElementById("adm-new-codes").value = "";
-      updateAdminStats();
-      showToast(`${tokens.length} código(s) processado(s) e salvo(s)!`);
-    });
+      const rec = await fetchGabaritoRecord(gabId);
 
-    document.getElementById("btn-adm-reset-used").addEventListener("click", () => {
-      if (confirm("Deseja limpar a lista de códigos já usados apenas neste dispositivo?")) {
-        localStorage.removeItem(STORAGE_KEYS.USED_CODES);
-        updateAdminStats();
-        showToast("Registro local de códigos usados limpo!");
+      if (!rec) {
+        banner.className = "verify-banner verify-fraud";
+        banner.innerHTML = `
+          <h3>🚨 ALERTA DE FRAUDE — REGISTRO INEXISTENTE!</h3>
+          <p>O registro <strong>${gabId}</strong> não existe no banco de dados oficial da Polícia Federal. O candidato inventou ou adulterou o link/ID do gabarito.</p>
+        `;
+        details.innerHTML = `<div class="decode-row"><span>ID informado:</span><strong style="color:#fca5a5;">${gabId} (Inexistente)</strong></div>`;
+        return;
+      }
+
+      lastVerifiedGabaritoRec = rec;
+      openWrap.classList.remove("hidden");
+
+      const isFullMessage = /Acertos:|Aproveitamento:|Situa[çc][ãa]o:|Candidato:/i.test(raw);
+      const fraudReasons = [];
+
+      if (isFullMessage) {
+        const msgCand = extractField(raw, /Candidato:\*?\s*([^\n\r]+)/i);
+        const msgDel = extractField(raw, /Delegado Respons[áa]vel:\*?\s*([^\n\r]+)/i);
+        const msgRole = extractField(raw, /Prova\/Cargo:\*?\s*([^\n\r]+)/i);
+        const msgStatus = extractField(raw, /Situa[çc][ãa]o:\*?\s*([^\n\r]+)/i);
+
+        const hitsMatch = raw.match(/Acertos:\*?\s*(\d+)\s*\/\s*(\d+)/i);
+        const msgHits = hitsMatch ? parseInt(hitsMatch[1], 10) : null;
+        const msgTotal = hitsMatch ? parseInt(hitsMatch[2], 10) : null;
+        const wrongMatch = raw.match(/Erros:\*?\s*(\d+)/i);
+        const msgWrong = wrongMatch ? parseInt(wrongMatch[1], 10) : null;
+        const annMatch = raw.match(/Anuladas(?:\s*\(Tempo\))?:\*?\s*(\d+)/i);
+        const msgAnn = annMatch ? parseInt(annMatch[1], 10) : null;
+        const pctMatch = raw.match(/Aproveitamento:\*?\s*(\d+)\s*%/i);
+        const msgPct = pctMatch ? parseInt(pctMatch[1], 10) : null;
+
+        const trueStatus = rec.passed ? "APTO PARA ENTREVISTA" : "INAPTO (ABAIXO DA MÉDIA)";
+
+        if (msgCand && msgCand.toLowerCase() !== rec.candidateName.toLowerCase()) {
+          fraudReasons.push(`Nome adulterado: enviou "${msgCand}", mas o salvo é "${rec.candidateName}".`);
+        }
+        if (msgDel && msgDel.toLowerCase() !== rec.delegateName.toLowerCase()) {
+          fraudReasons.push(`Delegado adulterado: enviou "${msgDel}", mas o salvo é "${rec.delegateName}".`);
+        }
+        if (msgRole && msgRole.toLowerCase() !== rec.roleName.toLowerCase()) {
+          fraudReasons.push(`Cargo adulterado: enviou "${msgRole}", mas o salvo é "${rec.roleName}".`);
+        }
+        if (msgHits !== null && (msgHits !== rec.correct || msgTotal !== rec.total)) {
+          fraudReasons.push(`Acertos adulterados: enviou "${msgHits}/${msgTotal}", mas o real no banco é "${rec.correct}/${rec.total}".`);
+        }
+        if (msgWrong !== null && msgWrong !== rec.wrong) {
+          fraudReasons.push(`Erros adulterados: enviou "${msgWrong}", mas o real é "${rec.wrong}".`);
+        }
+        if (msgAnn !== null && msgAnn !== rec.annulled) {
+          fraudReasons.push(`Anuladas adulteradas: enviou "${msgAnn}", mas o real é "${rec.annulled}".`);
+        }
+        if (msgPct !== null && msgPct !== rec.percent) {
+          fraudReasons.push(`Aproveitamento adulterado: enviou "${msgPct}%", mas o real é "${rec.percent}%".`);
+        }
+        if (msgStatus && msgStatus.toUpperCase() !== trueStatus) {
+          fraudReasons.push(`Situação adulterada: enviou "${msgStatus}", mas o real é "${trueStatus}".`);
+        }
+      }
+
+      const tabsHtml = rec.tabSwitches === 0
+        ? `<strong style="color:#86efac;">0 saídas (Limpo)</strong>`
+        : `<strong style="color:#fca5a5;">⚠️ ${rec.tabSwitches} saída(s) de aba/app</strong>`;
+
+      details.innerHTML = `
+        <div class="decode-row"><span>Registro Oficial:</span><strong>${escapeHtml(rec.id)}</strong></div>
+        <div class="decode-row"><span>Candidato:</span><strong>${escapeHtml(rec.candidateName)}</strong></div>
+        <div class="decode-row"><span>Delegado Responsável:</span><strong>${escapeHtml(rec.delegateName)}</strong></div>
+        <div class="decode-row"><span>Cargo:</span><strong>${escapeHtml(rec.roleName)}</strong></div>
+        <div class="decode-row"><span>Resultado Real no Banco:</span><strong>${rec.correct}/${rec.total} (${rec.percent}%) — ${rec.passed ? "APTO" : "INAPTO"}</strong></div>
+        <div class="decode-row"><span>Tentativa:</span><strong>${rec.attemptNumber}ª Tentativa</strong></div>
+        <div class="decode-row"><span>Saídas de Tela:</span>${tabsHtml}</div>
+        <div class="decode-row"><span>Compromisso 2 CRMs/dia:</span><strong>${escapeHtml(rec.interview?.crmCommit || "-")}</strong></div>
+      `;
+
+      if (fraudReasons.length === 0) {
+        banner.className = "verify-banner verify-ok";
+        banner.innerHTML = `
+          <h3>✅ RESULTADO AUTÊNTICO CONFIRMADO NO BANCO!</h3>
+          <p>Todos os dados conferem exatamente com o gabarito oficial salvo no Firebase. A mensagem pronta para o Grupo dos Delegados já foi gerada abaixo.</p>
+        `;
+        document.getElementById("ver-group-text").value = buildDelegatesGroupMessage(rec, false, null);
+        groupWrap.classList.remove("hidden");
+      } else {
+        banner.className = "verify-banner verify-fraud";
+        banner.innerHTML = `
+          <h3>🚨 ALERTA DE FRAUDE DETECTADA!</h3>
+          <p><strong>O candidato fraudou o resultado e modificou a mensagem antes de enviar!</strong> Veja exatamente o que foi alterado e a mensagem real abaixo:</p>
+          <ul class="fraud-list">${fraudReasons.map(r => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
+        `;
+        document.getElementById("ver-corrected-text").value = buildCandidateReportMessage(rec);
+        corrWrap.classList.remove("hidden");
+        document.getElementById("ver-group-text").value = buildDelegatesGroupMessage(rec, true, fraudReasons[0]);
+        groupWrap.classList.remove("hidden");
       }
     });
+
+    // --- ABA 3: ARQUIVO DE GABARITOS SALVOS ---
+    async function loadArchiveList() {
+      const container = document.getElementById("archive-list");
+      container.innerHTML = `<div class="loader-box">Carregando gabaritos salvos no Firebase...</div>`;
+
+      try {
+        const q = query(collection(db, COL_GABARITOS), orderBy("createdAt", "desc"), limit(60));
+        const snap = await getDocs(q);
+        state.archiveRecords = snap.docs.map(d => d.data());
+        renderArchiveList();
+      } catch (err) {
+        console.error("Erro ao listar gabaritos:", err);
+        container.innerHTML = `<div class="error-msg">Não foi possível listar os gabaritos da nuvem. Verifique se as regras do Firestore permitem leitura na coleção <code>${COL_GABARITOS}</code>.</div>`;
+      }
+    }
+
+    function renderArchiveList() {
+      const container = document.getElementById("archive-list");
+      const search = document.getElementById("arch-search").value.trim().toLowerCase();
+      const roleFilter = document.getElementById("arch-role-filter").value;
+
+      const filtered = state.archiveRecords.filter(r => {
+        if (roleFilter !== "ALL" && r.role !== roleFilter) return false;
+        if (search) {
+          const hay = `${r.candidateName} ${r.delegateName} ${r.id}`.toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = `<div class="loader-box">Nenhum gabarito encontrado para este filtro.</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      filtered.forEach(rec => {
+        const div = document.createElement("div");
+        div.className = "saved-gab-item";
+        div.innerHTML = `
+          <div>
+            <div style="font-weight:700; color:#fff; font-size:0.93rem;">
+              ${escapeHtml(rec.candidateName)}
+              <span class="pill ${rec.passed ? "pill-green" : "pill-red"}" style="margin-left:6px;">${rec.correct}/${rec.total} (${rec.percent}%)</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--muted); margin-top:4px;">
+              ${escapeHtml(rec.roleName)} • Del: ${escapeHtml(rec.delegateName)} • ${rec.attemptNumber}ª Tent. • ${escapeHtml(rec.dateStr)} ${escapeHtml(rec.timeStr)}
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-gold btn-sm btn-open">Abrir</button>
+            <button type="button" class="btn btn-outline btn-sm btn-link">Link</button>
+            <button type="button" class="btn btn-danger btn-sm btn-del">Excluir</button>
+          </div>
+        `;
+
+        div.querySelector(".btn-open").addEventListener("click", () => {
+          renderGabaritoView(rec);
+          showView("view-gabarito");
+        });
+        div.querySelector(".btn-link").addEventListener("click", () => {
+          copyToClipboard(getGabaritoUrl(rec.id), `Link do gabarito de ${rec.candidateName} copiado!`);
+        });
+        div.querySelector(".btn-del").addEventListener("click", async () => {
+          if (!confirm(`Excluir permanentemente o gabarito de ${rec.candidateName} (${rec.id})?`)) return;
+          try {
+            await deleteDoc(doc(db, COL_GABARITOS, rec.id));
+            state.archiveRecords = state.archiveRecords.filter(x => x.id !== rec.id);
+            renderArchiveList();
+            showToast("Gabarito excluído.");
+          } catch {
+            showToast("Erro ao excluir do Firebase.");
+          }
+        });
+
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById("arch-search").addEventListener("input", renderArchiveList);
+    document.getElementById("arch-role-filter").addEventListener("change", renderArchiveList);
+    document.getElementById("btn-refresh-archive").addEventListener("click", loadArchiveList);
+
+    // --- ABA 4: BANCO DE QUESTÕES (LISTAR / ADICIONAR / EDITAR / EXCLUIR) ---
+    document.querySelectorAll(".role-tab-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        document.querySelectorAll(".role-tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.qmActiveRole = btn.dataset.qrole;
+        await loadRoleQuestionsFromCloud(state.qmActiveRole);
+        renderQuestionManager();
+      });
+    });
+
+    document.getElementById("qm-search").addEventListener("input", renderQuestionManager);
+
+    function renderQuestionManager() {
+      const role = state.qmActiveRole;
+      const list = state.questionBanks[role] || [];
+      const minNeeded = ROLE_CONFIG[role].count;
+      const search = document.getElementById("qm-search").value.trim().toLowerCase();
+
+      document.getElementById("qm-role-title").textContent = ROLE_CONFIG[role].name;
+      document.getElementById("qm-count-info").textContent =
+        `${list.length} questão(ões) cadastrada(s) • Cada prova sorteia ${minNeeded} questões (recomendado ter pelo menos ${minNeeded * 2} para 2 tentativas sem repetição).`;
+
+      const container = document.getElementById("qm-list");
+      const filtered = list.filter(q => {
+        if (!search) return true;
+        return `${q.q} ${q.o.join(" ")} ${q.d}`.toLowerCase().includes(search);
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = `<div class="loader-box">Nenhuma questão encontrada. Clique em "+ Nova Questão" para adicionar.</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      filtered.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.className = "q-admin-card";
+        const optsHtml = item.o.map((txt, oi) =>
+          `<div class="${oi === Number(item.a) ? "is-correct" : ""}">${letters[oi]}) ${escapeHtml(txt)} ${oi === Number(item.a) ? "✅" : ""}</div>`
+        ).join("");
+
+        card.innerHTML = `
+          <div class="q-admin-head">
+            <span class="pill">${escapeHtml(item.d || "Médio")} • #${idx + 1}</span>
+            <div class="q-admin-actions">
+              <button type="button" class="btn btn-primary btn-sm btn-edit-q">Editar</button>
+              <button type="button" class="btn btn-danger btn-sm btn-del-q">Excluir</button>
+            </div>
+          </div>
+          <div style="font-weight:600; color:#fff; font-size:0.92rem; line-height:1.4;">${escapeHtml(item.q)}</div>
+          <div class="q-admin-opts">${optsHtml}</div>
+        `;
+
+        card.querySelector(".btn-edit-q").addEventListener("click", () => openQuestionModal(item));
+        card.querySelector(".btn-del-q").addEventListener("click", async () => {
+          if (list.length <= minNeeded) {
+            if (!confirm(`Atenção: este cargo precisa de pelo menos ${minNeeded} questões por prova. Deseja realmente excluir esta questão?`)) return;
+          } else if (!confirm("Excluir esta questão permanentemente do banco?")) {
+            return;
+          }
+          state.questionBanks[role] = state.questionBanks[role].filter(x => x.id !== item.id);
+          const ok = await saveRoleQuestionsToCloud(role);
+          renderQuestionManager();
+          if (ok) showToast("Questão excluída e banco atualizado na nuvem!");
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // Modal de Adicionar / Editar Questão
+    const qModal = document.getElementById("q-modal");
+
+    function openQuestionModal(existing = null) {
+      document.getElementById("q-modal-err").classList.add("hidden");
+      if (existing) {
+        state.qmEditingId = existing.id;
+        document.getElementById("q-modal-title").textContent = `Editar Questão (${ROLE_CONFIG[state.qmActiveRole].name})`;
+        document.getElementById("qm-input-diff").value = existing.d || "Médio";
+        document.getElementById("qm-input-q").value = existing.q || "";
+        document.getElementById("qm-input-o0").value = existing.o[0] || "";
+        document.getElementById("qm-input-o1").value = existing.o[1] || "";
+        document.getElementById("qm-input-o2").value = existing.o[2] || "";
+        document.getElementById("qm-input-o3").value = existing.o[3] || "";
+        document.getElementById("qm-input-correct").value = String(existing.a ?? 0);
+      } else {
+        state.qmEditingId = null;
+        document.getElementById("q-modal-title").textContent = `Nova Questão (${ROLE_CONFIG[state.qmActiveRole].name})`;
+        document.getElementById("qm-input-diff").value = "Médio";
+        document.getElementById("qm-input-q").value = "";
+        document.getElementById("qm-input-o0").value = "";
+        document.getElementById("qm-input-o1").value = "";
+        document.getElementById("qm-input-o2").value = "";
+        document.getElementById("qm-input-o3").value = "";
+        document.getElementById("qm-input-correct").value = "0";
+      }
+      qModal.classList.remove("hidden");
+    }
+
+    document.getElementById("btn-qm-add").addEventListener("click", () => openQuestionModal(null));
+    document.getElementById("btn-close-qmodal").addEventListener("click", () => qModal.classList.add("hidden"));
+    qModal.addEventListener("click", e => { if (e.target === qModal) qModal.classList.add("hidden"); });
+
+    document.getElementById("btn-qm-save").addEventListener("click", async () => {
+      const err = document.getElementById("q-modal-err");
+      err.classList.add("hidden");
+
+      const d = document.getElementById("qm-input-diff").value;
+      const q = document.getElementById("qm-input-q").value.trim();
+      const o = [
+        document.getElementById("qm-input-o0").value.trim(),
+        document.getElementById("qm-input-o1").value.trim(),
+        document.getElementById("qm-input-o2").value.trim(),
+        document.getElementById("qm-input-o3").value.trim()
+      ];
+      const a = parseInt(document.getElementById("qm-input-correct").value, 10);
+
+      if (q.length < 5) {
+        err.textContent = "Digite o enunciado completo da questão.";
+        err.classList.remove("hidden");
+        return;
+      }
+      if (o.some(opt => opt.length < 1)) {
+        err.textContent = "Preencha todas as 4 alternativas.";
+        err.classList.remove("hidden");
+        return;
+      }
+
+      const role = state.qmActiveRole;
+      const btn = document.getElementById("btn-qm-save");
+      btn.disabled = true;
+      btn.textContent = "Salvando...";
+
+      if (state.qmEditingId) {
+        const idx = state.questionBanks[role].findIndex(item => item.id === state.qmEditingId);
+        if (idx !== -1) {
+          state.questionBanks[role][idx] = { id: state.qmEditingId, d, q, o, a };
+        }
+      } else {
+        const newId = `${role}_${Date.now().toString(36).toUpperCase()}`;
+        state.questionBanks[role].unshift({ id: newId, d, q, o, a });
+      }
+
+      const ok = await saveRoleQuestionsToCloud(role);
+      btn.disabled = false;
+      btn.textContent = "Salvar Questão na Nuvem";
+
+      if (ok) {
+        qModal.classList.add("hidden");
+        renderQuestionManager();
+        showToast(state.qmEditingId ? "Questão atualizada na nuvem!" : "Nova questão adicionada na nuvem!");
+      }
+    });
+
+    document.getElementById("btn-qm-restore").addEventListener("click", async () => {
+      const role = state.qmActiveRole;
+      if (!confirm(`Deseja restaurar todas as questões padrão de ${ROLE_CONFIG[role].name}? Isso substituirá edições feitas neste cargo.`)) return;
+      state.questionBanks[role] = structuredClone(DEFAULT_QUESTION_BANK[role]);
+      const ok = await saveRoleQuestionsToCloud(role);
+      renderQuestionManager();
+      if (ok) showToast(`Questões padrão de ${ROLE_CONFIG[role].name} restauradas na nuvem!`);
+    });
+
+    // =========================================================================
+    // INICIALIZAÇÃO & LEITURA DE PARÂMETROS DA URL (?gabarito= | ?candidato=)
+    // =========================================================================
+    async function initApp() {
+      const params = new URLSearchParams(window.location.search);
+      const gabParam = params.get("gabarito");
+
+      // Se abriu um link de Gabarito salvo
+      if (gabParam) {
+        await openGabaritoById(gabParam.trim().toUpperCase());
+        return;
+      }
+
+      // Pré-preenchimento vindo do link personalizado do Delegado
+      const candParam = params.get("candidato");
+      const delParam = params.get("delegado");
+      const roleParam = (params.get("cargo") || "").toUpperCase();
+
+      if (candParam) document.getElementById("cand-name").value = candParam;
+      if (delParam) document.getElementById("delegado-name").value = delParam;
+      if (ROLE_CONFIG[roleParam]) selectRoleCard(roleParam);
+
+      await loadAllQuestionBanks();
+    }
+
+    initApp();
   </script>
 </body>
 </html>
